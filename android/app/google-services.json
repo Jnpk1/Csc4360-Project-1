@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "797167725859",
+    "project_id": "cs4360-groupproject1",
+    "storage_bucket": "cs4360-groupproject1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797167725859:android:81ae595d8a6892aa6ff096",
+        "android_client_info": {
+          "package_name": "teamjnd.memoclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797167725859-2vjgoho4tmhjt9092bgq7vh0mpstc41p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "teamjnd.memoclub",
+            "certificate_hash": "f86f924ca00dbe64dd583bc347b5e5f367ec21b2"
+          }
+        },
+        {
+          "client_id": "797167725859-6if2uu3rfvrh5uggl9n1do6mqpjeqf78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_JxRQ6vK1OcqQPWLTK46j7mkHxR2ejpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "797167725859-6if2uu3rfvrh5uggl9n1do6mqpjeqf78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
