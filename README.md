@@ -1,16 +1,15 @@
-# memoclub
+# MemoClub
 
-A new Flutter project.
+## Useful Links
 
-## Getting Started
+* [Link to Current Design Structure](https://www.figma.com/file/RugeWrPOBgDUWwE1prm6kZ/GroupProject1?node-id=1%3A143)
+* [GitHub repo we can use for reference](https://github.com/ashtonjonesdev/reply_flutter)
 
-This project is a starting point for a Flutter application.
+## Image of Data Storage
 
-A few resources to get you started if this is your first Flutter project:
+![image-20210627141554190](C:\Users\Nathan\AppData\Roaming\Typora\typora-user-images\image-20210627141554190.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## BLoC Design Graphic
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![img](https://cdn.discordapp.com/attachments/851552841395077214/858392404439597106/04-BLoC-diagram-1-650x284.png)
+
