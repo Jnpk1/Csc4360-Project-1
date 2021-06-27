@@ -7,7 +7,7 @@
 
 ## Image of Data Storage
 
-![image-20210627141554190](C:\Users\Nathan\AppData\Roaming\Typora\typora-user-images\image-20210627141554190.png)
+![img](https://cdn.discordapp.com/attachments/851552841395077214/858492796477243442/unknown.png)
 
 ## BLoC Design Graphic
 
