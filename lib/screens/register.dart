@@ -18,6 +18,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     AuthService _auth = Provider.of<AuthService>(context, listen: false);
+    print(Navigator.of(context).toString());
     return SingleChildScrollView(
       child: Container(
           child: Center(
@@ -27,6 +28,7 @@ class _RegisterState extends State<Register> {
           ElevatedButton(
               onPressed: () async {
                 var result = await _auth.signInAnon();
+                // Navigates user to home page if they signed in successfully
                 if (result != null) {
                   Navigator.pushNamed(context, Home.routeName);
                 }
@@ -37,6 +39,7 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  // // HAVE NOT TESTED YET
   // void registerUserWithEmailAndPassword() async {
   //   try {
   //     User? newUser = await Provider.of<AuthService>(context, listen: false)

@@ -31,6 +31,9 @@ class AuthService with ChangeNotifier {
   //   }
   // }
 
+
+  // Allows the app to grab up to date current user from anywhere in the app.
+  // Access by useing "Provider.of<AuthService>(context, listen: false).getUser()"
   Future<User?> getUser() async {
     try {
       final currUser = _auth.currentUser;
@@ -50,6 +53,8 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  // used by futurebuilder to do an initial check if user is signed in/out
+  // happens when app first launches
   Future<User?> firstLogin() async {
     try {
       final currUser = _auth.currentUser;
@@ -69,41 +74,42 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future registerWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required String firstName,
-      required String lastName}) async {
-    try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User? newUser = result.user;
+  // // Haven't tested yet
+  // Future registerWithEmailAndPassword(
+  //     {required String email,
+  //     required String password,
+  //     required String firstName,
+  //     required String lastName}) async {
+  //   try {
+  //     UserCredential result = await _auth.createUserWithEmailAndPassword(
+  //         email: email, password: password);
+  //     User? newUser = result.user;
 
-      /// Add the first and last name to the FirebaseUser
-      String newDisplayName = '$firstName $lastName';
+  //     /// Add the first and last name to the FirebaseUser
+  //     String newDisplayName = '$firstName $lastName';
 
-      await newUser
-          ?.updateDisplayName(newDisplayName)
-          .catchError((error) => print(error));
+  //     await newUser
+  //         ?.updateDisplayName(newDisplayName)
+  //         .catchError((error) => print(error));
 
-      // Refresh data
-      await newUser?.reload();
+  //     // Refresh data
+  //     await newUser?.reload();
 
-      // Need to make this call to get the updated display name; or else display name will be null
-      User? updatedUser = _auth.currentUser;
+  //     // Need to make this call to get the updated display name; or else display name will be null
+  //     User? updatedUser = _auth.currentUser;
 
-      print('new display name: ${updatedUser?.displayName}');
+  //     print('new display name: ${updatedUser?.displayName}');
 
-      notifyListeners();
+  //     notifyListeners();
 
-      // Return FirebaseUser with updated information (setting the display name using their first and last name)
-      return updatedUser;
-    } catch (e) {
-      print(e.toString());
+  //     // Return FirebaseUser with updated information (setting the display name using their first and last name)
+  //     return updatedUser;
+  //   } catch (e) {
+  //     print(e.toString());
 
-      return null;
-    }
-  }
+  //     return null;
+  //   }
+  // }
 
   // anonymous sign in
   Future signInAnon() async {

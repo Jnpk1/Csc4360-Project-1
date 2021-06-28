@@ -98,7 +98,7 @@ Widget materialApp(hasData) {
       // To navigate to another page enter type the command:
       // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
       // example: Navigator.pushNamed(context, Register.routeName);
-      routes: {
+      routes: <String, WidgetBuilder>{
         Home.routeName: (context) => Home(),
         SignIn.routeName: (context) => SignIn(),
         Register.routeName: (context) => Register(),

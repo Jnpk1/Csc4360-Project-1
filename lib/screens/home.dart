@@ -51,8 +51,9 @@ Widget testFunctionToGetCurrentUser(BuildContext context) {
 }
 
 Widget roomButtons(BuildContext context) {
-  String HEALTH_ROOM_ROUTE_NAME = SignIn.routeName;
+  final String HEALTH_ROOM_ROUTE_NAME = SignIn.routeName;
   AuthService _auth = Provider.of<AuthService>(context, listen: false);
+  print(Navigator.of(context).toString());
 
   return Column(children: <Widget>[
     ElevatedButton(
@@ -71,10 +72,11 @@ Widget roomButtons(BuildContext context) {
         onPressed: () async {
           bool didSignOut = await _auth.signOut();
           if (didSignOut) {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (BuildContext context) => Register()),
-                (Route<dynamic> route) => false);
+            // this navigator command pops all history from the navigator,
+            // and then sends them to home screen. This prevent them from
+            // signing out, then pressing back on native button to re-enter the app
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                Register.routeName, (Route<dynamic> route) => false);
           }
         },
         child: Text('sign out')),
