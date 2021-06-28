@@ -33,17 +33,35 @@ class AuthService with ChangeNotifier {
 
   Future<User?> getUser() async {
     try {
-      final user = _auth.currentUser;
+      final currUser = _auth.currentUser;
 
-      if (user != null) {
-        print('User signed in: ${user.email}');
+      if (currUser != null) {
+        print('User signed in: ${currUser.email}');
         print('Creating Member Object');
         // get user info from DatabaseService
       } else {
         print('No user signed in');
       }
       notifyListeners();
-      return user;
+      return currUser;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<User?> firstLogin() async {
+    try {
+      final currUser = _auth.currentUser;
+
+      if (currUser != null) {
+        print('User signed in: ${currUser.email}');
+        print('Creating Member Object');
+        // get user info from DatabaseService
+      } else {
+        print('No user signed in');
+      }
+      return currUser;
     } catch (e) {
       print(e);
       return null;

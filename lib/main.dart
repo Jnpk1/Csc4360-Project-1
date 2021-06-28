@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
@@ -47,8 +48,7 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return ChangeNotifierProvider<AuthService>(
-              create: (context) => AuthService(), child: MyApp());
+          return changeNotifier();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
@@ -61,22 +61,46 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'MemoClub',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Home(),
-
-        // To navigate to another page enter type the command:
-        // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
-        // example: Navigator.pushNamed(context, Register.routeName);
-        routes: {
-          Home.routeName: (context) => Home(),
-          SignIn.routeName: (context) => SignIn(),
-          Register.routeName: (context) => Register(),
-          Profile.routeName: (context) => Profile(),
-          Settings.routeName: (context) => Settings(),
+    return FutureBuilder(
+        future: Provider.of<AuthService>(context, listen: false).firstLogin(),
+        builder: (context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.error != null) {
+              print("error");
+              return Text(snapshot.error.toString());
+            }
+            print("main.dart: snaphshot.data=${snapshot.data}");
+            return snapshot.hasData ? materialApp() : materialApp();
+          } else {
+            return LoadingCircle();
+          }
         });
   }
+}
+
+Widget changeNotifier() {
+  return ChangeNotifierProvider<AuthService>(
+    create: (context) => AuthService(),
+    child: MyApp(),
+  );
+}
+
+Widget materialApp() {
+  return MaterialApp(
+      title: 'MemoClub',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Home(),
+
+      // To navigate to another page enter type the command:
+      // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
+      // example: Navigator.pushNamed(context, Register.routeName);
+      routes: {
+        Home.routeName: (context) => Home(),
+        SignIn.routeName: (context) => SignIn(),
+        Register.routeName: (context) => Register(),
+        Profile.routeName: (context) => Profile(),
+        Settings.routeName: (context) => Settings(),
+      });
 }
