@@ -52,6 +52,8 @@ Widget testFunctionToGetCurrentUser(BuildContext context) {
 
 Widget roomButtons(BuildContext context) {
   String HEALTH_ROOM_ROUTE_NAME = SignIn.routeName;
+  AuthService _auth = Provider.of<AuthService>(context, listen: false);
+
   return Column(children: <Widget>[
     ElevatedButton(
         onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
@@ -63,8 +65,19 @@ Widget roomButtons(BuildContext context) {
         onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
         child: Text('business_board')),
     ElevatedButton(
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        child: Text('games_board')),
+        onPressed: () => Navigator.pushNamed(context, Register.routeName),
+        child: Text('register_page')),
+    ElevatedButton(
+        onPressed: () async {
+          bool didSignOut = await _auth.signOut();
+          if (didSignOut) {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => Register()),
+                (Route<dynamic> route) => false);
+          }
+        },
+        child: Text('sign out')),
     testFunctionToGetCurrentUser(context),
   ]);
 }

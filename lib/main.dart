@@ -58,6 +58,13 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
   }
 }
 
+Widget changeNotifier() {
+  return ChangeNotifierProvider<AuthService>(
+    create: (_) => new AuthService(),
+    child: MyApp(),
+  );
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -70,7 +77,8 @@ class MyApp extends StatelessWidget {
               return Text(snapshot.error.toString());
             }
             print("main.dart: snaphshot.data=${snapshot.data}");
-            return snapshot.hasData ? materialApp() : materialApp();
+            // return snapshot.hasData ? materialApp() : Register();
+            return materialApp(snapshot.hasData);
           } else {
             return LoadingCircle();
           }
@@ -78,20 +86,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget changeNotifier() {
-  return ChangeNotifierProvider<AuthService>(
-    create: (context) => AuthService(),
-    child: MyApp(),
-  );
-}
-
-Widget materialApp() {
+Widget materialApp(hasData) {
+  // User? currProvider.of<AuthService>(context, listen: false).getUser();
   return MaterialApp(
       title: 'MemoClub',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      home: hasData ? Home() : Register(),
 
       // To navigate to another page enter type the command:
       // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
