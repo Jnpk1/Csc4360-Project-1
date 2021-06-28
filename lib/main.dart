@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
@@ -5,6 +6,7 @@ import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +48,7 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MyApp();
+          return changeNotifier();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
@@ -56,25 +58,51 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
   }
 }
 
+Widget changeNotifier() {
+  return ChangeNotifierProvider<AuthService>(
+    create: (_) => new AuthService(),
+    child: MyApp(),
+  );
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'MemoClub',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Home(),
-
-        // To navigate to another page enter type the command:
-        // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
-        // example: Navigator.pushNamed(context, Register.routeName);
-        routes: {
-          Home.routeName: (context) => Home(),
-          SignIn.routeName: (context) => SignIn(),
-          Register.routeName: (context) => Register(),
-          Profile.routeName: (context) => Profile(),
-          Settings.routeName: (context) => Settings(),
+    return FutureBuilder(
+        future: Provider.of<AuthService>(context, listen: false).firstLogin(),
+        builder: (context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.error != null) {
+              print("error");
+              return Text(snapshot.error.toString());
+            }
+            print("main.dart: snaphshot.data=${snapshot.data}");
+            // return snapshot.hasData ? materialApp() : Register();
+            return materialApp(snapshot.hasData);
+          } else {
+            return LoadingCircle();
+          }
         });
   }
+}
+
+Widget materialApp(hasData) {
+  // User? currProvider.of<AuthService>(context, listen: false).getUser();
+  return MaterialApp(
+      title: 'MemoClub',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: hasData ? Home() : Register(),
+
+      // To navigate to another page enter type the command:
+      // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
+      // example: Navigator.pushNamed(context, Register.routeName);
+      routes: <String, WidgetBuilder>{
+        Home.routeName: (context) => Home(),
+        SignIn.routeName: (context) => SignIn(),
+        Register.routeName: (context) => Register(),
+        Profile.routeName: (context) => Profile(),
+        Settings.routeName: (context) => Settings(),
+      });
 }
