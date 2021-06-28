@@ -5,6 +5,7 @@ import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,8 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MyApp();
+          return ChangeNotifierProvider<AuthService>(
+              create: (context) => AuthService(), child: MyApp());
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
