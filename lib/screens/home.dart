@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/services/auth.dart';
+import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -31,9 +32,7 @@ class _MyHomePageState extends State<Home> {
   Widget build(BuildContext context) {
     // printUser();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
+      appBar: memoAppBar("Home"),
       body: Center(
         child: roomButtons(context),
       ),

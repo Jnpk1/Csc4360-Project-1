@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-Widget memoAppBar(String appBarTitle) {
+PreferredSizeWidget memoAppBar(String appBarTitle) {
   return AppBar(
     backgroundColor: Colors.blueGrey,
-    
-
-    
+    title: Text(appBarTitle),
   );
 }

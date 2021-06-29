@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/settings.dart';
@@ -40,7 +38,7 @@ Widget memoDrawer(BuildContext context) {
               Navigator.pushNamed(context, Profile.routeName);
             }),
         ListTile(
-            title: Text('MessageBoards'),
+            title: Text('Home'),
             onTap: () {
               // Update the state of the app
               // ...
