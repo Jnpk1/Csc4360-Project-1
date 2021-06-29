@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/services/auth.dart';
+import 'package:memoclub/shared/drawer.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -36,6 +37,7 @@ class _MyHomePageState extends State<Home> {
       body: Center(
         child: roomButtons(context),
       ),
+      drawer: memoDrawer(context),
     );
   }
 }
