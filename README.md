@@ -7,7 +7,7 @@
 
 ## Image of Data Storage
 
-![data storage hierarchy](C:\Users\Nathan\Documents\ShareX\Screenshots\2021-06\Discord_KlGH9xffKA.png)
+[Imgur](https://i.imgur.com/gYHvjL4.png)
 
 ## BLoC Design Graphic
 
