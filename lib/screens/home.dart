@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/welcome.dart';
 import 'package:memoclub/services/auth.dart';
+import 'package:memoclub/services/database.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,7 @@ class _MyHomePageState extends State<Home> {
     print("In home.dart, currUser=$curr");
   }
 
+  DatabaseService db = DatabaseService();
   @override
   Widget build(BuildContext context) {
     // printUser();
@@ -50,6 +53,21 @@ Future printUser(BuildContext context) async {
 Widget testFunctionToGetCurrentUser(BuildContext context) {
   return ElevatedButton(
       onPressed: () => printUser(context), child: Text('Press to getUser()'));
+}
+
+Widget testFunctionCreateMemberFromFirestore(BuildContext context) {
+  return ElevatedButton(
+      onPressed: () async {
+        print("Pulling User from database");
+        User? curr =
+            await Provider.of<AuthService>(context, listen: false).getUser();
+        Member newMember =
+            await Provider.of<AuthService>(context, listen: false)
+                .db
+                .createMemberFromFirebase(curr);
+        print("Successfully created new member: $newMember");
+      },
+      child: Text('Press to create member from DB'));
 }
 
 Widget roomButtons(BuildContext context) {
@@ -83,5 +101,6 @@ Widget roomButtons(BuildContext context) {
         },
         child: Text('sign out')),
     testFunctionToGetCurrentUser(context),
+    testFunctionCreateMemberFromFirestore(context),
   ]);
 }

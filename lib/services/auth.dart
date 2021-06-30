@@ -10,6 +10,7 @@ import 'database.dart';
 class AuthService with ChangeNotifier {
   Member currentMember = Member();
   FirebaseAuth _auth = FirebaseAuth.instance;
+  DatabaseService db = DatabaseService();
   User? user;
   AuthService();
 

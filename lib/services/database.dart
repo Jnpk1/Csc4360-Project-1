@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/Member.dart';
 
 class DatabaseService with ChangeNotifier {
   final _firestoreInstance = FirebaseFirestore.instance;
@@ -64,5 +65,32 @@ class DatabaseService with ChangeNotifier {
     } else {
       print('User was null, so could not complete createUserInDatabase()');
     }
+  }
+
+  Future<Member> createMemberFromFirebase(User? user) async {
+    try {
+      if (user != null) {
+        _firestoreInstance
+            .collection(USERS_COLLECTION)
+            .doc(user.uid)
+            .get()
+            .then((DocumentSnapshot userInfoSnapshot) {
+          print(userInfoSnapshot.data());
+          print('map of user data');
+          print(userInfoSnapshot.data() as Map<String, dynamic>);
+          
+          Member currMember =
+              Member.fromMap(userInfoSnapshot.data() as Map<String, dynamic>);
+          print("currMember inside Database = $currMember");
+          return currMember;
+        });
+      } else {
+        return Member();
+      }
+    } catch (e) {
+      print('Error occured in createMemberFromFirebase');
+      print(e);
+    }
+    return Member();
   }
 }
