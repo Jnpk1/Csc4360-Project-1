@@ -13,6 +13,9 @@ class DatabaseService with ChangeNotifier {
   static const String USER_LASTNAME_FIELD = "lastName";
   static const String USER_ID_FIELD = "id";
   static const String USER_EMAIL_FIELD = "email";
+  static const String USER_DATE_REGISTERED_FIELD = "dateRegistered";
+  static const String USER_ROLE_FIELD = "role";
+
   static const String USER_SOCIAL_FIELD = "connectedSocials";
   static const String USER_FACEBOOK_FIELD = "facebook";
   static const String USER_GOOGLE_FIELD = "google";
@@ -36,7 +39,8 @@ class DatabaseService with ChangeNotifier {
       String password,
       String firstName,
       String lastName,
-      DateTime dateRegistered) async {
+      DateTime dateRegistered,
+      {String userRole = 'Customer'}) async {
     Map<String, bool> connectedSocials = new Map<String, bool>();
     connectedSocials[USER_FACEBOOK_FIELD] = false;
     connectedSocials[USER_GOOGLE_FIELD] = false;
@@ -50,6 +54,8 @@ class DatabaseService with ChangeNotifier {
             USER_FIRSTNAME_FIELD: firstName,
             USER_LASTNAME_FIELD: lastName,
             USER_ID_FIELD: currUser.uid,
+            USER_ROLE_FIELD: userRole,
+            USER_DATE_REGISTERED_FIELD: dateRegistered,
             USER_SOCIAL_FIELD: connectedSocials
           })
           .then((value) =>
