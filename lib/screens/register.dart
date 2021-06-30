@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
   static final String routeName = '/register';
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -58,6 +59,7 @@ class _RegisterState extends State<Register> {
     return _isLoading
         ? LoadingCircle()
         : Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.blue[100],
             appBar: AppBar(
                 backgroundColor: Colors.blue[400],
@@ -123,40 +125,38 @@ class _RegisterState extends State<Register> {
                               style: TextStyle(color: Colors.black),
                             ),
                             onPressed: () async {
-                              setState(() {
+                              setState(() async {
                                 _isLoading = true;
-                              });
-                              if (_formKey.currentState!.validate()) {
-                                var dateRegistered = DateTime.now();
-
-                                dynamic result =
-                                    await _auth.registerWithEmailAndPassword(
-                                        email,
-                                        password,
-                                        firstName,
-                                        lastName,
-                                        dateRegistered);
-
-                                if (result == null) {
-                                  setState(() {
-                                    _isLoading = false;
-                                    error = ('please input a valid email');
-                                  });
-                                } else {
-                                  await DatabaseService()
-                                      .createUserInDatabaseFromEmail(
-                                          result,
+                                if (_formKey.currentState!.validate()) {
+                                  var dateRegistered = DateTime.now();
+                                  dynamic result =
+                                      await _auth.registerWithEmailAndPassword(
                                           email,
                                           password,
                                           firstName,
                                           lastName,
                                           dateRegistered);
-                                  setState(() {
-                                    _isLoading = false;
-                                  });
-                                  Navigator.pushNamed(context, Home.routeName);
+                                  if (result == null) {
+                                    setState(
+                                      // _isLoading = false
+                                      () => error =
+                                          ('please input a valid email'),
+                                    );
+                                  } else {
+                                    await DatabaseService()
+                                        .createUserInDatabaseFromEmail(
+                                            result,
+                                            email,
+                                            password,
+                                            firstName,
+                                            lastName,
+                                            dateRegistered);
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                  }
                                 }
-                              }
+                              });
                             }),
                         SizedBox(height: 12.0),
                         Text(
