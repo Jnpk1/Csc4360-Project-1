@@ -128,9 +128,20 @@ class _RegisterState extends State<Register> {
                                   firstName,
                                   lastName,
                                   dateRegistered);
+
                           if (result == null) {
                             setState(
                                 () => error = 'please input a valid email');
+                          } else {
+                            await DatabaseService()
+                                .createUserInDatabaseFromEmail(
+                                    result,
+                                    email,
+                                    password,
+                                    firstName,
+                                    lastName,
+                                    dateRegistered);
+                            Navigator.pushNamed(context, Home.routeName);
                           }
                         }
                       }),

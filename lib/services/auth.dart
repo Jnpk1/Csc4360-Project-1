@@ -130,6 +130,10 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  // Future createEmailUserInDatabase(User? currUser,) {
+
+  // }
+
   // anonymous sign in
   Future signInAnon() async {
     print('trying to sign in anonymously');
