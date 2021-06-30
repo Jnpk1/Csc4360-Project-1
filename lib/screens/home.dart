@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/screens/styles/buttons.dart';
+import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/screens/welcome.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/appbar.dart';
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<Home> {
   Widget build(BuildContext context) {
     // printUser();
     return Scaffold(
-      appBar: memoAppBar("Home"),
+      appBar: memoAppBar(context, "Home"),
       body: Center(
         child: roomButtons(context),
       ),
@@ -48,8 +50,18 @@ Future printUser(BuildContext context) async {
 }
 
 Widget testFunctionToGetCurrentUser(BuildContext context) {
-  return ElevatedButton(
-      onPressed: () => printUser(context), child: Text('Press to getUser()'));
+  return MaterialButton(
+      onPressed: () => printUser(context),
+      elevation: buttonThemeElevation,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(buttonBorderRadius),
+      ),
+      child: Text('Press to getUser()',
+          style: Theme.of(context)
+              .textTheme
+              .button
+              ?.copyWith(color: kOnButtonColor)),
+      color: kButtonColor);
 }
 
 Widget roomButtons(BuildContext context) {
@@ -58,19 +70,55 @@ Widget roomButtons(BuildContext context) {
   print(Navigator.of(context).toString());
 
   return Column(children: <Widget>[
-    ElevatedButton(
+    MaterialButton(
         onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        child: Text('health_board')),
-    ElevatedButton(
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(buttonBorderRadius),
+        ),
+        child: Text('Health Room',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
         onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        child: Text('study_board')),
-    ElevatedButton(
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(buttonBorderRadius),
+        ),
+        child: Text('Study Room',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
         onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        child: Text('business_board')),
-    ElevatedButton(
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(buttonBorderRadius),
+        ),
+        child: Text('Business Board',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
         onPressed: () => Navigator.pushNamed(context, Register.routeName),
-        child: Text('register_page')),
-    ElevatedButton(
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(buttonBorderRadius),
+        ),
+        child: Text('Register Page',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
         onPressed: () async {
           bool didSignOut = await _auth.signOut();
           if (didSignOut) {
@@ -81,7 +129,16 @@ Widget roomButtons(BuildContext context) {
                 Welcome.routeName, (Route<dynamic> route) => false);
           }
         },
-        child: Text('sign out')),
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text('Sign Out',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
     testFunctionToGetCurrentUser(context),
   ]);
 }

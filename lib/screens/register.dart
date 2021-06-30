@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/services/database.dart';
 import 'package:memoclub/shared/inputDecor.dart';
@@ -58,15 +59,30 @@ class _RegisterState extends State<Register> {
     return _isLoading
         ? LoadingCircle()
         : Scaffold(
-            backgroundColor: Colors.blue[100],
+            backgroundColor: kBackgroundColor,
             appBar: AppBar(
-                backgroundColor: Colors.blue[400],
+                backgroundColor: kPrimaryColor,
                 elevation: 0.0,
-                title: Text('Register Here'),
+                title: Text(
+                  'Register Here',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      ?.copyWith(color: kOnPrimaryColor),
+                ),
                 actions: <Widget>[
                   TextButton.icon(
-                    icon: Icon(Icons.person),
-                    label: Text('Sign In'),
+                    icon: Icon(
+                      Icons.person,
+                      color: kOnPrimaryColor,
+                    ),
+                    label: Text(
+                      'Sign In',
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          ?.copyWith(color: kOnPrimaryColor),
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(context, Home.routeName);
                     },
@@ -80,6 +96,10 @@ class _RegisterState extends State<Register> {
                       children: <Widget>[
                         SizedBox(height: 15.0),
                         TextFormField(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: kTextColor),
                             decoration:
                                 textInputDecoration.copyWith(hintText: 'Email'),
                             validator: (val) =>

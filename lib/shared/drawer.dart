@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/settings.dart';
+import 'package:memoclub/screens/styles/colors.dart';
 
 Widget memoDrawer(BuildContext context) {
   return Drawer(
@@ -13,13 +14,18 @@ Widget memoDrawer(BuildContext context) {
           padding: EdgeInsets.zero,
           children: <Widget>[
         DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
+          decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+          child: Text(
+            'Quick Actions',
+            style: Theme.of(context)
+                .textTheme
+                .headline4
+                ?.copyWith(color: kOnPrimaryColor),
           ),
-          child: Text('Drawer Header'),
         ),
         ListTile(
           title: Text('Settings'),
+          leading: Icon(Icons.settings),
           onTap: () {
             // Update the state of the app
             // ...
@@ -30,6 +36,7 @@ Widget memoDrawer(BuildContext context) {
         ),
         ListTile(
             title: Text('Profile'),
+            leading: Icon(Icons.face),
             onTap: () {
               // Update the state of the app
               // ...
@@ -39,6 +46,7 @@ Widget memoDrawer(BuildContext context) {
             }),
         ListTile(
             title: Text('Home'),
+            leading: Icon(Icons.home),
             onTap: () {
               // Update the state of the app
               // ...

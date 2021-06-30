@@ -14,7 +14,7 @@ class Welcome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue[50],
-      appBar: memoAppBar("Welcome"),
+      appBar: memoAppBar(context, "Welcome"),
       body: Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 160.0),
           child: Column(
