@@ -7,19 +7,7 @@
 
 ## Image of Data Storage
 
-`messageBoards      <---------- collection
--businessBoard     <------------- doc
---name: "BusinessBoard"  <------- field
---messages <--------------------- subcollection
----msg_uid  <-------------------- doc 
-----content: "msg content"  <---- field
-----date: Timestamp()
-----author: "msg author"
----msg_uid2    <----------------- doc
-----content: "msg2 content2" <-- field
-----date: Timestamp2()
-----author: "msg2 author2"
-`
+![data storage hierarchy](C:\Users\Nathan\Documents\ShareX\Screenshots\2021-06\Discord_KlGH9xffKA.png)
 
 ## BLoC Design Graphic
 
