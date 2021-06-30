@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/screens/welcome.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
@@ -77,7 +78,7 @@ Widget roomButtons(BuildContext context) {
             // and then sends them to home screen. This prevent them from
             // signing out, then pressing back on native button to re-enter the app
             Navigator.of(context).pushNamedAndRemoveUntil(
-                Register.routeName, (Route<dynamic> route) => false);
+                Welcome.routeName, (Route<dynamic> route) => false);
           }
         },
         child: Text('sign out')),
