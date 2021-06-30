@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/models/Member.dart';
 
+import 'database.dart';
+
 class AuthService with ChangeNotifier {
   Member currentMember = Member();
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,7 +32,6 @@ class AuthService with ChangeNotifier {
   //     return null;
   //   }
   // }
-
 
   // Allows the app to grab up to date current user from anywhere in the app.
   // Access by useing "Provider.of<AuthService>(context, listen: false).getUser()"
@@ -109,6 +110,28 @@ class AuthService with ChangeNotifier {
 
   //     return null;
   //   }
+  // }
+
+  // register with email and pass
+
+  Future registerWithEmailAndPassword(String email, String password,
+      String firstName, String lastName, DateTime dateRegistered) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? currUser = result.user;
+      // create a new document based on new user
+      // await DatabaseService(uid: currUser?.uid as String)
+      //     .updateUserData(firstName, lastName, 'Customer', dateRegistered);
+      return currUser!;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  // Future createEmailUserInDatabase(User? currUser,) {
+
   // }
 
   // anonymous sign in

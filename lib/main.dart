@@ -9,6 +9,7 @@ import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:memoclub/screens/welcome.dart';
 
 void main() {
   // This needs to be called before any Firebase services can be used
@@ -93,7 +94,7 @@ Widget materialApp(hasData) {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: hasData ? Home() : Register(),
+      home: hasData ? Home() : Welcome(),
 
       // To navigate to another page enter type the command:
       // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
@@ -104,5 +105,6 @@ Widget materialApp(hasData) {
         Register.routeName: (context) => Register(),
         Profile.routeName: (context) => Profile(),
         Settings.routeName: (context) => Settings(),
+        Welcome.routeName: (context) => Welcome(),
       });
 }
