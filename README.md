@@ -7,7 +7,19 @@
 
 ## Image of Data Storage
 
-![img](https://cdn.discordapp.com/attachments/851552841395077214/858492796477243442/unknown.png)
+`messageBoards      <---------- collection
+-businessBoard     <------------- doc
+--name: "BusinessBoard"  <------- field
+--messages <--------------------- subcollection
+---msg_uid  <-------------------- doc 
+----content: "msg content"  <---- field
+----date: Timestamp()
+----author: "msg author"
+---msg_uid2    <----------------- doc
+----content: "msg2 content2" <-- field
+----date: Timestamp2()
+----author: "msg2 author2"
+`
 
 ## BLoC Design Graphic
 
