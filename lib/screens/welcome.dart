@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/register.dart';
+import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/inputDecor.dart';
@@ -34,7 +35,7 @@ class Welcome extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
-                    Navigator.pushNamed(context, Home.routeName);
+                    Navigator.pushNamed(context, SignIn.routeName);
                   }),
               SizedBox(height: 15.0),
             ],
