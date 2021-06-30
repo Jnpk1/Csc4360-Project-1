@@ -5,6 +5,7 @@ import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/services/database.dart';
 import 'package:memoclub/shared/inputDecor.dart';
+import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
@@ -50,109 +51,121 @@ class _RegisterState extends State<Register> {
   String error = '';
   String firstName = '';
   String lastName = '';
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue[100],
-      appBar: AppBar(
-          backgroundColor: Colors.blue[400],
-          elevation: 0.0,
-          title: Text('Register Here'),
-          actions: <Widget>[
-            TextButton.icon(
-              icon: Icon(Icons.person),
-              label: Text('Sign In'),
-              onPressed: () {
-                Navigator.pushNamed(context, Home.routeName);
-              },
-            )
-          ]),
-      body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-          child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 15.0),
-                  TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Email'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() => email = val);
-                      }),
-                  SizedBox(height: 15.0),
-                  TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Password'),
-                      obscureText: true,
-                      validator: (val) => val!.length < 6
-                          ? 'Enter a password 6+ chars long'
-                          : null,
-                      onChanged: (val) {
-                        setState(() => password = val);
-                      }),
-                  SizedBox(height: 15.0),
-                  TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'First Name'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter your First Name' : null,
-                      onChanged: (val) {
-                        setState(() => firstName = val);
-                      }),
-                  SizedBox(height: 15.0),
-                  TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Last Name'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter your Last Name' : null,
-                      onChanged: (val) {
-                        setState(() => lastName = val);
-                      }),
-                  SizedBox(height: 15.0),
-                  ElevatedButton(
-                      child: Text(
-                        'Register',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          var dateRegistered = DateTime.now();
-                          dynamic result =
-                              await _auth.registerWithEmailAndPassword(
-                                  email,
-                                  password,
-                                  firstName,
-                                  lastName,
-                                  dateRegistered);
-
-                          if (result == null) {
-                            setState(
-                                () => error = 'please input a valid email');
-                          } else {
-                            await DatabaseService()
-                                .createUserInDatabaseFromEmail(
-                                    result,
-                                    email,
-                                    password,
-                                    firstName,
-                                    lastName,
-                                    dateRegistered);
-                            Navigator.pushNamed(context, Home.routeName);
-                          }
-                        }
-                      }),
-                  SizedBox(height: 12.0),
-                  Text(
-                    error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+    return _isLoading
+        ? LoadingCircle()
+        : Scaffold(
+            backgroundColor: Colors.blue[100],
+            appBar: AppBar(
+                backgroundColor: Colors.blue[400],
+                elevation: 0.0,
+                title: Text('Register Here'),
+                actions: <Widget>[
+                  TextButton.icon(
+                    icon: Icon(Icons.person),
+                    label: Text('Sign In'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, Home.routeName);
+                    },
                   )
-                ],
-              ))),
-    );
+                ]),
+            body: Container(
+                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 15.0),
+                        TextFormField(
+                            decoration:
+                                textInputDecoration.copyWith(hintText: 'Email'),
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter an email' : null,
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            }),
+                        SizedBox(height: 15.0),
+                        TextFormField(
+                            decoration: textInputDecoration.copyWith(
+                                hintText: 'Password'),
+                            obscureText: true,
+                            validator: (val) => val!.length < 6
+                                ? 'Enter a password 6+ chars long'
+                                : null,
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            }),
+                        SizedBox(height: 15.0),
+                        TextFormField(
+                            decoration: textInputDecoration.copyWith(
+                                hintText: 'First Name'),
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter your First Name' : null,
+                            onChanged: (val) {
+                              setState(() => firstName = val);
+                            }),
+                        SizedBox(height: 15.0),
+                        TextFormField(
+                            decoration: textInputDecoration.copyWith(
+                                hintText: 'Last Name'),
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter your Last Name' : null,
+                            onChanged: (val) {
+                              setState(() => lastName = val);
+                            }),
+                        SizedBox(height: 15.0),
+                        ElevatedButton(
+                            child: Text(
+                              'Register',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              if (_formKey.currentState!.validate()) {
+                                var dateRegistered = DateTime.now();
+
+                                dynamic result =
+                                    await _auth.registerWithEmailAndPassword(
+                                        email,
+                                        password,
+                                        firstName,
+                                        lastName,
+                                        dateRegistered);
+
+                                if (result == null) {
+                                  setState(() {
+                                    _isLoading = false;
+                                    error = ('please input a valid email');
+                                  });
+                                } else {
+                                  await DatabaseService()
+                                      .createUserInDatabaseFromEmail(
+                                          result,
+                                          email,
+                                          password,
+                                          firstName,
+                                          lastName,
+                                          dateRegistered);
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  Navigator.pushNamed(context, Home.routeName);
+                                }
+                              }
+                            }),
+                        SizedBox(height: 12.0),
+                        Text(
+                          error,
+                          style: TextStyle(color: Colors.red, fontSize: 14.0),
+                        )
+                      ],
+                    ))),
+          );
   }
 }
 
