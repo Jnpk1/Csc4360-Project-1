@@ -36,6 +36,7 @@ class _MyHomePageState extends State<Home> {
     // printUser();
     return Scaffold(
       appBar: memoAppBar(context, "Home"),
+      backgroundColor: kBackgroundColor,
       body: Center(
         child: roomButtons(context),
       ),

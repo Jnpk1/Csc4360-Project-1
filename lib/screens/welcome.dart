@@ -15,7 +15,7 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Welcome"),
       body: Center(
         child: Container(
