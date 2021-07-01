@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
+import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
 
@@ -15,6 +16,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Profile"),
       body: Center(
         child: roomButtons(context),
