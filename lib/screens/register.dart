@@ -61,6 +61,7 @@ class _RegisterState extends State<Register> {
         ? LoadingCircle()
         : Scaffold(
             backgroundColor: kBackgroundColor,
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
                 backgroundColor: kPrimaryColor,
                 elevation: 0.0,
