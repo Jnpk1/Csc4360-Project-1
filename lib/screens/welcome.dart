@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/screens/styles/buttons.dart';
+import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/inputDecor.dart';
@@ -15,31 +17,45 @@ class Welcome extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: memoAppBar(context, "Welcome"),
-      body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 160.0),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 15.0),
-              ElevatedButton(
-                  child: Text(
-                    'Register',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () async {
-                    Navigator.pushNamed(context, Register.routeName);
-                  }),
-              SizedBox(height: 15.0),
-              ElevatedButton(
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () async {
-                    Navigator.pushNamed(context, SignIn.routeName);
-                  }),
-              SizedBox(height: 15.0),
-            ],
-          )),
+      body: Center(
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 15.0),
+                MaterialButton(
+                    elevation: buttonThemeElevation,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(buttonBorderRadius),
+                    ),
+                    child: Text('Register',
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            ?.copyWith(color: kOnButtonColor)),
+                    color: kButtonColor,
+                    onPressed: () async {
+                      Navigator.pushNamed(context, Register.routeName);
+                    }),
+                SizedBox(height: 15.0),
+                MaterialButton(
+                    elevation: buttonThemeElevation,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(buttonBorderRadius),
+                    ),
+                    child: Text('Sign In',
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            ?.copyWith(color: kOnButtonColor)),
+                    color: kButtonColor,
+                    onPressed: () async {
+                      Navigator.pushNamed(context, SignIn.routeName);
+                    }),
+                SizedBox(height: 15.0),
+              ],
+            )),
+      ),
     );
   }
 }

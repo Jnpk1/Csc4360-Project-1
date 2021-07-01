@@ -19,7 +19,7 @@ Widget memoDrawer(BuildContext context) {
             'Quick Actions',
             style: Theme.of(context)
                 .textTheme
-                .headline4
+                .headline6
                 ?.copyWith(color: kOnPrimaryColor),
           ),
         ),

@@ -9,20 +9,20 @@ PreferredSizeWidget memoAppBar(BuildContext context, String appBarTitle) {
       appBarTitle,
       style: Theme.of(context)
           .textTheme
-          .headline3
+          .headline5
           ?.copyWith(color: kOnPrimaryColor),
     ),
   );
 }
 
-Widget logo(BuildContext context) {
-  return Container(
-      margin: EdgeInsets.fromLTRB(2, 3, 2, 3),
-      child: Text(
-        'mc',
-        style: Theme.of(context)
-            .textTheme
-            .headline3
-            ?.copyWith(color: kOnPrimaryColor),
-      ));
-}
+// Widget logo(BuildContext context) {
+//   return Container(
+//       margin: EdgeInsets.fromLTRB(2, 3, 2, 3),
+//       child: Text(
+//         'mc',
+//         style: Theme.of(context)
+//             .textTheme
+//             .headline3
+//             ?.copyWith(color: kOnPrimaryColor),
+//       ));
+// }

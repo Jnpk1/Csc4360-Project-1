@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/services/database.dart';
@@ -109,6 +110,10 @@ class _RegisterState extends State<Register> {
                             }),
                         SizedBox(height: 15.0),
                         TextFormField(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: kTextColor),
                             decoration: textInputDecoration.copyWith(
                                 hintText: 'Password'),
                             obscureText: true,
@@ -120,6 +125,10 @@ class _RegisterState extends State<Register> {
                             }),
                         SizedBox(height: 15.0),
                         TextFormField(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: kTextColor),
                             decoration: textInputDecoration.copyWith(
                                 hintText: 'First Name'),
                             validator: (val) =>
@@ -129,6 +138,10 @@ class _RegisterState extends State<Register> {
                             }),
                         SizedBox(height: 15.0),
                         TextFormField(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: kTextColor),
                             decoration: textInputDecoration.copyWith(
                                 hintText: 'Last Name'),
                             validator: (val) =>
@@ -137,11 +150,18 @@ class _RegisterState extends State<Register> {
                               setState(() => lastName = val);
                             }),
                         SizedBox(height: 15.0),
-                        ElevatedButton(
-                            child: Text(
-                              'Register',
-                              style: TextStyle(color: Colors.black),
+                        MaterialButton(
+                            elevation: buttonThemeElevation,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(buttonBorderRadius),
                             ),
+                            child: Text('Register',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button
+                                    ?.copyWith(color: kOnButtonColor)),
+                            color: kButtonColor,
                             onPressed: () async {
                               setState(() {
                                 _isLoading = true;
@@ -176,6 +196,8 @@ class _RegisterState extends State<Register> {
                                   });
                                   Navigator.pushNamed(context, Home.routeName);
                                 }
+                              } else {
+                                setState(() => _isLoading = false);
                               }
                             }),
                         SizedBox(height: 12.0),
