@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:memoclub/screens/styles/colors.dart';
 
 const textInputDecoration = InputDecoration(
-    fillColor: Colors.white,
+    fillColor: kFormColor,
     filled: true,
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.white, width: 2.0),
+      borderSide: BorderSide(color: kBackgroundColor, width: 2.0),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.blue, width: 2.0),
+      borderSide: BorderSide(color: kPrimaryColor, width: 2.0),
     ));

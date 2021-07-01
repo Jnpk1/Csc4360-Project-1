@@ -15,7 +15,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: memoAppBar("Profile"),
+      appBar: memoAppBar(context, "Profile"),
       body: Center(
         child: roomButtons(context),
       ),

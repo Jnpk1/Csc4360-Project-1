@@ -14,7 +14,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: memoAppBar("Settings"),
+      appBar: memoAppBar(context, "Settings"),
       body: Center(
         child: roomButtons(context),
       ),
