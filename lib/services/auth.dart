@@ -134,10 +134,7 @@ class AuthService with ChangeNotifier {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       User? currUser = result.user;
-      // create a new document based on new user
-      // await DatabaseService(uid: currUser?.uid as String)
-      //     .updateUserData(firstName, lastName, 'Customer', dateRegistered);
-      return currUser;
+      return currUser!;
     } catch (e) {
       print(e.toString());
       return null;
