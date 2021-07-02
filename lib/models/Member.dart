@@ -5,7 +5,7 @@ class Member {
   String lastName;
   String id;
   String email;
-  Map<String, bool>? connectedSocials = Map<String, bool>();
+  Map<String, String>? connectedSocials = Map<String, String>();
   String role;
   Timestamp? dateRegistered;
 
@@ -19,7 +19,7 @@ class Member {
       this.dateRegistered});
 
   factory Member.fromMap(Map<String, dynamic> userInfo) {
-    Map<String, bool> _connectedSocials = Map<String, bool>();
+    Map<String, String> _connectedSocials = Map<String, String>();
     _connectedSocials["facebook"] = userInfo["connectedSocials"]["facebook"];
     _connectedSocials["google"] = userInfo["connectedSocials"]["google"];
     Member res = new Member(

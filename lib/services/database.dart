@@ -42,9 +42,9 @@ class DatabaseService with ChangeNotifier {
       String lastName,
       DateTime dateRegistered,
       {String userRole = 'Customer'}) async {
-    Map<String, bool> connectedSocials = new Map<String, bool>();
-    connectedSocials[USER_FACEBOOK_FIELD] = false;
-    connectedSocials[USER_GOOGLE_FIELD] = false;
+    Map<String, String> connectedSocials = new Map<String, String>();
+    connectedSocials[USER_FACEBOOK_FIELD] = "";
+    connectedSocials[USER_GOOGLE_FIELD] = "";
 
     if (currUser != null) {
       _firestoreInstance
@@ -78,7 +78,7 @@ class DatabaseService with ChangeNotifier {
           print(userInfoSnapshot.data());
           print('map of user data');
           print(userInfoSnapshot.data() as Map<String, dynamic>);
-          
+
           Member currMember =
               Member.fromMap(userInfoSnapshot.data() as Map<String, dynamic>);
           print("currMember inside Database = $currMember");
