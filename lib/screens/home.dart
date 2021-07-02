@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/MessageCard.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/screens/welcome.dart';
 import 'package:memoclub/services/auth.dart';
+import 'package:memoclub/services/database.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
 import 'package:provider/provider.dart';
@@ -135,6 +137,90 @@ Widget roomButtons(BuildContext context) {
           borderRadius: BorderRadius.circular(40),
         ),
         child: Text('Sign Out',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
+        onPressed: () async {
+          MessageCard mc = MessageCard(
+              author: "nate",
+              content: "filler content",
+              date: DateTime.now(),
+              room: "healthRoom");
+          DatabaseService db = DatabaseService();
+          await db.createMessageInDatabase(mc);
+          print("Added $mc to Firestore.");
+        },
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text('Create Dummy Message Health Room',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
+        onPressed: () async {
+          MessageCard mc = MessageCard(
+              author: "nate",
+              content: "filler content",
+              date: DateTime.now(),
+              room: "studyRoom");
+          DatabaseService db = DatabaseService();
+          await db.createMessageInDatabase(mc);
+          print("Added $mc to Firestore.");
+        },
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text('Create Dummy Message Study Room',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
+        onPressed: () async {
+          MessageCard mc = MessageCard(
+              author: "nate",
+              content: "filler content",
+              date: DateTime.now(),
+              room: "businessRoom");
+          DatabaseService db = DatabaseService();
+          await db.createMessageInDatabase(mc);
+          print("Added $mc to Firestore.");
+        },
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text('Create Dummy Message Business Room',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
+        onPressed: () async {
+          MessageCard mc = MessageCard(
+              author: "nate",
+              content: "filler content",
+              date: DateTime.now(),
+              room: "gamesRoom");
+          DatabaseService db = DatabaseService();
+          await db.createMessageInDatabase(mc);
+          print("Added $mc to Firestore.");
+        },
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text('Create Dummy Message Games Room',
             style: Theme.of(context)
                 .textTheme
                 .button

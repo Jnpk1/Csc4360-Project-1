@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/MessageCard.dart';
 
 class DatabaseService with ChangeNotifier {
   final _firestoreInstance = FirebaseFirestore.instance;
@@ -20,7 +21,7 @@ class DatabaseService with ChangeNotifier {
   static const String USER_FACEBOOK_FIELD = "facebook";
   static const String USER_GOOGLE_FIELD = "google";
 
-  static const String ROOM_COLLECTION = 'gamesRoom';
+  static const String ROOM_COLLECTION = 'allRooms';
   static const String GAMES_ROOM = 'gamesRoom';
   static const String BUSINESS_ROOM = 'businessRoom';
   static const String STUDY_ROOM = 'studyRoom';
@@ -29,7 +30,13 @@ class DatabaseService with ChangeNotifier {
   static const String MSG_AUTHOR_FIELD = 'author';
   static const String MSG_CONTENT_FIELD = 'content';
   static const String MSG_DATE_FIELD = 'date';
-  static const String MSG_ROOM_FIELD = 'date';
+  static const String MSG_ROOM_FIELD = 'room';
+  static const List ALL_ROOMS = [
+    GAMES_ROOM,
+    BUSINESS_ROOM,
+    HEALTH_ROOM,
+    STUDY_ROOM
+  ];
 
   // TODO: Add methods to create, store, and modify users and messages
 
@@ -63,6 +70,26 @@ class DatabaseService with ChangeNotifier {
           .catchError((error) => print('Failed to create user: $error'));
     } else {
       print('User was null, so could not complete createUserInDatabase()');
+    }
+  }
+
+  Future createMessageInDatabase(MessageCard msgCardToAdd) async {
+    try {
+      // checks to make sure room collection exists
+      if (ALL_ROOMS.contains(msgCardToAdd.room)) {
+        _firestoreInstance
+            .collection(ROOM_COLLECTION)
+            .doc(msgCardToAdd.room)
+            .collection(MSG_COLLECTION)
+            .add({
+          MSG_AUTHOR_FIELD: msgCardToAdd.author,
+          MSG_CONTENT_FIELD: msgCardToAdd.content,
+          MSG_DATE_FIELD: msgCardToAdd.date,
+          MSG_ROOM_FIELD: msgCardToAdd.room,
+        });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }
