@@ -44,7 +44,8 @@ class Register extends StatefulWidget {
 //     );
 //   }
 class _RegisterState extends State<Register> {
-  final AuthService _auth = AuthService();
+  // final AuthService _auth = AuthService();
+  // AuthService _auth = Provider.of<AuthService>(context);
   final _formKey = GlobalKey<FormState>();
 
   // text field state
@@ -57,6 +58,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    AuthService _auth = Provider.of<AuthService>(context);
     return _isLoading
         ? LoadingCircle()
         : Scaffold(
