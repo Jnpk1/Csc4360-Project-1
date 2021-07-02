@@ -112,6 +112,7 @@ class _SignInState extends State<SignIn> {
                                 dynamic result =
                                     await _auth.signInWithEmailAndPassword(
                                         email, password);
+                                setState(() => _isLoading = true);
                                 Navigator.pushNamed(context, Home.routeName);
                                 if (result == null) {
                                   setState(() => error = 'INVALID CREDENTIALS');
