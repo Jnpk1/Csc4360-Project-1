@@ -6,6 +6,7 @@ import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/screens/styles/theme.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
@@ -91,9 +92,7 @@ Widget materialApp(hasData) {
   // User? currProvider.of<AuthService>(context, listen: false).getUser();
   return MaterialApp(
       title: 'MemoClub',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppTheme.appThemeData,
       home: hasData ? Home() : Welcome(),
 
       // To navigate to another page enter type the command:
