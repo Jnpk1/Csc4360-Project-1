@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
@@ -7,6 +9,7 @@ import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/services/database.dart';
 import 'package:memoclub/shared/inputDecor.dart';
 import 'package:memoclub/shared/loading.dart';
+import 'package:auth_buttons/auth_buttons.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -24,6 +27,7 @@ class _SignInState extends State<SignIn> {
   String password = '';
   String error = '';
   bool _isLoading = false;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +123,16 @@ class _SignInState extends State<SignIn> {
                                 }
                               }
                             }),
+                        (GoogleAuthButton(onPressed: () async {
+                          setState(() => loading = true);
+                          dynamic result = await _auth.signInWithGoogle();
+                          if (result == null) {
+                            print('Error. Gooogle sign in resulted in null.');
+                            setState(() => loading = false);
+                          } else {
+                            print('Google sign in returned: $result');
+                          }
+                        })),
                         SizedBox(height: 12.0),
                         Text(
                           error,

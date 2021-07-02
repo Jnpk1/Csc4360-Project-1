@@ -63,7 +63,7 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
 Widget changeNotifier() {
   return ChangeNotifierProvider<AuthService>(
     create: (_) => new AuthService(),
-    child: MyApp(),
+    child: MyApp(), //MyApp(),
   );
 }
 

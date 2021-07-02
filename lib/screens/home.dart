@@ -68,6 +68,10 @@ Widget testFunctionToGetCurrentUser(BuildContext context) {
       color: kButtonColor);
 }
 
+Widget imageLayout(BuildContext context) {
+  return Image.asset('lib/assets/layout.png');
+}
+
 Widget roomButtons(BuildContext context) {
   final String HEALTH_ROOM_ROUTE_NAME = SignIn.routeName;
   AuthService _auth = Provider.of<AuthService>(context, listen: false);
