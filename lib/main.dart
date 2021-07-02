@@ -6,9 +6,11 @@ import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
+import 'package:memoclub/screens/styles/theme.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:memoclub/screens/welcome.dart';
 
 void main() {
   // This needs to be called before any Firebase services can be used
@@ -58,6 +60,13 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
   }
 }
 
+Widget changeNotifier() {
+  return ChangeNotifierProvider<AuthService>(
+    create: (_) => new AuthService(),
+    child: MyApp(),
+  );
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -70,7 +79,8 @@ class MyApp extends StatelessWidget {
               return Text(snapshot.error.toString());
             }
             print("main.dart: snaphshot.data=${snapshot.data}");
-            return snapshot.hasData ? materialApp() : materialApp();
+            // return snapshot.hasData ? materialApp() : Register();
+            return materialApp(snapshot.hasData);
           } else {
             return LoadingCircle();
           }
@@ -78,29 +88,22 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget changeNotifier() {
-  return ChangeNotifierProvider<AuthService>(
-    create: (context) => AuthService(),
-    child: MyApp(),
-  );
-}
-
-Widget materialApp() {
+Widget materialApp(hasData) {
+  // User? currProvider.of<AuthService>(context, listen: false).getUser();
   return MaterialApp(
       title: 'MemoClub',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Home(),
+      theme: AppTheme.appThemeData,
+      home: hasData ? Home() : Welcome(),
 
       // To navigate to another page enter type the command:
       // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
       // example: Navigator.pushNamed(context, Register.routeName);
-      routes: {
+      routes: <String, WidgetBuilder>{
         Home.routeName: (context) => Home(),
         SignIn.routeName: (context) => SignIn(),
         Register.routeName: (context) => Register(),
         Profile.routeName: (context) => Profile(),
         Settings.routeName: (context) => Settings(),
+        Welcome.routeName: (context) => Welcome(),
       });
 }

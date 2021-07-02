@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:memoclub/screens/home.dart';
+import 'package:memoclub/screens/styles/colors.dart';
+import 'package:memoclub/shared/appbar.dart';
+import 'package:memoclub/shared/drawer.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({ Key? key }) : super(key: key);
+  const Profile({Key? key}) : super(key: key);
   static final String routeName = '/profile';
 
   @override
@@ -11,10 +15,13 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    return Container( 
-      child: Center(
-        child: Text('profile')
-      )
+    return Scaffold(
+      backgroundColor: kBackgroundColor,
+      appBar: memoAppBar(context, "Profile"),
+      body: Center(
+        child: roomButtons(context),
+      ),
+      drawer: memoDrawer(context),
     );
   }
 }
