@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/models/MessageCard.dart';
+import 'package:memoclub/screens/boards/health_room.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
@@ -68,7 +69,7 @@ Widget testFunctionToGetCurrentUser(BuildContext context) {
 }
 
 Widget roomButtons(BuildContext context) {
-  final String HEALTH_ROOM_ROUTE_NAME = SignIn.routeName;
+  final String HEALTH_ROOM_ROUTE_NAME = HealthRoom.routeName;
   AuthService _auth = Provider.of<AuthService>(context, listen: false);
   print(Navigator.of(context).toString());
 
@@ -231,8 +232,6 @@ Widget roomButtons(BuildContext context) {
           DatabaseService db = DatabaseService();
           await db.getAllHealthMessages();
           print('after await');
-
-
         },
         elevation: buttonThemeElevation,
         shape: RoundedRectangleBorder(
