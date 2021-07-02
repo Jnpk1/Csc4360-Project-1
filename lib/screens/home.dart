@@ -37,6 +37,7 @@ class _MyHomePageState extends State<Home> {
   Widget build(BuildContext context) {
     // printUser();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: memoAppBar(context, "Home"),
       backgroundColor: kBackgroundColor,
       body: Center(
@@ -231,8 +232,6 @@ Widget roomButtons(BuildContext context) {
           DatabaseService db = DatabaseService();
           await db.getAllHealthMessages();
           print('after await');
-
-
         },
         elevation: buttonThemeElevation,
         shape: RoundedRectangleBorder(
