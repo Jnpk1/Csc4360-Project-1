@@ -42,6 +42,8 @@ class _HealthRoomState extends State<HealthRoom> {
           print("posted by: ${_healthMessageList?[0].author ?? ''}");
           print("list of msseages = ${_healthMessageList}");
           return new ListView.builder(
+            reverse: true,
+            padding: EdgeInsets.all(10.0),
             itemCount: snapshot.data?.length,
             itemBuilder: (context, index) => buildItem(
                 context,

@@ -116,7 +116,8 @@ class DatabaseService with ChangeNotifier {
     return _messageList;
   }
 
-  List<MessageCard> convertToMessageList(QuerySnapshot<Map<String, dynamic>> snapshot) {
+  List<MessageCard> convertToMessageList(
+      QuerySnapshot<Map<String, dynamic>> snapshot) {
     List<MessageCard> _healthMessageList = [];
     snapshot.docs.forEach((element) {
       _healthMessageList.add(MessageCard.fromMap(element.data()));
@@ -125,8 +126,10 @@ class DatabaseService with ChangeNotifier {
   }
 
   Stream<List<MessageCard>> get healthMessages => _firestoreInstance
-          .collection(ROOM_COLLECTION)
-          .doc(HEALTH_ROOM)
-          .collection(MSG_COLLECTION).snapshots()
-          .map(convertToMessageList);
+      .collection(ROOM_COLLECTION)
+      .doc(HEALTH_ROOM)
+      .collection(MSG_COLLECTION)
+      .orderBy("date", descending: true)
+      .snapshots()
+      .map(convertToMessageList);
 }
