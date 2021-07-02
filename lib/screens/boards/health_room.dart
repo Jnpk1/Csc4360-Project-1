@@ -67,7 +67,9 @@ class _HealthRoomState extends State<HealthRoom> {
 }
 
 Widget buildItem(context, MessageCard currCard) {
-  DateFormat f = new DateFormat('yyyy/MM/dd hh:mm');
+  String timePosted = DateFormat.yMd()
+      .add_jm()
+      .format(currCard.date?.toLocal() ?? DateTime.now());
   if (currCard.author == '') {
     // Right (my message)
     return Row(
@@ -124,7 +126,7 @@ Widget buildItem(context, MessageCard currCard) {
                               .bodyText1
                               ?.copyWith(color: kMessageContentColor)),
                       Text(
-                        "posted on: ${f.format(currCard.date?.toLocal() ?? DateTime.now())}",
+                        "posted on: $timePosted",
                         textAlign: TextAlign.left,
                         style: Theme.of(context)
                             .textTheme
