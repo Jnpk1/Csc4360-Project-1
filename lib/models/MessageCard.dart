@@ -13,6 +13,8 @@ class MessageCard {
     this.date,
   });
 
+
+
   factory MessageCard.fromMap(Map<String, dynamic> userInfo) {
     MessageCard res = new MessageCard(
       author: userInfo["author"],
