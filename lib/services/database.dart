@@ -92,4 +92,27 @@ class DatabaseService with ChangeNotifier {
       print(e);
     }
   }
+
+  Future<List<MessageCard>> getAllHealthMessages() async {
+    List<MessageCard> _messageList = [];
+    print("trying to gather messages...");
+    try {
+      _firestoreInstance
+          .collection(ROOM_COLLECTION)
+          .doc(HEALTH_ROOM)
+          .collection(MSG_COLLECTION)
+          .get()
+          .then((res) {
+        res.docs.forEach((element) {
+          // print(MessageCard.fromMap(element.data()));
+          _messageList.add(MessageCard.fromMap(element.data()));
+          print('list is now $_messageList');
+        });
+        return _messageList;
+      });
+    } catch (e) {
+      print(e);
+    }
+    return _messageList;
+  }
 }

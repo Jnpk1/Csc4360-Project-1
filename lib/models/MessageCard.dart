@@ -6,29 +6,23 @@ class MessageCard {
   String content;
   String room;
 
-  MessageCard(
-      {this.author = '',
-      this.content = '',
-      this.room = '',
-      this.date,
-      });
+  MessageCard({
+    this.author = '',
+    this.content = '',
+    this.room = '',
+    this.date,
+  });
 
-  // factory MessageCard.fromMap(Map<String, dynamic> userInfo) {
-  //   Map<String, String> _connectedSocials = Map<String, String>();
-  //   _connectedSocials["facebook"] = userInfo["connectedSocials"]["facebook"];
-  //   _connectedSocials["google"] = userInfo["connectedSocials"]["google"];
-  //   MessageCard res = new MessageCard(
-  //     firstName: userInfo["firstName"],
-  //     lastName: userInfo["lastName"],
-  //     id: userInfo["id"],
-  //     email: userInfo["email"],
-  //     connectedSocials: _connectedSocials,
-  //     role: userInfo["role"],
-  //     dateRegistered: userInfo["dateRegistered"],
-  //   );
-  //   print("resulting member is $res");
-  //   return res;
-  // }
+  factory MessageCard.fromMap(Map<String, dynamic> userInfo) {
+    MessageCard res = new MessageCard(
+      author: userInfo["author"],
+      date: (userInfo["date"] as Timestamp).toDate(),
+      content: userInfo["content"],
+      room: userInfo["room"],
+    );
+    print("Created $res");
+    return res;
+  }
 
   @override
   String toString() {

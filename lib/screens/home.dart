@@ -226,6 +226,24 @@ Widget roomButtons(BuildContext context) {
                 .button
                 ?.copyWith(color: kOnButtonColor)),
         color: kButtonColor),
+    MaterialButton(
+        onPressed: () async {
+          DatabaseService db = DatabaseService();
+          await db.getAllHealthMessages();
+          print('after await');
+
+
+        },
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text('Print HealthRoom Messages',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
     testFunctionToGetCurrentUser(context),
   ]);
 }
