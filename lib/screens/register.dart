@@ -86,7 +86,7 @@ class _RegisterState extends State<Register> {
                           ?.copyWith(color: kOnPrimaryColor),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, Home.routeName);
+                      Navigator.pushNamed(context, SignIn.routeName);
                     },
                   )
                 ]),
