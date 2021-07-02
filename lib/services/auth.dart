@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/models/Member.dart';
-
-import 'database.dart';
 
 class AuthService with ChangeNotifier {
   Member currentMember = Member();
@@ -59,22 +56,23 @@ class AuthService with ChangeNotifier {
   // happens when app first launches
   Future<User?> firstLogin() async {
     try {
-      final currUser = _auth.currentUser;
+      final currentMember = _auth.currentUser;
 
-      if (currUser != null) {
-        print('User signed in: ${currUser.email}');
+      if (currentMember != null) {
+        print('User signed in: ${currentMember.email}');
         print('Creating Member Object');
-        return currUser;
+        return currentMember;
         // get user info from DatabaseService
       } else {
         print('No user signed in');
       }
-      return currUser;
+      return currentMember;
     } catch (e) {
       print(e);
       return null;
     }
   }
+
   Future<UserCredential?> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -130,6 +128,21 @@ class AuthService with ChangeNotifier {
   //   }
   // }
 
+  // sign in with email and pass
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      User? currUser = result.user;
+      // create a new document based on new user
+      // await DatabaseService(uid: currUser?.uid as String)
+      //     .updateUserData(firstName, lastName, 'Customer', dateRegistered);
+      return currUser;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
   // register with email and pass
 
   Future registerWithEmailAndPassword(String email, String password,
