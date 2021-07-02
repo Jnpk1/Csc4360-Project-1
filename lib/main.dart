@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/screens/boards/health_room.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
@@ -105,5 +106,7 @@ Widget materialApp(hasData) {
         Profile.routeName: (context) => Profile(),
         Settings.routeName: (context) => Settings(),
         Welcome.routeName: (context) => Welcome(),
+        HealthRoom.routeName: (context) => HealthRoom(),
+
       });
 }
