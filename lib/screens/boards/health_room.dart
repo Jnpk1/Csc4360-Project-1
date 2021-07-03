@@ -191,7 +191,6 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                           .bodyText1
                           ?.copyWith(color: Colors.black),
                       // autofocus: true,
-                      textCapitalization: ,
                       maxLines: 5,
                       controller: myController,
                       decoration: const InputDecoration.collapsed(
@@ -206,7 +205,7 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                 icon: Icon(Icons.send, size: 25),
                 onPressed: () async {
                   String msgContent = myController.text;
-                  myController.clear();
+                  myController.clear();   // currently doesn't clear
 
                   User? currUser =
                       await Provider.of<AuthService>(context, listen: false)
