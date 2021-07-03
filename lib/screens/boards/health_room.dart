@@ -124,25 +124,37 @@ Widget buildItem(context, MessageCard currCard) {
                   nip: BubbleNip.leftTop,
                   child: Column(
                     children: [
-                      Text(
-                        "posted by: ${currCard.author}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .overline
-                            ?.copyWith(color: kMessageUsernameAndDateColor),
+                      Row(
+                        children: [
+                          Text(
+                            "posted by: ${currCard.author}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .overline
+                                ?.copyWith(color: kMessageUsernameAndDateColor),
+                          ),
+                          Expanded(
+                            child: Container(),
+                          ),
+                        ],
                       ),
                       Text(currCard.content,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(color: kMessageContentColor)),
-                      Text(
-                        "posted on: $timePosted",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context)
-                            .textTheme
-                            .overline
-                            ?.copyWith(color: kMessageUsernameAndDateColor),
+                      Row(
+                        children: [
+                          Expanded(child: Container()),
+                          Text(
+                            "posted on: $timePosted",
+                            textAlign: TextAlign.left,
+                            style: Theme.of(context)
+                                .textTheme
+                                .overline
+                                ?.copyWith(color: kMessageUsernameAndDateColor),
+                          ),
+                        ],
                       ),
                     ],
                   )),
@@ -195,7 +207,7 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                       await Provider.of<AuthService>(context, listen: false)
                           .getUser();
                   MessageCard mc = MessageCard(
-                      author: 'current no username',
+                      author: currUser?.displayName ?? '',
                       content: msgContent,
                       date: DateTime.now(),
                       room: "healthRoom");
