@@ -194,6 +194,8 @@ class _RegisterState extends State<Register> {
                                           firstName,
                                           lastName,
                                           dateRegistered);
+                                  await _auth.createUsernameDuringRegistration(
+                                      result, firstName, lastName);
                                   setState(() {
                                     _isLoading = false;
                                   });

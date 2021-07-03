@@ -75,6 +75,28 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  Future<bool> createUsernameDuringRegistration(
+      User? user, String firstName, String lastName) async {
+    try {
+      String newUsername = firstName.trim() + '-' + lastName.trim();
+      const int maxLenUsername = 18;
+      if (newUsername.length > maxLenUsername) {
+        print(
+            "WARNING: username is longer than max allowed. Cutting off extra.");
+        newUsername = newUsername.substring(0, maxLenUsername + 1);
+      }
+
+      await user?.updateDisplayName(newUsername);
+      user?.reload();
+      User? updatedUser = await getUser();
+      print("username is updated to ${updatedUser?.displayName}");
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<UserCredential?> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
