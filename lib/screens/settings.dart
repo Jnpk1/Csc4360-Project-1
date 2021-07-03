@@ -5,8 +5,10 @@ import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/screens/welcome.dart';
+import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -16,10 +18,9 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  AuthService _auth = Provider.of<AuthService>(context, listen: false);
-
   @override
   Widget build(BuildContext context) {
+    AuthService _auth = Provider.of<AuthService>(context);
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Settings"),
