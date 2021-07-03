@@ -64,7 +64,7 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
 Widget changeNotifier() {
   return ChangeNotifierProvider<AuthService>(
     create: (_) => new AuthService(),
-    child: MyApp(), //MyApp(),
+    child: MyApp(), //MyApp(),  //
   );
 }
 
@@ -107,6 +107,5 @@ Widget materialApp(hasData) {
         Settings.routeName: (context) => Settings(),
         Welcome.routeName: (context) => Welcome(),
         HealthRoom.routeName: (context) => HealthRoom(),
-
       });
 }

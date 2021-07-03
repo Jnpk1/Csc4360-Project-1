@@ -42,7 +42,7 @@ class _MyHomePageState extends State<Home> {
       appBar: memoAppBar(context, "Home"),
       backgroundColor: kBackgroundColor,
       body: Center(
-        child: roomButtons(context),
+        child: home_content(context),
       ),
       drawer: memoDrawer(context),
     );
@@ -69,64 +69,14 @@ Widget testFunctionToGetCurrentUser(BuildContext context) {
       color: kButtonColor);
 }
 
-Widget imageLayout(BuildContext context) {
-  return Image.asset('lib/assets/layout.png');
-}
-
+//HEALTH_ROOM_ROUTE_NAME
 Widget roomButtons(BuildContext context) {
   final String HEALTH_ROOM_ROUTE_NAME = HealthRoom.routeName;
   AuthService _auth = Provider.of<AuthService>(context, listen: false);
   print(Navigator.of(context).toString());
 
+  RoundedRectangleBorder side;
   return Column(children: <Widget>[
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Health Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Study Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Business Board',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, Register.routeName),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Register Page',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
     MaterialButton(
         onPressed: () async {
           bool didSignOut = await _auth.signOut();
@@ -250,4 +200,89 @@ Widget roomButtons(BuildContext context) {
         color: kButtonColor),
     testFunctionToGetCurrentUser(context),
   ]);
+}
+
+Widget home_content(BuildContext context) {
+  final String HEALTH_ROOM_ROUTE_NAME = HealthRoom.routeName;
+  AuthService _auth = Provider.of<AuthService>(context, listen: false);
+  print(Navigator.of(context).toString());
+  var child;
+  return Container(
+    padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+    child: ListView(children: <Widget>[
+      Card(
+          child: ListTile(
+        leading: Icon(
+          Icons.business_center,
+          size: 56.0,
+          color: Colors.white,
+        ),
+        tileColor: kPrimaryColor,
+        title: Text(
+          'Business \nChatRoom',
+          style: TextStyle(color: Colors.white),
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, Home.routeName);
+        },
+        subtitle: Text(''),
+        trailing: Icon(Icons.more_vert),
+        //isThreeLine: true,
+      )),
+      Card(
+        child: ListTile(
+          leading: Icon(
+            Icons.sports_esports_outlined,
+            size: 56.0,
+            color: Colors.white,
+          ),
+          tileColor: kPrimaryColor,
+          title: Text(
+            'Games \nChatRoom',
+            style: TextStyle(color: Colors.white),
+          ),
+          subtitle: Text(''),
+          trailing: Icon(Icons.more_vert),
+          // isThreeLine: true,
+        ),
+      ),
+      Card(
+          child: ListTile(
+        leading: Icon(
+          Icons.health_and_safety_outlined,
+          size: 56.0,
+          color: Colors.white,
+        ),
+        tileColor: kPrimaryColor,
+        title: Text(
+          'Health \nChatRoom',
+          style: TextStyle(color: Colors.white),
+        ),
+        subtitle: Text(''),
+        trailing: Icon(Icons.more_vert),
+        //  isThreeLine: true,
+      )),
+      Card(
+          child: ListTile(
+        leading: Icon(
+          Icons.book,
+          size: 56.0,
+          color: Colors.white,
+        ),
+        tileColor: kPrimaryColor,
+        title: Text(
+          'Study \nChatRoom',
+          style: TextStyle(color: Colors.white),
+        ),
+        subtitle: Text(''),
+        trailing: Icon(Icons.more_vert),
+        // isThreeLine: true,
+      )),
+      Card(
+        child: roomButtons(context),
+      ),
+
+      // Google Button
+    ]),
+  );
 }
