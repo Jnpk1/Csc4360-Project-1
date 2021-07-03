@@ -5,6 +5,7 @@ import 'package:memoclub/screens/boards/health_room.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
+import 'package:memoclub/screens/reset.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/theme.dart';
@@ -107,6 +108,6 @@ Widget materialApp(hasData) {
         Settings.routeName: (context) => Settings(),
         Welcome.routeName: (context) => Welcome(),
         HealthRoom.routeName: (context) => HealthRoom(),
-
+        ResetScreen.routeName: (context) => ResetScreen()
       });
 }
