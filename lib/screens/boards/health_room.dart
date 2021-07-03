@@ -114,58 +114,42 @@ Widget buildItem(context, MessageCard currCard) {
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: <Widget>[
-          Container(
-            child: Bubble(
-                color: kMessageTileColor,
-                elevation: 0,
-                // borderColor: kMessageBorderColor,
-                // padding: const BubbleEdges.fromLTRB(10, 2, 10, 2),
-                alignment: Alignment.topLeft,
-                // margin: BubbleEdges.only(top: 10),
-                nip: BubbleNip.leftTop,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "posted by: ${currCard.author}",
+          Row(children: <Widget>[
+            Container(
+              child: Bubble(
+                  color: kMessageTileColor,
+                  elevation: 0,
+                  // borderColor: kMessageBorderColor,
+                  padding: const BubbleEdges.all(10.0),
+                  nip: BubbleNip.leftTop,
+                  child: Column(
+                    children: [
+                      Text(
+                        "posted by: ${currCard.author}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .overline
+                            ?.copyWith(color: kMessageUsernameAndDateColor),
+                      ),
+                      Text(currCard.content,
                           style: Theme.of(context)
                               .textTheme
-                              .overline
-                              ?.copyWith(color: kMessageUsernameAndDateColor),
-                        ),
-                        Expanded(
-                          child: Container(),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      currCard.content,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: kMessageContentColor),
-                      maxLines: 5,
-                      // textAlign: TextAlign.left,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: Container()),
-                        Text(
-                          "posted on: $timePosted",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context)
-                              .textTheme
-                              .overline
-                              ?.copyWith(color: kMessageUsernameAndDateColor),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-            width: 300.0,
-            margin: const EdgeInsets.only(left: 10.0),
-          ),
+                              .bodyText1
+                              ?.copyWith(color: kMessageContentColor)),
+                      Text(
+                        "posted on: $timePosted",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context)
+                            .textTheme
+                            .overline
+                            ?.copyWith(color: kMessageUsernameAndDateColor),
+                      ),
+                    ],
+                  )),
+              width: 300.0,
+              margin: const EdgeInsets.only(left: 10.0),
+            )
+          ]),
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
       ),
