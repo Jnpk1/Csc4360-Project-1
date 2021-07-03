@@ -18,9 +18,6 @@ class HealthRoom extends StatefulWidget {
 }
 
 class _HealthRoomState extends State<HealthRoom> {
-  // final Stream<QuerySnapshot> _usersStream =
-  //     FirebaseFirestore.instance.collection('users').snapshots();
-
   final myController = TextEditingController();
 
   @override
@@ -32,7 +29,6 @@ class _HealthRoomState extends State<HealthRoom> {
 
   @override
   Widget build(BuildContext context) {
-    // Member currMember = Provider.of<AuthService>(context).currentMember;
     return Scaffold(
       appBar: memoAppBar(context, "Health Room"),
       drawer: memoDrawer(context),
@@ -77,32 +73,6 @@ Widget buildMessageList(BuildContext context) {
   );
 }
 
-// Row(
-//       children: <Widget>[
-//         // Text
-//         Container(
-//             margin: EdgeInsets.symmetric(vertical: 5),
-//             child: Column(
-//               children: [
-//                 Text("posted by: "),
-//                 Bubble(
-//                     color: Colors.blueGrey,
-//                     elevation: 0,
-//                     padding: const BubbleEdges.all(10.0),
-//                     nip: BubbleNip.rightTop,
-//                     child: Text(currCard.content,
-//                         style: Theme.of(context)
-//                             .textTheme
-//                             .bodyText1
-//                             ?.copyWith(color: kMessageContentColor))),
-//                 Text("posted on: date"),
-//               ],
-//             ),
-//             width: 200)
-//       ],
-//       mainAxisAlignment: MainAxisAlignment.end,
-//     );
-
 Widget buildItem(context, MessageCard currCard) {
   User? currUser = FirebaseAuth.instance.currentUser;
   // print()
@@ -122,7 +92,8 @@ Widget buildItem(context, MessageCard currCard) {
                 color: kSelfMessageTileColor,
                 elevation: 0,
                 // borderColor: kMessageBorderColor,
-                padding: const BubbleEdges.all(10.0),
+                // padding: const BubbleEdges.all(10.0),
+                padding: const BubbleEdges.fromLTRB(10, 4, 10, 4),
                 nip: BubbleNip.rightTop,
                 child: Column(
                   children: [
@@ -178,7 +149,8 @@ Widget buildItem(context, MessageCard currCard) {
                 color: kMessageTileColor,
                 elevation: 0,
                 // borderColor: kMessageBorderColor,
-                padding: const BubbleEdges.all(10.0),
+                // padding: const BubbleEdges.all(10.0),
+                padding: const BubbleEdges.fromLTRB(10, 4, 10, 4),
                 nip: BubbleNip.leftTop,
                 child: Column(
                   children: [
