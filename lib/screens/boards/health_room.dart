@@ -189,7 +189,7 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                 icon: Icon(Icons.send, size: 25),
                 onPressed: () async {
                   String msgContent = myController.text;
-                  myController.clear();   // currently doesn't clear
+                  myController.clear(); // currently doesn't clear
 
                   User? currUser =
                       await Provider.of<AuthService>(context, listen: false)
@@ -202,7 +202,7 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                   DatabaseService db = DatabaseService();
                   await db.createMessageInDatabase(mc);
                   print("Added $mc to Firestore.");
-                  
+                  myController.clear();
                   // myController.clear();
                   // myController.clearComposing();
                 },

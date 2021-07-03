@@ -92,42 +92,6 @@ class AuthService with ChangeNotifier {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
-  // // Haven't tested yet
-  // Future registerWithEmailAndPassword(
-  //     {required String email,
-  //     required String password,
-  //     required String firstName,
-  //     required String lastName}) async {
-  //   try {
-  //     UserCredential result = await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: password);
-  //     User? newUser = result.user;
-
-  //     /// Add the first and last name to the FirebaseUser
-  //     String newDisplayName = '$firstName $lastName';
-
-  //     await newUser
-  //         ?.updateDisplayName(newDisplayName)
-  //         .catchError((error) => print(error));
-
-  //     // Refresh data
-  //     await newUser?.reload();
-
-  //     // Need to make this call to get the updated display name; or else display name will be null
-  //     User? updatedUser = _auth.currentUser;
-
-  //     print('new display name: ${updatedUser?.displayName}');
-
-  //     notifyListeners();
-
-  //     // Return FirebaseUser with updated information (setting the display name using their first and last name)
-  //     return updatedUser;
-  //   } catch (e) {
-  //     print(e.toString());
-
-  //     return null;
-  //   }
-  // }
 
   // sign in with email and pass
   Future signInWithEmailAndPassword(String email, String password) async {

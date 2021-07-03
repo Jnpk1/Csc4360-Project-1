@@ -130,6 +130,7 @@ class DatabaseService with ChangeNotifier {
       .doc(HEALTH_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
+      .limit(20)
       .snapshots()
       .map(convertToMessageList);
 }
