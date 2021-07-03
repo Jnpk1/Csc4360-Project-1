@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/register.dart';
+import 'package:memoclub/screens/reset.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
@@ -42,7 +43,7 @@ class _SettingsState extends State<Settings> {
                             ?.copyWith(color: kOnButtonColor)),
                     color: kButtonColor,
                     onPressed: () async {
-                      Navigator.pushNamed(context, Register.routeName);
+                      Navigator.pushNamed(context, ResetScreen.routeName);
                     }),
                 SizedBox(height: 15.0),
                 MaterialButton(
