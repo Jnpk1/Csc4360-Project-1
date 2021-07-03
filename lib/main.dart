@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/screens/boards/business_room.dart';
+import 'package:memoclub/screens/boards/games_room.dart';
 import 'package:memoclub/screens/boards/health_room.dart';
+import 'package:memoclub/screens/boards/study_room.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
@@ -107,6 +110,8 @@ Widget materialApp(hasData) {
         Settings.routeName: (context) => Settings(),
         Welcome.routeName: (context) => Welcome(),
         HealthRoom.routeName: (context) => HealthRoom(),
-
+        GamesRoom.routeName: (context) => GamesRoom(),
+        BusinessRoom.routeName: (context) => BusinessRoom(),
+        StudyRoom.routeName: (context) => StudyRoom(),
       });
 }

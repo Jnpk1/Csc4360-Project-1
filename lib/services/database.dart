@@ -133,4 +133,31 @@ class DatabaseService with ChangeNotifier {
       .limit(20)
       .snapshots()
       .map(convertToMessageList);
+
+  Stream<List<MessageCard>> get gamesMessages => _firestoreInstance
+      .collection(ROOM_COLLECTION)
+      .doc(GAMES_ROOM)
+      .collection(MSG_COLLECTION)
+      .orderBy("date", descending: true)
+      .limit(20)
+      .snapshots()
+      .map(convertToMessageList);
+
+  Stream<List<MessageCard>> get businessMessages => _firestoreInstance
+      .collection(ROOM_COLLECTION)
+      .doc(BUSINESS_ROOM)
+      .collection(MSG_COLLECTION)
+      .orderBy("date", descending: true)
+      .limit(20)
+      .snapshots()
+      .map(convertToMessageList);
+
+  Stream<List<MessageCard>> get studyMessages => _firestoreInstance
+      .collection(ROOM_COLLECTION)
+      .doc(STUDY_ROOM)
+      .collection(MSG_COLLECTION)
+      .orderBy("date", descending: true)
+      .limit(20)
+      .snapshots()
+      .map(convertToMessageList);
 }

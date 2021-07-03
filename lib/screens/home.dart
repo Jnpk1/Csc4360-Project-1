@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/models/MessageCard.dart';
+import 'package:memoclub/screens/boards/business_room.dart';
+import 'package:memoclub/screens/boards/games_room.dart';
 import 'package:memoclub/screens/boards/health_room.dart';
+import 'package:memoclub/screens/boards/study_room.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
@@ -92,24 +95,38 @@ Widget roomButtons(BuildContext context) {
                 ?.copyWith(color: kOnButtonColor)),
         color: kButtonColor),
     MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
+        onPressed: () {
+          Navigator.pushNamed(context, GamesRoom.routeName);
+        },
         elevation: buttonThemeElevation,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(buttonBorderRadius),
         ),
-        child: Text('Study Room',
+        child: Text('Games Room',
             style: Theme.of(context)
                 .textTheme
                 .button
                 ?.copyWith(color: kOnButtonColor)),
         color: kButtonColor),
     MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
+        onPressed: () => Navigator.pushNamed(context, BusinessRoom.routeName),
         elevation: buttonThemeElevation,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(buttonBorderRadius),
         ),
         child: Text('Business Board',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
+    MaterialButton(
+        onPressed: () => Navigator.pushNamed(context, StudyRoom.routeName),
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(buttonBorderRadius),
+        ),
+        child: Text('Study Board',
             style: Theme.of(context)
                 .textTheme
                 .button
