@@ -21,47 +21,49 @@ class _HealthRoomState extends State<HealthRoom> {
   // final Stream<QuerySnapshot> _usersStream =
   //     FirebaseFirestore.instance.collection('users').snapshots();
   DatabaseService db = DatabaseService();
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Member currMember = Provider.of<AuthService>(context).currentMember;
     return Scaffold(
       appBar: memoAppBar(context, "Health Room"),
       drawer: memoDrawer(context),
-      body: StreamBuilder<List<MessageCard>>(
-        stream: db.healthMessages,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<MessageCard>> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
+      body: Stack(children: <Widget>[
+        StreamBuilder<List<MessageCard>>(
+          stream: db.healthMessages,
+          builder: (BuildContext context,
+              AsyncSnapshot<List<MessageCard>> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
-          List<MessageCard>? _healthMessageList = snapshot.data;
-          print("posted by: ${_healthMessageList?[0].author ?? ''}");
-          print("list of msseages = ${_healthMessageList}");
-          return new ListView.builder(
-            reverse: true,
-            padding: EdgeInsets.all(10.0),
-            itemCount: snapshot.data?.length,
-            itemBuilder: (context, index) => buildItem(
-                context,
-                _healthMessageList?[index] ??
-                    MessageCard(date: DateTime.now())),
-          );
-
-          // )
-          //   children: snapshot.data.docs.map((DocumentSnapshot document) {
-          //     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-          //     return new ListTile(
-          //       title: new Text(data['full_name']),
-          //       subtitle: new Text(data['company']),
-          //     );
-          //   }).toList(),
-          // );
-        },
-      ),
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading");
+            }
+            List<MessageCard>? _healthMessageList = snapshot.data;
+            print("posted by: ${_healthMessageList?[0].author ?? ''}");
+            print("list of msseages = ${_healthMessageList}");
+            return new ListView.builder(
+              reverse: true,
+              padding: EdgeInsets.all(10.0),
+              itemCount: snapshot.data?.length,
+              itemBuilder: (context, index) => buildItem(
+                  context,
+                  _healthMessageList?[index] ??
+                      MessageCard(date: DateTime.now())),
+            );
+          },
+        ),
+        buildInput(context, myController),
+      ]),
     );
   }
 }
@@ -160,4 +162,53 @@ Widget buildItem(context, MessageCard currCard) {
       ),
     );
   }
+}
+
+Widget buildInput(BuildContext context, TextEditingController myController) {
+  // final myController = TextEditingController();
+  return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          children: <Widget>[
+            // Edit text
+            Flexible(
+              child: Container(
+                child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextField(
+                      // autofocus: true,
+                      maxLines: 5,
+                      controller: myController,
+                      decoration: const InputDecoration.collapsed(
+                        hintText: 'Type your message...',
+                      ),
+                    )),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.send, size: 25),
+                onPressed: () async {
+                  User? currUser =
+                      await Provider.of<AuthService>(context, listen: false)
+                          .getUser();
+                  MessageCard mc = MessageCard(
+                      author: currUser?.uid ?? '',
+                      content: myController.text,
+                      date: DateTime.now(),
+                      room: "healthRoom");
+                  DatabaseService db = DatabaseService();
+                  await db.createMessageInDatabase(mc);
+                  print("Added $mc to Firestore.");
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      // width: 100,
+      width: double.infinity,
+      height: 100.0);
 }
