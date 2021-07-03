@@ -191,7 +191,6 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                           .bodyText1
                           ?.copyWith(color: Colors.black),
                       // autofocus: true,
-                      textCapitalization: ,
                       maxLines: 5,
                       controller: myController,
                       decoration: const InputDecoration.collapsed(
@@ -219,7 +218,7 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                   DatabaseService db = DatabaseService();
                   await db.createMessageInDatabase(mc);
                   print("Added $mc to Firestore.");
-                  
+
                   // myController.clear();
                   // myController.clearComposing();
                 },
