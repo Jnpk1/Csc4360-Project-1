@@ -77,11 +77,39 @@ Widget buildMessageList(BuildContext context) {
   );
 }
 
+// Row(
+//       children: <Widget>[
+//         // Text
+//         Container(
+//             margin: EdgeInsets.symmetric(vertical: 5),
+//             child: Column(
+//               children: [
+//                 Text("posted by: "),
+//                 Bubble(
+//                     color: Colors.blueGrey,
+//                     elevation: 0,
+//                     padding: const BubbleEdges.all(10.0),
+//                     nip: BubbleNip.rightTop,
+//                     child: Text(currCard.content,
+//                         style: Theme.of(context)
+//                             .textTheme
+//                             .bodyText1
+//                             ?.copyWith(color: kMessageContentColor))),
+//                 Text("posted on: date"),
+//               ],
+//             ),
+//             width: 200)
+//       ],
+//       mainAxisAlignment: MainAxisAlignment.end,
+//     );
+
 Widget buildItem(context, MessageCard currCard) {
+  User? currUser = FirebaseAuth.instance.currentUser;
+  // print()
   String timePosted = DateFormat.yMd()
       .add_jm()
       .format(currCard.date?.toLocal() ?? DateTime.now());
-  if (currCard.author == '') {
+  if (currCard.author == currUser?.displayName) {
     // Right (my message)
     return Row(
       children: <Widget>[
