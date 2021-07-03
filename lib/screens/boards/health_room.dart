@@ -191,7 +191,6 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                           .bodyText1
                           ?.copyWith(color: Colors.black),
                       // autofocus: true,
-                      textCapitalization: ,
                       maxLines: 5,
                       controller: myController,
                       decoration: const InputDecoration.collapsed(
@@ -205,21 +204,21 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
               child: IconButton(
                 icon: Icon(Icons.send, size: 25),
                 onPressed: () async {
-                  String msgContent = myController.text;
-                  myController.clear();
-
+                  // String msgContent = myController.text;
+                  // myController.clear();
+                  print("Creating message with content: ${myController.text}");
                   User? currUser =
                       await Provider.of<AuthService>(context, listen: false)
                           .getUser();
                   MessageCard mc = MessageCard(
                       author: 'current no username',
-                      content: msgContent,
+                      content: myController.text,
                       date: DateTime.now(),
                       room: "healthRoom");
                   DatabaseService db = DatabaseService();
                   await db.createMessageInDatabase(mc);
                   print("Added $mc to Firestore.");
-                  
+                  myController.clear();
                   // myController.clear();
                   // myController.clearComposing();
                 },
