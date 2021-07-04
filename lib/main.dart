@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
             }
             print("main.dart: snaphshot.data=${snapshot.data}");
             // return snapshot.hasData ? materialApp() : Register();
-            return materialApp(context, snapshot.data, snapshot.hasData);
+            return MyMaterialApp(snapshot.data, snapshot.hasData);
           } else {
             return LoadingCircle();
           }
@@ -97,36 +97,72 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget materialApp(BuildContext context, User? currUser, bool hasData) {
-  
-  AuthService _auth = Provider.of<AuthService>(context, listen: false);
-  // DatabaseService db = DatabaseService();
-  return MultiProvider(
-    providers: [
-      StreamProvider<Member>.value(
-        value: MemberBloc().memberStream,
-        initialData: Member(),
-      ),
-    ],
-    child: MaterialApp(
-        title: 'MemoClub',
-        theme: AppTheme.appThemeData,
-        home: hasData ? Home() : Welcome(),
+// Widget materialApp() {
 
-        // To navigate to another page enter type the command:
-        // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
-        // example: Navigator.pushNamed(context, Register.routeName);
-        routes: <String, WidgetBuilder>{
-          Home.routeName: (context) => Home(),
-          SignIn.routeName: (context) => SignIn(),
-          Register.routeName: (context) => Register(),
-          Profile.routeName: (context) => Profile(),
-          SettingsPage.routeName: (context) => SettingsPage(),
-          Welcome.routeName: (context) => Welcome(),
-          HealthRoom.routeName: (context) => HealthRoom(),
-          GamesRoom.routeName: (context) => GamesRoom(),
-          BusinessRoom.routeName: (context) => BusinessRoom(),
-          StudyRoom.routeName: (context) => StudyRoom(),
-        }),
-  );
+//   // DatabaseService db = DatabaseService();
+//   return
+// }
+
+class MyMaterialApp extends StatefulWidget {
+  // const MyMaterialApp({ Key? key }) : super(key: key);
+  // MyMaterialApp({ Key? key , BuildContext context, }) : super(key: key);
+  final User? currUser;
+  final bool hasData;
+  MyMaterialApp(this.currUser, this.hasData);
+
+  @override
+  _MyMaterialAppState createState() => _MyMaterialAppState(currUser, hasData);
+}
+
+class _MyMaterialAppState extends State<MyMaterialApp> {
+  final User? currUser;
+  final bool hasData;
+  // late MemberBloc bloc;
+  MemberBloc bloc = MemberBloc();
+  _MyMaterialAppState(this.currUser, this.hasData);
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.bloc = MemberBloc();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    AuthService _auth = Provider.of<AuthService>(context, listen: false);
+    return MultiProvider(
+      providers: [
+        StreamProvider<Member>.value(
+          value: bloc.memberStream,
+          initialData: Member(),
+        ),
+      ],
+      child: MaterialApp(
+          title: 'MemoClub',
+          theme: AppTheme.appThemeData,
+          home: hasData ? Home() : Welcome(),
+
+          // To navigate to another page enter type the command:
+          // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
+          // example: Navigator.pushNamed(context, Register.routeName);
+          routes: <String, WidgetBuilder>{
+            Home.routeName: (context) => Home(),
+            SignIn.routeName: (context) => SignIn(),
+            Register.routeName: (context) => Register(),
+            Profile.routeName: (context) => Profile(),
+            SettingsPage.routeName: (context) => SettingsPage(),
+            Welcome.routeName: (context) => Welcome(),
+            HealthRoom.routeName: (context) => HealthRoom(),
+            GamesRoom.routeName: (context) => GamesRoom(),
+            BusinessRoom.routeName: (context) => BusinessRoom(),
+            StudyRoom.routeName: (context) => StudyRoom(),
+          }),
+    );
+  }
 }
