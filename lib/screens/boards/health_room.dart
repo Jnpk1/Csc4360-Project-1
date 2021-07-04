@@ -20,50 +20,61 @@ class HealthRoom extends StatefulWidget {
 class _HealthRoomState extends State<HealthRoom> {
   // final Stream<QuerySnapshot> _usersStream =
   //     FirebaseFirestore.instance.collection('users').snapshots();
-  DatabaseService db = DatabaseService();
+
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Member currMember = Provider.of<AuthService>(context).currentMember;
     return Scaffold(
       appBar: memoAppBar(context, "Health Room"),
       drawer: memoDrawer(context),
-      body: StreamBuilder<List<MessageCard>>(
-        stream: db.healthMessages,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<MessageCard>> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
-          List<MessageCard>? _healthMessageList = snapshot.data;
-          print("posted by: ${_healthMessageList?[0].author ?? ''}");
-          print("list of msseages = ${_healthMessageList}");
-          return new ListView.builder(
-            reverse: true,
-            padding: EdgeInsets.all(10.0),
-            itemCount: snapshot.data?.length,
-            itemBuilder: (context, index) => buildItem(
-                context,
-                _healthMessageList?[index] ??
-                    MessageCard(date: DateTime.now())),
-          );
-
-          // )
-          //   children: snapshot.data.docs.map((DocumentSnapshot document) {
-          //     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-          //     return new ListTile(
-          //       title: new Text(data['full_name']),
-          //       subtitle: new Text(data['company']),
-          //     );
-          //   }).toList(),
-          // );
-        },
-      ),
+      body: Stack(children: <Widget>[
+        Column(
+          children: <Widget>[
+            Flexible(
+              child: buildMessageList(context),
+            ),
+            buildInput(context, myController),
+          ],
+        )
+      ]),
     );
   }
+}
+
+Widget buildMessageList(BuildContext context) {
+  DatabaseService db = DatabaseService();
+  return StreamBuilder<List<MessageCard>>(
+    stream: db.healthMessages,
+    builder: (BuildContext context, AsyncSnapshot<List<MessageCard>> snapshot) {
+      if (snapshot.hasError) {
+        return Text('Something went wrong');
+      }
+
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Text("Loading");
+      }
+      List<MessageCard>? _healthMessageList = snapshot.data;
+      print("posted by: ${_healthMessageList?[0].author ?? ''}");
+      print("list of msseages = ${_healthMessageList}");
+      return new ListView.builder(
+        reverse: true,
+        shrinkWrap: true,
+        padding: EdgeInsets.all(10.0),
+        itemCount: snapshot.data?.length,
+        itemBuilder: (context, index) => buildItem(context,
+            _healthMessageList?[index] ?? MessageCard(date: DateTime.now())),
+      );
+    },
+  );
 }
 
 Widget buildItem(context, MessageCard currCard) {
@@ -103,45 +114,119 @@ Widget buildItem(context, MessageCard currCard) {
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: <Widget>[
-          Row(children: <Widget>[
-            Container(
-              child: Bubble(
-                  color: kMessageTileColor,
-                  elevation: 0,
-                  // borderColor: kMessageBorderColor,
-                  padding: const BubbleEdges.all(10.0),
-                  nip: BubbleNip.leftTop,
-                  child: Column(
-                    children: [
-                      Text(
-                        "posted by: ${currCard.author}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .overline
-                            ?.copyWith(color: kMessageUsernameAndDateColor),
-                      ),
-                      Text(currCard.content,
+          Container(
+            child: Bubble(
+                color: kMessageTileColor,
+                elevation: 0,
+                // borderColor: kMessageBorderColor,
+                // padding: const BubbleEdges.fromLTRB(10, 2, 10, 2),
+                alignment: Alignment.topLeft,
+                // margin: BubbleEdges.only(top: 10),
+                nip: BubbleNip.leftTop,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "posted by: ${currCard.author}",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1
-                              ?.copyWith(color: kMessageContentColor)),
-                      Text(
-                        "posted on: $timePosted",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context)
-                            .textTheme
-                            .overline
-                            ?.copyWith(color: kMessageUsernameAndDateColor),
-                      ),
-                    ],
-                  )),
-              width: 300.0,
-              margin: const EdgeInsets.only(left: 10.0),
-            )
-          ]),
+                              .overline
+                              ?.copyWith(color: kMessageUsernameAndDateColor),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      currCard.content,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: kMessageContentColor),
+                      maxLines: 5,
+                      // textAlign: TextAlign.left,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: Container()),
+                        Text(
+                          "posted on: $timePosted",
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context)
+                              .textTheme
+                              .overline
+                              ?.copyWith(color: kMessageUsernameAndDateColor),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+            width: 300.0,
+            margin: const EdgeInsets.only(left: 10.0),
+          ),
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
       ),
     );
   }
+}
+
+Widget buildInput(BuildContext context, TextEditingController myController) {
+  return Container(
+      child: Padding(
+        // padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          children: <Widget>[
+            // Edit text
+            Flexible(
+              child: Container(
+                child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextField(
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: Colors.black),
+                      // autofocus: true,
+                      maxLines: 5,
+                      controller: myController,
+                      decoration: const InputDecoration.collapsed(
+                        hintText: 'Type your message...',
+                      ),
+                    )),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.send, size: 25),
+                onPressed: () async {
+                  // String msgContent = myController.text;
+                  // myController.clear();
+                  print("Creating message with content: ${myController.text}");
+                  User? currUser =
+                      await Provider.of<AuthService>(context, listen: false)
+                          .getUser();
+                  MessageCard mc = MessageCard(
+                      author: 'current no username',
+                      content: myController.text,
+                      date: DateTime.now(),
+                      room: "healthRoom");
+                  DatabaseService db = DatabaseService();
+                  await db.createMessageInDatabase(mc);
+                  print("Added $mc to Firestore.");
+                  myController.clear();
+                  // myController.clear();
+                  // myController.clearComposing();
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      width: double.infinity,
+      height: 100.0);
 }

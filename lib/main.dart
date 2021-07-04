@@ -5,6 +5,7 @@ import 'package:memoclub/screens/boards/health_room.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
+import 'package:memoclub/screens/reset.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/theme.dart';

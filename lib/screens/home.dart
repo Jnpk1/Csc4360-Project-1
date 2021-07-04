@@ -240,7 +240,7 @@ Widget home_content(BuildContext context) {
           title: Text(
             'Games \nChatRoom',
             style: TextStyle(color: Colors.white),
-          ), 
+          ),
           onTap: () {
             Navigator.pushNamed(context, Home.routeName);
           },
@@ -262,8 +262,8 @@ Widget home_content(BuildContext context) {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-            Navigator.pushNamed(context, Home.routeName);
-          },
+          Navigator.pushNamed(context, Home.routeName);
+        },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
         //  isThreeLine: true,
@@ -280,9 +280,9 @@ Widget home_content(BuildContext context) {
           'Study \nChatRoom',
           style: TextStyle(color: Colors.white),
         ),
-         onTap: () {
-            Navigator.pushNamed(context, Home.routeName);
-          },
+        onTap: () {
+          Navigator.pushNamed(context, Home.routeName);
+        },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
         // isThreeLine: true,

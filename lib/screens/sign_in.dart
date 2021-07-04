@@ -116,13 +116,20 @@ class _SignInState extends State<SignIn> {
                             color: kButtonColor,
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
+                                setState(() => _isLoading = true);
                                 dynamic result =
                                     await _auth.signInWithEmailAndPassword(
                                         email, password);
-                                setState(() => _isLoading = true);
-                                Navigator.pushNamed(context, Home.routeName);
                                 if (result == null) {
-                                  setState(() => error = 'INVALID CREDENTIALS');
+                                  setState(() {
+                                    error = 'INVALID CREDENTIALS';
+                                    _isLoading = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
+                                  Navigator.pushNamed(context, Home.routeName);
                                 }
                               }
                             }),

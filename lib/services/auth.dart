@@ -135,7 +135,7 @@ class AuthService with ChangeNotifier {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       User? currUser = result.user;
-      return currUser!;
+      return currUser;
     } catch (e) {
       print(e.toString());
       return null;
