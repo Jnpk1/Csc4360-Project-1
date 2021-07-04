@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/models/MessageCard.dart';
 import 'package:memoclub/screens/boards/business_room.dart';
 import 'package:memoclub/screens/boards/games_room.dart';
@@ -40,9 +41,11 @@ class _MyHomePageState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // printUser();
+    Member? currMember = Provider.of<Member?>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: memoAppBar(context, "Home"),
+      // appBar: memoAppBar(context, "Home"),
+      appBar: memoAppBar(context, "$currMember"),
       backgroundColor: kBackgroundColor,
       body: Center(
         child: roomButtons(context),
@@ -54,10 +57,14 @@ class _MyHomePageState extends State<Home> {
 
 Future printUser(BuildContext context) async {
   User? curr = await Provider.of<AuthService>(context, listen: false).getUser();
+  Member currMember =
+      Provider.of<AuthService>(context, listen: false).currentMember;
   print("In home.dart, currUser=$curr");
+  print("In home.dart, currMember=$currMember");
 }
 
 Widget testFunctionToGetCurrentUser(BuildContext context) {
+  // Member currMember = Provider.of<AuthService>(context).currentMember;
   return MaterialButton(
       onPressed: () => printUser(context),
       elevation: buttonThemeElevation,

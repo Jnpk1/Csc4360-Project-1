@@ -12,9 +12,13 @@ import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/theme.dart';
 import 'package:memoclub/services/auth.dart';
+import 'package:memoclub/services/database.dart';
+import 'package:memoclub/services/member_bloc.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:memoclub/screens/welcome.dart';
+
+import 'models/Member.dart';
 
 void main() {
   // This needs to be called before any Firebase services can be used
@@ -84,7 +88,7 @@ class MyApp extends StatelessWidget {
             }
             print("main.dart: snaphshot.data=${snapshot.data}");
             // return snapshot.hasData ? materialApp() : Register();
-            return materialApp(snapshot.hasData);
+            return materialApp(context, snapshot.data, snapshot.hasData);
           } else {
             return LoadingCircle();
           }
@@ -92,26 +96,33 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget materialApp(hasData) {
-  // User? currProvider.of<AuthService>(context, listen: false).getUser();
-  return MaterialApp(
-      title: 'MemoClub',
-      theme: AppTheme.appThemeData,
-      home: hasData ? Home() : Welcome(),
+Widget materialApp(BuildContext context, User? currUser, bool hasData) {
+  AuthService _auth = Provider.of<AuthService>(context, listen: false);
+  // DatabaseService db = DatabaseService();
+  return MultiProvider(
+    providers: [
+      StreamProvider<Member?>.value(
+          value: MemberBloc().memberStream, initialData: null),
+    ],
+    child: MaterialApp(
+        title: 'MemoClub',
+        theme: AppTheme.appThemeData,
+        home: hasData ? Home() : Welcome(),
 
-      // To navigate to another page enter type the command:
-      // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
-      // example: Navigator.pushNamed(context, Register.routeName);
-      routes: <String, WidgetBuilder>{
-        Home.routeName: (context) => Home(),
-        SignIn.routeName: (context) => SignIn(),
-        Register.routeName: (context) => Register(),
-        Profile.routeName: (context) => Profile(),
-        Settings.routeName: (context) => Settings(),
-        Welcome.routeName: (context) => Welcome(),
-        HealthRoom.routeName: (context) => HealthRoom(),
-        GamesRoom.routeName: (context) => GamesRoom(),
-        BusinessRoom.routeName: (context) => BusinessRoom(),
-        StudyRoom.routeName: (context) => StudyRoom(),
-      });
+        // To navigate to another page enter type the command:
+        // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
+        // example: Navigator.pushNamed(context, Register.routeName);
+        routes: <String, WidgetBuilder>{
+          Home.routeName: (context) => Home(),
+          SignIn.routeName: (context) => SignIn(),
+          Register.routeName: (context) => Register(),
+          Profile.routeName: (context) => Profile(),
+          Settings.routeName: (context) => Settings(),
+          Welcome.routeName: (context) => Welcome(),
+          HealthRoom.routeName: (context) => HealthRoom(),
+          GamesRoom.routeName: (context) => GamesRoom(),
+          BusinessRoom.routeName: (context) => BusinessRoom(),
+          StudyRoom.routeName: (context) => StudyRoom(),
+        }),
+  );
 }

@@ -193,7 +193,8 @@ class _RegisterState extends State<Register> {
                                           password,
                                           firstName,
                                           lastName,
-                                          dateRegistered);
+                                          dateRegistered,
+                                          firstName + '-' + lastName);
                                   await _auth.createUsernameDuringRegistration(
                                       result, firstName, lastName);
                                   setState(() {

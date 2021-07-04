@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/models/MessageCard.dart';
 
 class DatabaseService with ChangeNotifier {
@@ -16,6 +17,7 @@ class DatabaseService with ChangeNotifier {
   static const String USER_EMAIL_FIELD = "email";
   static const String USER_DATE_REGISTERED_FIELD = "dateRegistered";
   static const String USER_ROLE_FIELD = "role";
+  static const String USER_USERNAME_FIELD = "username";
 
   static const String USER_SOCIAL_FIELD = "connectedSocials";
   static const String USER_FACEBOOK_FIELD = "facebook";
@@ -47,10 +49,11 @@ class DatabaseService with ChangeNotifier {
       String firstName,
       String lastName,
       DateTime dateRegistered,
+      String username,
       {String userRole = 'Customer'}) async {
-    Map<String, bool> connectedSocials = new Map<String, bool>();
-    connectedSocials[USER_FACEBOOK_FIELD] = false;
-    connectedSocials[USER_GOOGLE_FIELD] = false;
+    Map<String, String> connectedSocials = new Map<String, String>();
+    connectedSocials[USER_FACEBOOK_FIELD] = "";
+    connectedSocials[USER_GOOGLE_FIELD] = "";
 
     if (currUser != null) {
       _firestoreInstance
@@ -63,13 +66,32 @@ class DatabaseService with ChangeNotifier {
             USER_ID_FIELD: currUser.uid,
             USER_ROLE_FIELD: userRole,
             USER_DATE_REGISTERED_FIELD: dateRegistered,
-            USER_SOCIAL_FIELD: connectedSocials
+            USER_SOCIAL_FIELD: connectedSocials,
+            USER_USERNAME_FIELD: username,
           })
           .then((value) =>
               print('$firstName $lastName created in Firestore Database.'))
           .catchError((error) => print('Failed to create user: $error'));
     } else {
       print('User was null, so could not complete createUserInDatabase()');
+    }
+  }
+
+  Future<Map<String, dynamic>?> getUserInfoFromFirestore(User? currUser) async {
+    try {
+      // await _firestoreInstance
+      //     .collection(USERS_COLLECTION)
+      //     .where(USER_ID_FIELD, isEqualTo: currUser?.uid ?? '').get().then((value) => value.docs.);
+
+      DocumentSnapshot<Map<String, dynamic>> result = await _firestoreInstance
+          .collection(USERS_COLLECTION)
+          .doc(currUser?.uid)
+          .get();
+
+      print("VALUE IN DB PULLED IS ${result.data()}");
+      return result.data();
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -160,4 +182,20 @@ class DatabaseService with ChangeNotifier {
       .limit(20)
       .snapshots()
       .map(convertToMessageList);
+
+  Stream<Member?> getMember(User? currUser) {
+    return _firestoreInstance
+        .collection(USERS_COLLECTION)
+        .doc(currUser?.uid)
+        .snapshots()
+        .map((event) => Member.fromMap(event.data()));
+  }
+
+  Stream<Member?> currFirestoreMember(User? currUser) {
+    return _firestoreInstance
+        .collection(USERS_COLLECTION)
+        .doc(currUser?.uid)
+        .snapshots()
+        .map((event) => Member.fromMap(event.data()));
+  }
 }
