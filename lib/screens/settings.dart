@@ -4,14 +4,14 @@ import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
-  static final String routeName = 'settings';
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+  static final String routeName = '/settings';
   @override
-  _SettingsState createState() => _SettingsState();
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

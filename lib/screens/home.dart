@@ -42,10 +42,14 @@ class _MyHomePageState extends State<Home> {
   Widget build(BuildContext context) {
     // printUser();
     Member? currMember = Provider.of<Member?>(context);
+    Member newestMember = Provider.of<Member>(context);
+    // Member? newestMember =
+    //     Member.fromMap(Provider.of<Map<String, dynamic>?>(context));
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // appBar: memoAppBar(context, "Home"),
-      appBar: memoAppBar(context, "$currMember"),
+      appBar: memoAppBar(context, "$newestMember"),
       backgroundColor: kBackgroundColor,
       body: Center(
         child: roomButtons(context),
@@ -57,10 +61,10 @@ class _MyHomePageState extends State<Home> {
 
 Future printUser(BuildContext context) async {
   User? curr = await Provider.of<AuthService>(context, listen: false).getUser();
-  Member currMember =
-      Provider.of<AuthService>(context, listen: false).currentMember;
+  // Member currMember =
+  //     Provider.of<AuthService>(context, listen: false).currentMember;
   print("In home.dart, currUser=$curr");
-  print("In home.dart, currMember=$currMember");
+  // print("In home.dart, currMember=$currMember");
 }
 
 Widget testFunctionToGetCurrentUser(BuildContext context) {

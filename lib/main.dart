@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -103,6 +104,14 @@ Widget materialApp(BuildContext context, User? currUser, bool hasData) {
     providers: [
       StreamProvider<Member?>.value(
           value: MemberBloc().memberStream, initialData: null),
+      // StreamProvider<DocumentSnapshot<Map<String, dynamic>>>.value(
+      //     value: MemberBloc().userSnapshot, initialData: null),
+      // StreamProvider<Map<String, dynamic>?>.value(
+      //     value: MemberBloc().userSnapshot, initialData: null),
+      StreamProvider<Member>.value(
+        value: MemberBloc().userSnapshot,
+        initialData: Member(),
+      ),
     ],
     child: MaterialApp(
         title: 'MemoClub',
@@ -117,7 +126,7 @@ Widget materialApp(BuildContext context, User? currUser, bool hasData) {
           SignIn.routeName: (context) => SignIn(),
           Register.routeName: (context) => Register(),
           Profile.routeName: (context) => Profile(),
-          Settings.routeName: (context) => Settings(),
+          SettingsPage.routeName: (context) => SettingsPage(),
           Welcome.routeName: (context) => Welcome(),
           HealthRoom.routeName: (context) => HealthRoom(),
           GamesRoom.routeName: (context) => GamesRoom(),

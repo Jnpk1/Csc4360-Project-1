@@ -24,6 +24,7 @@ class MemberBloc {
 
   void dispose() {
     _controller.close();
+    _profileInfoController.close();
   }
 
   MemberBloc() {
@@ -34,6 +35,18 @@ class MemberBloc {
   final _controller = StreamController<Member?>();
 
   Stream<Member?> get memberStream => _controller.stream;
+
+  // Stream<DocumentSnapshot<Map<String, dynamic>>> get userSnapshot =>
+  //     _profileInfoController.stream;
+  // Stream<Map<String, dynamic>?> get userSnapshot =>
+  //     _profileInfoController.stream;
+  Stream<Member> get userSnapshot =>
+      _profileInfoController.stream;
+
+  // final _profileInfoController =
+  //     StreamController<DocumentSnapshot<Map<String, dynamic>>>();
+  // final _profileInfoController = StreamController<Map<String, dynamic>?>();
+  final _profileInfoController = StreamController<Member>();
 
   Future<void> createMember(User? currUser) async {
     // if (curr)
@@ -49,9 +62,26 @@ class MemberBloc {
         Member newMember = Member.fromMap(data);
         print("MEMBER IS $newMember");
         _controller.sink.add(newMember);
+        grabProfileSnapshot(currUser);
         prevUser = currUser;
       }
     }
     prevUser = currUser;
+  }
+
+  // Future<void> grabProfileSnapshot(User? currUser) async {
+  //   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  //   _profileInfoController.addStream(
+  //       _firebaseFirestore.collection('users').doc(currUser!.uid).snapshots().map((event) => event.data()));
+  // }
+  Future<void> grabProfileSnapshot(User? currUser) async {
+    FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+    _profileInfoController.addStream(_firebaseFirestore
+        .collection('users')
+        .doc(currUser!.uid)
+        .snapshots()
+        .map((event) {
+      return Member.fromMap(event.data());
+    }));
   }
 }
