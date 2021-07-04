@@ -27,6 +27,11 @@ class Member {
     }
     try {
       Map<String, String> _connectedSocials = Map<String, String>();
+      // var facebookInfo = userInfo["connectedSocials"]["facebook"];
+      // var googleInfo = userInfo["connectedSocials"]["google"];
+      // assert(facebookInfo is String);
+      // assert(googleInfo is String);
+
       _connectedSocials["facebook"] = userInfo["connectedSocials"]["facebook"];
       _connectedSocials["google"] = userInfo["connectedSocials"]["google"];
       Member res = new Member(
@@ -53,6 +58,6 @@ class Member {
 
   @override
   String toString() {
-    return "Member($username $firstName, $lastName, $id, $email, $connectedSocials, $role)";
+    return "Member($username, $firstName, $lastName, $id, $email, $connectedSocials, $role)";
   }
 }

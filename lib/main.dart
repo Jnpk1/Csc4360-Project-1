@@ -98,12 +98,13 @@ class MyApp extends StatelessWidget {
 }
 
 Widget materialApp(BuildContext context, User? currUser, bool hasData) {
+  
   AuthService _auth = Provider.of<AuthService>(context, listen: false);
   // DatabaseService db = DatabaseService();
   return MultiProvider(
     providers: [
       StreamProvider<Member>.value(
-        value: MemberBloc().userSnapshot,
+        value: MemberBloc().memberStream,
         initialData: Member(),
       ),
     ],

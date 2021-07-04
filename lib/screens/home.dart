@@ -57,14 +57,10 @@ class _MyHomePageState extends State<Home> {
 
 Future printUser(BuildContext context) async {
   User? curr = await Provider.of<AuthService>(context, listen: false).getUser();
-  // Member currMember =
-  //     Provider.of<AuthService>(context, listen: false).currentMember;
   print("In home.dart, currUser=$curr");
-  // print("In home.dart, currMember=$currMember");
 }
 
 Widget testFunctionToGetCurrentUser(BuildContext context) {
-  // Member currMember = Provider.of<AuthService>(context).currentMember;
   return MaterialButton(
       onPressed: () => printUser(context),
       elevation: buttonThemeElevation,
