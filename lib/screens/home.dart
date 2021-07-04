@@ -98,106 +98,6 @@ Widget roomButtons(BuildContext context) {
                 .button
                 ?.copyWith(color: kOnButtonColor)),
         color: kButtonColor),
-    MaterialButton(
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "healthRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Health Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "studyRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Study Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "businessRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Business Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "gamesRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Games Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () async {
-          DatabaseService db = DatabaseService();
-          await db.getAllHealthMessages();
-          print('after await');
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Print HealthRoom Messages',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
     testFunctionToGetCurrentUser(context),
   ]);
 }
@@ -223,7 +123,7 @@ Widget home_content(BuildContext context) {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          Navigator.pushNamed(context, Home.routeName);
+          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
         },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
@@ -242,7 +142,7 @@ Widget home_content(BuildContext context) {
             style: TextStyle(color: Colors.white),
           ),
           onTap: () {
-            Navigator.pushNamed(context, Home.routeName);
+            Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
           },
           subtitle: Text(''),
           trailing: Icon(Icons.more_vert),
@@ -262,7 +162,7 @@ Widget home_content(BuildContext context) {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          Navigator.pushNamed(context, Home.routeName);
+          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
         },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
@@ -281,7 +181,7 @@ Widget home_content(BuildContext context) {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          Navigator.pushNamed(context, Home.routeName);
+          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
         },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
