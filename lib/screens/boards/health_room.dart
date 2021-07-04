@@ -9,6 +9,7 @@ import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/services/database.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
+import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class HealthRoom extends StatefulWidget {
@@ -56,18 +57,18 @@ Widget buildMessageList(BuildContext context) {
       }
 
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Text("Loading");
+        return LoadingCircle();
       }
-      List<MessageCard>? _healthMessageList = snapshot.data;
-      print("posted by: ${_healthMessageList?[0].author ?? ''}");
-      print("list of msseages = ${_healthMessageList}");
+      List<MessageCard>? _messageList = snapshot.data;
+      // print("posted by: ${_messageList?[0].author ?? ''}");
+      // print("list of messages = $_messageList");
       return new ListView.builder(
         reverse: true,
         shrinkWrap: true,
         padding: EdgeInsets.all(10.0),
         itemCount: snapshot.data?.length,
-        itemBuilder: (context, index) => buildItem(context,
-            _healthMessageList?[index] ?? MessageCard(date: DateTime.now())),
+        itemBuilder: (context, index) => buildItem(
+            context, _messageList?[index] ?? MessageCard(date: DateTime.now())),
       );
     },
   );

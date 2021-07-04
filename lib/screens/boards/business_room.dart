@@ -60,8 +60,8 @@ Widget buildMessageList(BuildContext context) {
         return LoadingCircle();
       }
       List<MessageCard>? _messageList = snapshot.data;
-      print("posted by: ${_messageList?[0].author ?? ''}");
-      print("list of msseages = $_messageList");
+      // print("posted by: ${_messageList?[0].author ?? ''}");
+      // print("list of messages = $_messageList");
       return new ListView.builder(
         reverse: true,
         shrinkWrap: true,
