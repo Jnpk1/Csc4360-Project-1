@@ -130,7 +130,7 @@ class _MyMaterialAppState extends State<MyMaterialApp> {
   @override
   void initState() {
     super.initState();
-    this.bloc = MemberBloc();
+    // this.bloc = MemberBloc();
   }
 
   @override
