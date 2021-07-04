@@ -40,11 +40,7 @@ class _MyHomePageState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // printUser();
-    Member? currMember = Provider.of<Member?>(context);
     Member newestMember = Provider.of<Member>(context);
-    // Member? newestMember =
-    //     Member.fromMap(Provider.of<Map<String, dynamic>?>(context));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

@@ -102,12 +102,6 @@ Widget materialApp(BuildContext context, User? currUser, bool hasData) {
   // DatabaseService db = DatabaseService();
   return MultiProvider(
     providers: [
-      StreamProvider<Member?>.value(
-          value: MemberBloc().memberStream, initialData: null),
-      // StreamProvider<DocumentSnapshot<Map<String, dynamic>>>.value(
-      //     value: MemberBloc().userSnapshot, initialData: null),
-      // StreamProvider<Map<String, dynamic>?>.value(
-      //     value: MemberBloc().userSnapshot, initialData: null),
       StreamProvider<Member>.value(
         value: MemberBloc().userSnapshot,
         initialData: Member(),
