@@ -20,6 +20,7 @@ class DatabaseService with ChangeNotifier {
   static const String USER_SOCIAL_FIELD = "connectedSocials";
   static const String USER_FACEBOOK_FIELD = "facebook";
   static const String USER_GOOGLE_FIELD = "google";
+  static const String USER_INSTAGRAM_FIELD = "instagram";
 
   static const String ROOM_COLLECTION = 'allRooms';
   static const String GAMES_ROOM = 'gamesRoom';
@@ -145,13 +146,27 @@ class DatabaseService with ChangeNotifier {
       _firestoreInstance
           .collection(USERS_COLLECTION)
           .doc(currUser.uid)
-          .update({
-            USER_SOCIAL_FIELD: {USER_FACEBOOK_FIELD: facebookURL}
-          })
+          .update({"$USER_SOCIAL_FIELD.$USER_FACEBOOK_FIELD": facebookURL})
           .then((value) => print('Updated Facebook Account $facebookURL.'))
           .catchError((error) => print('Failed to create user: $error'));
     } else {
-      print('User was null, so could not complete createUserInDatabase()');
+      print('User was null, so could not complete updateFacebookProfile()');
+    }
+  }
+
+  Future updateInstagramProfile(
+    User? currUser,
+    String instagramURL,
+  ) async {
+    if (currUser != null) {
+      _firestoreInstance
+          .collection(USERS_COLLECTION)
+          .doc(currUser.uid)
+          .update({"$USER_SOCIAL_FIELD.$USER_INSTAGRAM_FIELD": instagramURL})
+          .then((value) => print('Updated Instagram Account $instagramURL.'))
+          .catchError((error) => print('Failed to create user: $error'));
+    } else {
+      print('User was null, so could not complete updateGoogleprofile()');
     }
   }
 }

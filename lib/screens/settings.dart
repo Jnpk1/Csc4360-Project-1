@@ -24,8 +24,9 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   String _urlToLink = '';
+  String error = '';
   @override
   Widget build(BuildContext context) {
     AuthService _auth = Provider.of<AuthService>(context);
@@ -72,7 +73,7 @@ class _SettingsState extends State<Settings> {
                 //**\\\
                 //**This Form is for the User to insert their Social Media URL
                 Form(
-                  key: _formKey1,
+                  key: _formKey,
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -88,9 +89,19 @@ class _SettingsState extends State<Settings> {
                           //This is check if input is valid
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return 'Enter in a URL';
+                              return 'URL is empty.';
                             }
-                            return null;
+
+                            bool test1 =
+                                value.toLowerCase().contains("facebook");
+                            bool test2 =
+                                value.toLowerCase().contains("instagram");
+                            // print("test1 is $test1 and test2 is $test2");
+                            if (test1 || test2) {
+                              return null;
+                            } else {
+                              return "URL must be facebook or instagram";
+                            }
                           },
                         ),
                       ),
@@ -104,27 +115,42 @@ class _SettingsState extends State<Settings> {
                               primary: Colors.deepPurple[600]),
                           child: const Text('Submit'),
                           onPressed: () async {
-                            // if (_formKey.currentState!.validate()) {
-                            // Process Data
+                            if (_formKey.currentState?.validate() ?? false) {
+                              // Process Data
 
-                            User? currUser = await Provider.of<AuthService>(
-                                    context,
-                                    listen: false)
-                                .getUser();
-                            String key = _urlToLink;
-                            print(
-                                "currUser is = $currUser, sending to database...");
-                            print(
-                                "userinput is = $key, sending to database...");
+                              User? currUser = await Provider.of<AuthService>(
+                                      context,
+                                      listen: false)
+                                  .getUser();
+                              String key = _urlToLink;
+                              print(
+                                  "currUser is = $currUser, sending to database...");
+                              print(
+                                  "userinput is = $key, sending to database...");
 
-                            DatabaseService db = DatabaseService();
-                            db.updateFacebookProfile(currUser, key);
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     SnackBar(content: Text('Processing Data')));
-                            // }
+                              DatabaseService db = DatabaseService();
+                              if (key.toLowerCase().contains('facebook')) {
+                                await db.updateFacebookProfile(currUser, key);
+                              } else {
+                                await db.updateInstagramProfile(currUser, key);
+                              }
+
+                              // db.updateFacebookProfile(currUser, key);
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //     SnackBar(content: Text('Processing Data')));
+                            } else {
+                              setState(() {
+                                error =
+                                    "URL must contain facebook or instagram";
+                              });
+                            }
                           },
                         ),
                       ),
+                      // Text(
+                      //   error,
+                      //   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                      // ),
                     ],
                   ),
                 ),
