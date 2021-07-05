@@ -48,7 +48,7 @@ class _MyHomePageState extends State<Home> {
       appBar: memoAppBar(context, "$newestMember"),
       backgroundColor: kBackgroundColor,
       body: Center(
-        child: roomButtons(context),
+        child: home_content(context),
       ),
       drawer: memoDrawer(context),
     );
@@ -75,35 +75,15 @@ Widget testFunctionToGetCurrentUser(BuildContext context) {
       color: kButtonColor);
 }
 
-Widget imageLayout(BuildContext context) {
-  return Image.asset('lib/assets/layout.png');
-}
-
+//HEALTH_ROOM_ROUTE_NAME
 Widget roomButtons(BuildContext context) {
   final String HEALTH_ROOM_ROUTE_NAME = HealthRoom.routeName;
   AuthService _auth = Provider.of<AuthService>(context, listen: false);
   print(Navigator.of(context).toString());
 
+  RoundedRectangleBorder side;
   return Column(children: <Widget>[
-    StyledButton(
-        text: 'Health Room',
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME)),
-    StyledButton(
-        text: 'Games Room',
-        onPressed: () {
-          Navigator.pushNamed(context, GamesRoom.routeName);
-        }),
-    StyledButton(
-        text: 'Business Board',
-        onPressed: () => Navigator.pushNamed(context, BusinessRoom.routeName)),
-    StyledButton(
-        text: 'Study Board',
-        onPressed: () => Navigator.pushNamed(context, StudyRoom.routeName)),
-    StyledButton(
-        text: 'Register Page',
-        onPressed: () => Navigator.pushNamed(context, Register.routeName)),
-    StyledButton(
-        text: 'Sign out',
+    MaterialButton(
         onPressed: () async {
           bool didSignOut = await _auth.signOut();
           if (didSignOut) {
@@ -113,62 +93,111 @@ Widget roomButtons(BuildContext context) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 Welcome.routeName, (Route<dynamic> route) => false);
           }
-        }),
-    StyledButton(
-        text: 'Create Dummy Message Health Room',
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "healthRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        }),
-    StyledButton(
-        text: 'Create Dummy Message Study Room',
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "studyRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        }),
-    StyledButton(
-        text: 'Create Dummy Message Business Room',
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "businessRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        }),
-    StyledButton(
-        text: 'Create Dummy Message Games Room',
-        onPressed: () async {
-          MessageCard mc = MessageCard(
-              author: "nate",
-              content: "filler content",
-              date: DateTime.now(),
-              room: "gamesRoom");
-          DatabaseService db = DatabaseService();
-          await db.createMessageInDatabase(mc);
-          print("Added $mc to Firestore.");
-        }),
-    StyledButton(
-        text: 'Print HealthRoom Messages',
-        onPressed: () async {
-          DatabaseService db = DatabaseService();
-          await db.getAllHealthMessages();
-          print('after await');
-        }),
+        },
+        elevation: buttonThemeElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text('Sign Out',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(color: kOnButtonColor)),
+        color: kButtonColor),
     testFunctionToGetCurrentUser(context),
   ]);
+}
+
+Widget home_content(BuildContext context) {
+  final String HEALTH_ROOM_ROUTE_NAME = HealthRoom.routeName;
+  AuthService _auth = Provider.of<AuthService>(context, listen: false);
+  print(Navigator.of(context).toString());
+  var child;
+  return Container(
+    padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+    child: ListView(children: <Widget>[
+      Card(
+          child: ListTile(
+        leading: Icon(
+          Icons.business_center,
+          size: 56.0,
+          color: Colors.white,
+        ),
+        tileColor: kPrimaryColor,
+        title: Text(
+          'Business \nChatRoom',
+          style: TextStyle(color: Colors.white),
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+        },
+        subtitle: Text(''),
+        trailing: Icon(Icons.more_vert),
+        //isThreeLine: true,
+      )),
+      Card(
+        child: ListTile(
+          leading: Icon(
+            Icons.sports_esports_outlined,
+            size: 56.0,
+            color: Colors.white,
+          ),
+          tileColor: kPrimaryColor,
+          title: Text(
+            'Games \nChatRoom',
+            style: TextStyle(color: Colors.white),
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+          },
+          subtitle: Text(''),
+          trailing: Icon(Icons.more_vert),
+          // isThreeLine: true,
+        ),
+      ),
+      Card(
+          child: ListTile(
+        leading: Icon(
+          Icons.health_and_safety_outlined,
+          size: 56.0,
+          color: Colors.white,
+        ),
+        tileColor: kPrimaryColor,
+        title: Text(
+          'Health \nChatRoom',
+          style: TextStyle(color: Colors.white),
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+        },
+        subtitle: Text(''),
+        trailing: Icon(Icons.more_vert),
+        //  isThreeLine: true,
+      )),
+      Card(
+          child: ListTile(
+        leading: Icon(
+          Icons.book,
+          size: 56.0,
+          color: Colors.white,
+        ),
+        tileColor: kPrimaryColor,
+        title: Text(
+          'Study \nChatRoom',
+          style: TextStyle(color: Colors.white),
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+        },
+        subtitle: Text(''),
+        trailing: Icon(Icons.more_vert),
+        // isThreeLine: true,
+      )),
+      Card(
+        child: roomButtons(context),
+      ),
+
+      // Google Button
+    ]),
+  );
 }

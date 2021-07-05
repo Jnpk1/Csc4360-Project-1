@@ -89,6 +89,20 @@ class AuthService with ChangeNotifier {
     }
   }
 
+ 
+  
+   Future createUserInDatabaseWithGoogle(User user) async {
+    List userName = user.displayName?.split(' ') ?? List.empty();
+    if (userName.length > 0) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'firstName': userName[0],
+        'lastName': userName[1],
+        'email': user.email,
+        'registrationDate': DateTime.now(),
+        'userRole': 'Customer',
+      });
+    }
+  }
   Future<bool> createUsernameDuringRegistration(
       User? user, String firstName, String lastName) async {
     try {
@@ -125,9 +139,78 @@ class AuthService with ChangeNotifier {
       idToken: googleAuth?.idToken,
     );
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      UserCredential userCredential;
+
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final googleAuthCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      userCredential = await _auth.signInWithCredential(googleAuthCredential);
+      User? user = userCredential.user;
+      if (user != null) {
+        print(
+            'FirebaseUser creation time: ${user.metadata.creationTime} FirebaseUser lastSignInTime: ${user.metadata.lastSignInTime}');
+        // If it is a new user (signing in for the first time), create a user in the database
+        DateTime? creation = user.metadata.creationTime;
+        DateTime? lastSignIn = user.metadata.lastSignInTime;
+        if ((creation?.difference(lastSignIn ?? DateTime.now()).abs() ??
+                Duration(seconds: 2)) <
+            Duration(seconds: 1)) {
+          print('Creating new user in Database.');
+          createUserInDatabaseWithGoogle(user);
+        }
+      }
+      print("Signed in with google as {$user}");
+      return userCredential;
+    } catch (e) {
+      print(e);
+    }
   }
+
+  Future<User?> createUser() async {}
+  // // Haven't tested yet
+  // Future registerWithEmailAndPassword(
+  //     {required String email,
+  //     required String password,
+  //     required String firstName,
+  //     required String lastName}) async {
+  //   try {
+  //     UserCredential result = await _auth.createUserWithEmailAndPassword(
+  //         email: email, password: password);
+  //     User? newUser = result.user;
+
+  //     /// Add the first and last name to the FirebaseUser
+  //     String newDisplayName = '$firstName $lastName';
+
+  //     await newUser
+  //         ?.updateDisplayName(newDisplayName)
+  //         .catchError((error) => print(error));
+
+  //     // Refresh data
+  //     await newUser?.reload();
+
+  //     // Need to make this call to get the updated display name; or else display name will be null
+  //     User? updatedUser = _auth.currentUser;
+
+  //     print('new display name: ${updatedUser?.displayName}');
+
+  //     notifyListeners();
+
+  //     // Return FirebaseUser with updated information (setting the display name using their first and last name)
+  //     return updatedUser;
+  //   } catch (e) {
+  //     print(e.toString());
+
+  //     return null;
+  //   }
+  // }
+
 
   // sign in with email and pass
   Future signInWithEmailAndPassword(String email, String password) async {

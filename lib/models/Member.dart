@@ -20,6 +20,9 @@ class Member {
       this.role = '',
       this.username = '',
       this.dateRegistered});
+  String get() {
+    return id;
+  }
 
   factory Member.fromMap(Map<String, dynamic>? userInfo) {
     if (userInfo == null) {

@@ -18,9 +18,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Profile"),
-      body: Center(
-        child: roomButtons(context),
-      ),
+      body: roomButtons(context),
       drawer: memoDrawer(context),
     );
   }
