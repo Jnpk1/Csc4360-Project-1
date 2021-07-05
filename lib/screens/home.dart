@@ -193,9 +193,8 @@ Widget home_content(BuildContext context) {
         trailing: Icon(Icons.more_vert),
         // isThreeLine: true,
       )),
-      Card(
-        child: roomButtons(context),
-      ),
+
+      roomButtons(context),
 
       // Google Button
     ]),
