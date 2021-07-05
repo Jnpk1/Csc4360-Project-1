@@ -77,10 +77,11 @@ Widget buildMessageList(BuildContext context) {
 Widget buildItem(context, MessageCard currCard) {
   User? currUser = FirebaseAuth.instance.currentUser;
   // print()
+  Member newestMember = Provider.of<Member>(context);
   String timePosted = DateFormat.yMd()
       .add_jm()
       .format(currCard.date?.toLocal() ?? DateTime.now());
-  if (currCard.author == currUser?.displayName) {
+  if (currCard.author == newestMember.username) {
     // Right (my message)
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
