@@ -91,16 +91,13 @@ class _SettingsPageState extends State<SettingsPage> {
                             if (value == null || value.isEmpty) {
                               return 'URL is empty.';
                             }
+                            RegExp validURL = RegExp(
+                                r".*(facebook|fb|instagram)\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$");
 
-                            bool test1 =
-                                value.toLowerCase().contains("facebook");
-                            bool test2 =
-                                value.toLowerCase().contains("instagram");
-                            // print("test1 is $test1 and test2 is $test2");
-                            if (test1 || test2) {
-                              return null;
-                            } else {
+                            if (!validURL.hasMatch(value.toLowerCase())) {
                               return "URL must be facebook or instagram";
+                            } else {
+                              return null;
                             }
                           },
                         ),
@@ -117,6 +114,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           onPressed: () async {
                             if (_formKey.currentState?.validate() ?? false) {
                               // Process Data
+                              String _originalUrl = _urlToLink;
+                              _urlToLink = _urlToLink.toLowerCase();
 
                               User? currUser = await Provider.of<AuthService>(
                                       context,
@@ -125,14 +124,33 @@ class _SettingsPageState extends State<SettingsPage> {
                               String key = _urlToLink;
                               print(
                                   "currUser is = $currUser, sending to database...");
-                              print(
-                                  "userinput is = $key, sending to database...");
+                              // print(
+                              //     "userinput is = $key, sending to database...");
 
                               DatabaseService db = DatabaseService();
-                              if (key.toLowerCase().contains('facebook')) {
-                                await db.updateFacebookProfile(currUser, key);
+                              int idx = _urlToLink
+                                  .indexOf(RegExp(r"(fb\.|facebook\.)"));
+
+                              if (idx >= 0) {
+                                // contains facebook
+                                String _formattedLink = "https://" +
+                                    _originalUrl.substring(
+                                        idx, _urlToLink.length);
+                                await db.updateFacebookProfile(
+                                    currUser, _formattedLink);
+                              } else if (_urlToLink.contains("instagram\.")) {
+                                // contains instagram
+                                String _formattedLink = "https://" +
+                                    _originalUrl.substring(
+                                        _urlToLink
+                                            .indexOf(RegExp(r"instagram")),
+                                        _urlToLink.length);
+                                await db.updateInstagramProfile(
+                                    currUser, _formattedLink);
                               } else {
-                                await db.updateInstagramProfile(currUser, key);
+                                // Should NEVER happen
+                                print(
+                                    "ERROR, url passed validation but did not contain facebook or instagram.");
                               }
 
                               // db.updateFacebookProfile(currUser, key);
