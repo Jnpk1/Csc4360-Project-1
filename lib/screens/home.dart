@@ -60,20 +60,20 @@ Future printUser(BuildContext context) async {
   print("In home.dart, currUser=$curr");
 }
 
-Widget testFunctionToGetCurrentUser(BuildContext context) {
-  return MaterialButton(
-      onPressed: () => printUser(context),
-      elevation: buttonThemeElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(buttonBorderRadius),
-      ),
-      child: Text('Press to getUser()',
-          style: Theme.of(context)
-              .textTheme
-              .button
-              ?.copyWith(color: kOnButtonColor)),
-      color: kButtonColor);
-}
+// Widget testFunctionToGetCurrentUser(BuildContext context) {
+//   return MaterialButton(
+//       onPressed: () => printUser(context),
+//       elevation: buttonThemeElevation,
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(buttonBorderRadius),
+//       ),
+//       child: Text('Press to getUser()',
+//           style: Theme.of(context)
+//               .textTheme
+//               .button
+//               ?.copyWith(color: kOnButtonColor)),
+//       color: kButtonColor);
+// }
 
 //HEALTH_ROOM_ROUTE_NAME
 Widget roomButtons(BuildContext context) {
@@ -104,7 +104,7 @@ Widget roomButtons(BuildContext context) {
                 .button
                 ?.copyWith(color: kOnButtonColor)),
         color: kButtonColor),
-    testFunctionToGetCurrentUser(context),
+    // testFunctionToGetCurrentUser(context),
   ]);
 }
 

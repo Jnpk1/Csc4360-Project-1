@@ -135,15 +135,6 @@ class _SignInState extends State<SignIn> {
                               }
                             }),
 
-                        //Button to take you to home page.
-                        //Delete me before sending in for grade.
-                        ElevatedButton.icon(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, Home.routeName),
-                          icon: Icon(Icons.house),
-                          label: Text('Take Me To Home Page'),
-                        ),
-
                         //Google sign in button
                         (GoogleAuthButton(onPressed: () async {
                           setState(() => loading = true);
