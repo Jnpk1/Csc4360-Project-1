@@ -124,12 +124,18 @@ class _SignInState extends State<SignIn> {
                                     _isLoading = false;
                                   });
                                 } else {
+                                  
+
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
                                   setState(() => _isLoading = false);
                                   Navigator.pushNamed(context, Home.routeName);
                                 }
                               }
                             }),
-                        (GoogleAuthButton(onPressed: () async {
+                        SizedBox(height: 15.0),
+                        GoogleAuthButton(onPressed: () async {
                           setState(() => loading = true);
                           dynamic result = await _auth.signInWithGoogle();
                           if (result == null) {
@@ -138,7 +144,7 @@ class _SignInState extends State<SignIn> {
                           } else {
                             print('Google sign in returned: $result');
                           }
-                        })),
+                        }),
                         SizedBox(height: 12.0),
                         Text(
                           error,
