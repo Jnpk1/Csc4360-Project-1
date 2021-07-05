@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/screens/boards/business_room.dart';
+import 'package:memoclub/screens/boards/games_room.dart';
 import 'package:memoclub/screens/boards/health_room.dart';
+import 'package:memoclub/screens/boards/study_room.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
@@ -10,9 +14,13 @@ import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/theme.dart';
 import 'package:memoclub/services/auth.dart';
+import 'package:memoclub/services/database.dart';
+import 'package:memoclub/services/member_bloc.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:memoclub/screens/welcome.dart';
+
+import 'models/Member.dart';
 
 void main() {
   // This needs to be called before any Firebase services can be used
@@ -82,7 +90,7 @@ class MyApp extends StatelessWidget {
             }
             print("main.dart: snaphshot.data=${snapshot.data}");
             // return snapshot.hasData ? materialApp() : Register();
-            return materialApp(snapshot.hasData);
+            return MyMaterialApp(snapshot.data, snapshot.hasData);
           } else {
             return LoadingCircle();
           }
@@ -90,24 +98,72 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget materialApp(hasData) {
-  // User? currProvider.of<AuthService>(context, listen: false).getUser();
-  return MaterialApp(
-      title: 'MemoClub',
-      theme: AppTheme.appThemeData,
-      home: hasData ? Home() : Welcome(),
+// Widget materialApp() {
 
-      // To navigate to another page enter type the command:
-      // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
-      // example: Navigator.pushNamed(context, Register.routeName);
-      routes: <String, WidgetBuilder>{
-        Home.routeName: (context) => Home(),
-        SignIn.routeName: (context) => SignIn(),
-        Register.routeName: (context) => Register(),
-        Profile.routeName: (context) => Profile(),
-        Settings.routeName: (context) => Settings(),
-        Welcome.routeName: (context) => Welcome(),
-        HealthRoom.routeName: (context) => HealthRoom(),
-        ResetScreen.routeName: (context) => ResetScreen()
-      });
+//   // DatabaseService db = DatabaseService();
+//   return
+// }
+
+class MyMaterialApp extends StatefulWidget {
+  // const MyMaterialApp({ Key? key }) : super(key: key);
+  // MyMaterialApp({ Key? key , BuildContext context, }) : super(key: key);
+  final User? currUser;
+  final bool hasData;
+  MyMaterialApp(this.currUser, this.hasData);
+
+  @override
+  _MyMaterialAppState createState() => _MyMaterialAppState(currUser, hasData);
+}
+
+class _MyMaterialAppState extends State<MyMaterialApp> {
+  final User? currUser;
+  final bool hasData;
+  // late MemberBloc bloc;
+  MemberBloc bloc = MemberBloc();
+  _MyMaterialAppState(this.currUser, this.hasData);
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // this.bloc = MemberBloc();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    AuthService _auth = Provider.of<AuthService>(context, listen: false);
+    return MultiProvider(
+      providers: [
+        StreamProvider<Member>.value(
+          value: bloc.memberStream,
+          initialData: Member(),
+        ),
+      ],
+      child: MaterialApp(
+          title: 'MemoClub',
+          theme: AppTheme.appThemeData,
+          home: hasData ? Home() : Welcome(),
+
+          // To navigate to another page enter type the command:
+          // Navigator.pushNamed(context, <ClassWithRouteName>.routeName);
+          // example: Navigator.pushNamed(context, Register.routeName);
+          routes: <String, WidgetBuilder>{
+            Home.routeName: (context) => Home(),
+            SignIn.routeName: (context) => SignIn(),
+            Register.routeName: (context) => Register(),
+            Profile.routeName: (context) => Profile(),
+            SettingsPage.routeName: (context) => SettingsPage(),
+            Welcome.routeName: (context) => Welcome(),
+            HealthRoom.routeName: (context) => HealthRoom(),
+            GamesRoom.routeName: (context) => GamesRoom(),
+            BusinessRoom.routeName: (context) => BusinessRoom(),
+            StudyRoom.routeName: (context) => StudyRoom(),
+          }),
+    );
+  }
 }

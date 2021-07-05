@@ -11,6 +11,8 @@ class AppTheme {
     accentColor: kAccentColor,
     backgroundColor: kBackgroundColor,
     errorColor: kErrorColor,
+    cardColor: kCardColor,
+    
     textTheme: TextTheme(
         headline1: TextStyle(fontSize: 96.0, fontFamily: 'Roboto', color: kTextColor),
         headline2: TextStyle(fontSize: 60.0, fontFamily: 'Roboto', color: kTextColor),
