@@ -18,6 +18,9 @@ class Member {
       this.connectedSocials,
       this.role = '',
       this.dateRegistered});
+  String get() {
+    return id;
+  }
 
   factory Member.fromMap(Map<String, dynamic> userInfo) {
     Map<String, String> _connectedSocials = Map<String, String>();

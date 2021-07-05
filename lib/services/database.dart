@@ -48,9 +48,9 @@ class DatabaseService with ChangeNotifier {
       String lastName,
       DateTime dateRegistered,
       {String userRole = 'Customer'}) async {
-    Map<String, bool> connectedSocials = new Map<String, bool>();
-    connectedSocials[USER_FACEBOOK_FIELD] = false;
-    connectedSocials[USER_GOOGLE_FIELD] = false;
+    Map<String, String> connectedSocials = new Map<String, String>();
+    connectedSocials[USER_FACEBOOK_FIELD] = "";
+    connectedSocials[USER_GOOGLE_FIELD] = "";
 
     if (currUser != null) {
       _firestoreInstance
@@ -71,6 +71,10 @@ class DatabaseService with ChangeNotifier {
     } else {
       print('User was null, so could not complete createUserInDatabase()');
     }
+  }
+
+  Future createSocialMediaAcct(String socialMedia) async {
+    // _firestoreInstance.collection(USER_SOCIAL_FIELD).doc().set();
   }
 
   Future createMessageInDatabase(MessageCard msgCardToAdd) async {
@@ -132,4 +136,22 @@ class DatabaseService with ChangeNotifier {
       .orderBy("date", descending: true)
       .snapshots()
       .map(convertToMessageList);
+
+  Future updateFacebookProfile(
+    User? currUser,
+    String facebookURL,
+  ) async {
+    if (currUser != null) {
+      _firestoreInstance
+          .collection(USERS_COLLECTION)
+          .doc(currUser.uid)
+          .update({
+            USER_SOCIAL_FIELD: {USER_FACEBOOK_FIELD: facebookURL}
+          })
+          .then((value) => print('Updated Facebook Account $facebookURL.'))
+          .catchError((error) => print('Failed to create user: $error'));
+    } else {
+      print('User was null, so could not complete createUserInDatabase()');
+    }
+  }
 }

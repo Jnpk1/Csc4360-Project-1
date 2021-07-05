@@ -92,6 +92,8 @@ class AuthService with ChangeNotifier {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+  Future<User?> createUser() async {}
   // // Haven't tested yet
   // Future registerWithEmailAndPassword(
   //     {required String email,
