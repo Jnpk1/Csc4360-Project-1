@@ -22,7 +22,7 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsPageState extends State<SettingsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   String _urlToLink = '';
