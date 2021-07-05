@@ -51,7 +51,7 @@ class DatabaseService with ChangeNotifier {
       {String userRole = 'Customer'}) async {
     Map<String, String> connectedSocials = new Map<String, String>();
     connectedSocials[USER_FACEBOOK_FIELD] = "";
-    connectedSocials[USER_GOOGLE_FIELD] = "";
+    connectedSocials[USER_INSTAGRAM_FIELD] = "";
 
     if (currUser != null) {
       _firestoreInstance
@@ -166,7 +166,7 @@ class DatabaseService with ChangeNotifier {
           .then((value) => print('Updated Instagram Account $instagramURL.'))
           .catchError((error) => print('Failed to create user: $error'));
     } else {
-      print('User was null, so could not complete updateGoogleprofile()');
+      print('User was null, so could not complete updateInstagramProfile()');
     }
   }
 }

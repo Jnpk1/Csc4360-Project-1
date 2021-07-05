@@ -25,7 +25,7 @@ class Member {
   factory Member.fromMap(Map<String, dynamic> userInfo) {
     Map<String, String> _connectedSocials = Map<String, String>();
     _connectedSocials["facebook"] = userInfo["connectedSocials"]["facebook"];
-    _connectedSocials["google"] = userInfo["connectedSocials"]["google"];
+    _connectedSocials["instagram"] = userInfo["connectedSocials"]["instagram"];
     Member res = new Member(
       firstName: userInfo["firstName"],
       lastName: userInfo["lastName"],
