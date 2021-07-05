@@ -7,7 +7,7 @@
 
 ## Image of Data Storage
 
-![img](https://cdn.discordapp.com/attachments/851552841395077214/858492796477243442/unknown.png)
+[Imgur](https://i.imgur.com/gYHvjL4.png)
 
 ## BLoC Design Graphic
 
