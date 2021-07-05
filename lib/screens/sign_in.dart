@@ -126,8 +126,6 @@ class _SignInState extends State<SignIn> {
                                     _isLoading = false;
                                   });
                                 } else {
-                                  
-
                                   setState(() {
                                     _isLoading = true;
                                   });
@@ -157,6 +155,7 @@ class _SignInState extends State<SignIn> {
                             setState(() => loading = false);
                           } else {
                             print('Google sign in returned: $result');
+                            Navigator.pushNamed(context, Home.routeName);
                           }
                         })),
                         SizedBox(height: 12.0),
