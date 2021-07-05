@@ -75,7 +75,7 @@ Widget buildMessageList(BuildContext context) {
 }
 
 Widget buildItem(context, MessageCard currCard) {
-  User? currUser = FirebaseAuth.instance.currentUser;
+  // User? currUser = FirebaseAuth.instance.currentUser;
   Member newestMember = Provider.of<Member>(context);
   // print()
   String timePosted = DateFormat.yMd()

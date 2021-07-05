@@ -45,7 +45,7 @@ class _MyHomePageState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // appBar: memoAppBar(context, "Home"),
-      appBar: memoAppBar(context, "$newestMember"),
+      appBar: memoAppBar(context, "Home"),
       backgroundColor: kBackgroundColor,
       body: Center(
         child: home_content(context),

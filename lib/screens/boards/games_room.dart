@@ -75,12 +75,12 @@ Widget buildMessageList(BuildContext context) {
 }
 
 Widget buildItem(context, MessageCard currCard) {
-  User? currUser = FirebaseAuth.instance.currentUser;
+  Member newestMember = Provider.of<Member>(context);
   // print()
   String timePosted = DateFormat.yMd()
       .add_jm()
       .format(currCard.date?.toLocal() ?? DateTime.now());
-  if (currCard.author == currUser?.displayName) {
+  if (currCard.author == newestMember.username) {
     // Right (my message)
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -197,6 +197,7 @@ Widget buildItem(context, MessageCard currCard) {
 }
 
 Widget buildInput(BuildContext context, TextEditingController myController) {
+  Member newestMember = Provider.of<Member>(context);
   return Container(
       child: Padding(
         // padding: const EdgeInsets.all(8.0),
@@ -234,7 +235,7 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                       await Provider.of<AuthService>(context, listen: false)
                           .getUser();
                   MessageCard mc = MessageCard(
-                      author: currUser?.displayName ?? '',
+                      author: newestMember.username,
                       content: msgContent,
                       date: DateTime.now(),
                       room: "gamesRoom");
