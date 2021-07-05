@@ -89,18 +89,18 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future createUserInDatabaseWithGoogle(User user) async {
-    List userName = user.displayName?.split(' ') ?? List.empty();
-    if (userName.length > 0) {
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'firstName': userName[0],
-        'lastName': userName[1],
-        'email': user.email,
-        'registrationDate': DateTime.now(),
-        'userRole': 'Customer',
-      });
-    }
-  }
+  // Future createUserInDatabaseWithGoogle(User user) async {
+  //   List userName = user.displayName?.split(' ') ?? List.empty();
+  //   if (userName.length > 0) {
+  //     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+  //       'firstName': userName[0],
+  //       'lastName': userName[1],
+  //       'email': user.email,
+  //       'registrationDate': DateTime.now(),
+  //       'userRole': 'Customer',
+  //     });
+  //   }
+  // }
 
   Future<bool> createUsernameDuringRegistration(
       User? user, String firstName, String lastName) async {
@@ -163,7 +163,7 @@ class AuthService with ChangeNotifier {
                 Duration(seconds: 2)) <
             Duration(seconds: 1)) {
           print('Creating new user in Database.');
-          createUserInDatabaseWithGoogle(user);
+          await _db.createUserInDatabaseWithGoogle(user);
         }
       }
       print("Signed in with google as {$user}");
