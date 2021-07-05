@@ -159,6 +159,7 @@ class _MyMaterialAppState extends State<MyMaterialApp> {
             Profile.routeName: (context) => Profile(),
             SettingsPage.routeName: (context) => SettingsPage(),
             Welcome.routeName: (context) => Welcome(),
+            ResetScreen.routeName: (context) => ResetScreen(),
             HealthRoom.routeName: (context) => HealthRoom(),
             GamesRoom.routeName: (context) => GamesRoom(),
             BusinessRoom.routeName: (context) => BusinessRoom(),

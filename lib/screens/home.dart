@@ -85,69 +85,25 @@ Widget roomButtons(BuildContext context) {
   print(Navigator.of(context).toString());
 
   return Column(children: <Widget>[
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Health Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
+    StyledButton(
+        text: 'Health Room',
+        onPressed: () => Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME)),
+    StyledButton(
+        text: 'Games Room',
         onPressed: () {
           Navigator.pushNamed(context, GamesRoom.routeName);
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Games Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, BusinessRoom.routeName),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Business Board',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, StudyRoom.routeName),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Study Board',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
-        onPressed: () => Navigator.pushNamed(context, Register.routeName),
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonBorderRadius),
-        ),
-        child: Text('Register Page',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
+        }),
+    StyledButton(
+        text: 'Business Board',
+        onPressed: () => Navigator.pushNamed(context, BusinessRoom.routeName)),
+    StyledButton(
+        text: 'Study Board',
+        onPressed: () => Navigator.pushNamed(context, StudyRoom.routeName)),
+    StyledButton(
+        text: 'Register Page',
+        onPressed: () => Navigator.pushNamed(context, Register.routeName)),
+    StyledButton(
+        text: 'Sign out',
         onPressed: () async {
           bool didSignOut = await _auth.signOut();
           if (didSignOut) {
@@ -157,18 +113,9 @@ Widget roomButtons(BuildContext context) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 Welcome.routeName, (Route<dynamic> route) => false);
           }
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Sign Out',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
+        }),
+    StyledButton(
+        text: 'Create Dummy Message Health Room',
         onPressed: () async {
           MessageCard mc = MessageCard(
               author: "nate",
@@ -178,18 +125,9 @@ Widget roomButtons(BuildContext context) {
           DatabaseService db = DatabaseService();
           await db.createMessageInDatabase(mc);
           print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Health Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
+        }),
+    StyledButton(
+        text: 'Create Dummy Message Study Room',
         onPressed: () async {
           MessageCard mc = MessageCard(
               author: "nate",
@@ -199,18 +137,9 @@ Widget roomButtons(BuildContext context) {
           DatabaseService db = DatabaseService();
           await db.createMessageInDatabase(mc);
           print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Study Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
+        }),
+    StyledButton(
+        text: 'Create Dummy Message Business Room',
         onPressed: () async {
           MessageCard mc = MessageCard(
               author: "nate",
@@ -220,18 +149,9 @@ Widget roomButtons(BuildContext context) {
           DatabaseService db = DatabaseService();
           await db.createMessageInDatabase(mc);
           print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Business Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
+        }),
+    StyledButton(
+        text: 'Create Dummy Message Games Room',
         onPressed: () async {
           MessageCard mc = MessageCard(
               author: "nate",
@@ -241,33 +161,14 @@ Widget roomButtons(BuildContext context) {
           DatabaseService db = DatabaseService();
           await db.createMessageInDatabase(mc);
           print("Added $mc to Firestore.");
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Create Dummy Message Games Room',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
-    MaterialButton(
+        }),
+    StyledButton(
+        text: 'Print HealthRoom Messages',
         onPressed: () async {
           DatabaseService db = DatabaseService();
           await db.getAllHealthMessages();
           print('after await');
-        },
-        elevation: buttonThemeElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text('Print HealthRoom Messages',
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(color: kOnButtonColor)),
-        color: kButtonColor),
+        }),
     testFunctionToGetCurrentUser(context),
   ]);
 }
