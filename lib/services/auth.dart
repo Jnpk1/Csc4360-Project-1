@@ -75,22 +75,53 @@ class AuthService with ChangeNotifier {
     }
   }
 
+ 
+  
+   Future createUserInDatabaseWithGoogle(User user) async {
+    List userName = user.displayName?.split(' ') ?? List.empty();
+    if (userName.length > 0) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'firstName': userName[0],
+        'lastName': userName[1],
+        'email': user.email,
+        'registrationDate': DateTime.now(),
+        'userRole': 'Customer',
+      });
+    }
+  }
+
   Future<UserCredential?> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    try {
+      UserCredential userCredential;
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final googleAuthCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+      userCredential = await _auth.signInWithCredential(googleAuthCredential);
+      User? user = userCredential.user;
+      if (user != null) {
+        print(
+            'FirebaseUser creation time: ${user.metadata.creationTime} FirebaseUser lastSignInTime: ${user.metadata.lastSignInTime}');
+        // If it is a new user (signing in for the first time), create a user in the database
+        DateTime? creation = user.metadata.creationTime;
+        DateTime? lastSignIn = user.metadata.lastSignInTime;
+        if ((creation?.difference(lastSignIn ?? DateTime.now()).abs() ??
+                Duration(seconds: 2)) <
+            Duration(seconds: 1)) {
+          print('Creating new user in Database.');
+          createUserInDatabaseWithGoogle(user);
+        }
+      }
+      print("Signed in with google as {$user}");
+      return userCredential;
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<User?> createUser() async {}
