@@ -19,9 +19,14 @@ class Welcome extends StatelessWidget {
       appBar: memoAppBar(context, "Welcome"),
       body: Center(
         child: Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             child: Column(
               children: <Widget>[
+                Image.asset(
+                  'assets/mc.png',
+                ),
+
+                // // ),
                 SizedBox(height: 15.0),
                 MaterialButton(
                     elevation: buttonThemeElevation,
