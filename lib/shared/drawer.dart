@@ -33,7 +33,7 @@ Widget memoDrawer(BuildContext context) {
             // ...
             // Then close the drawer
             Navigator.pop(context);
-            Navigator.pushNamed(context, Settings.routeName);
+            Navigator.pushNamed(context, SettingsPage.routeName);
           },
         ),
         ListTile(

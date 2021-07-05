@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/models/MessageCard.dart';
+import 'package:memoclub/screens/boards/business_room.dart';
+import 'package:memoclub/screens/boards/games_room.dart';
 import 'package:memoclub/screens/boards/health_room.dart';
+import 'package:memoclub/screens/boards/study_room.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
@@ -36,10 +40,12 @@ class _MyHomePageState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // printUser();
+    Member newestMember = Provider.of<Member>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: memoAppBar(context, "Home"),
+      // appBar: memoAppBar(context, "Home"),
+      appBar: memoAppBar(context, "$newestMember"),
       backgroundColor: kBackgroundColor,
       body: Center(
         child: home_content(context),
