@@ -25,9 +25,11 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
+  String _urlToLink = '';
   @override
   Widget build(BuildContext context) {
     AuthService _auth = Provider.of<AuthService>(context);
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Settings"),
@@ -76,7 +78,9 @@ class _SettingsState extends State<Settings> {
                       Container(
                         width: 200,
                         child: TextFormField(
+                          onChanged: (input) => _urlToLink = input,
                           style: TextStyle(color: Colors.black),
+
                           decoration: const InputDecoration(
                             hintText: 'Enter Social Media URL',
                             enabledBorder: OutlineInputBorder(),
@@ -98,23 +102,27 @@ class _SettingsState extends State<Settings> {
                                 borderRadius: BorderRadius.circular(40),
                               ),
                               primary: Colors.deepPurple[600]),
-                          onPressed: () {
-                            //   if (_formKey.currentState!.validate()) {
+                          child: const Text('Submit'),
+                          onPressed: () async {
+                            // if (_formKey.currentState!.validate()) {
                             // Process Data
 
-                            String key = _formKey1.toString();
-                            print(key);
-                            User? user =
-                                Provider.of<AuthService>(context, listen: false)
-                                    .getUser() as User?;
+                            User? currUser = await Provider.of<AuthService>(
+                                    context,
+                                    listen: false)
+                                .getUser();
+                            String key = _urlToLink;
+                            print(
+                                "currUser is = $currUser, sending to database...");
+                            print(
+                                "userinput is = $key, sending to database...");
 
                             DatabaseService db = DatabaseService();
-                            db.updateFacebookProfile(user, key);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Processing Data')));
+                            db.updateFacebookProfile(currUser, key);
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //     SnackBar(content: Text('Processing Data')));
                             // }
                           },
-                          child: const Text('Submit'),
                         ),
                       ),
                     ],
