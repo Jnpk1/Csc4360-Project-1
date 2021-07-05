@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -15,50 +18,117 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
+    Member currentMember = Provider.of<Member>(context);
+    String _facebookLink = currentMember.connectedSocials?["facebook"] ?? '';
+    String _instagramLink = currentMember.connectedSocials?["instagram"] ?? '';
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Profile"),
-      body: roomButtons(context),
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+          child: ListView(children: <Widget>[
+            Card(
+                child: ListTile(
+              leading: Icon(
+                Icons.facebook,
+                size: 56.0,
+                color: Colors.white,
+              ),
+              tileColor: kPrimaryColor,
+              title: Text(
+                'Facebook Account',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: Colors.white),
+              ),
+              onTap: () async {
+                if (_facebookLink.isNotEmpty) {
+                  await canLaunch(_facebookLink)
+                      ? await launch(_facebookLink)
+                      : throw 'Could not launch $_facebookLink';
+                }
+              },
+              subtitle: _facebookLink.isEmpty
+                  ? Text(
+                      "No Facebook link available.",
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          ?.copyWith(color: Colors.white),
+                    )
+                  : (Text(
+                      "$_facebookLink",
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          ?.copyWith(color: Colors.white),
+                    )),
+            )),
+            Card(
+                child: ListTile(
+              leading: Icon(
+                Icons.camera_alt_outlined,
+                size: 56.0,
+                color: Colors.white,
+              ),
+              tileColor: kPrimaryColor,
+              title: Text(
+                'Instagram Account',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: Colors.white),
+              ),
+              onTap: () async {
+                if (_instagramLink.isNotEmpty) {
+                  await canLaunch(_instagramLink)
+                      ? await launch(_instagramLink)
+                      : throw 'Could not launch $_instagramLink';
+                }
+              },
+              subtitle: _instagramLink.isEmpty
+                  ? Text(
+                      "No Instagram link available.",
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          ?.copyWith(color: Colors.white),
+                    )
+                  : (Text(
+                      "$_instagramLink",
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          ?.copyWith(color: Colors.white),
+                    )),
+            )),
+            roomButtons(context),
+          ]),
+        ),
+      ),
       drawer: memoDrawer(context),
     );
   }
 }
 
-// https://firebase.flutter.dev/docs/firestore/usage#realtime-changes
-// use ^^ to track connected social media accounts.
-
-// class UserInformation extends StatefulWidget {
-//   @override
-//   _UserInformationState createState() => _UserInformationState();
+// Widget facebookLink(context, String possibleUrl) {
+//   return possibleUrl.isEmpty
+//       ? Container(child: Text("Facebook is not connected."))
+//       : StyledButton(
+//           text: possibleUrl,
+//           onPressed: () async => await canLaunch(possibleUrl)
+//               ? await launch(possibleUrl)
+//               : throw 'Could not launch $possibleUrl');
 // }
 
-// class _UserInformationState extends State<UserInformation> {
-//   final Stream<QuerySnapshot> _usersStream =
-//       FirebaseFirestore.instance.collection('users').snapshots();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder<QuerySnapshot>(
-//       stream: _usersStream,
-//       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//         if (snapshot.hasError) {
-//           return Text('Something went wrong');
-//         }
-
-//         if (snapshot.connectionState == ConnectionState.waiting) {
-//           return Text("Loading");
-//         }
-
-//         return new ListView(
-//           children: snapshot.data.docs.map((DocumentSnapshot document) {
-//             Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-//             return new ListTile(
-//               title: new Text(data['full_name']),
-//               subtitle: new Text(data['company']),
-//             );
-//           }).toList(),
-//         );
-//       },
-//     );
-//   }
+// Widget instagramLink(context, String possibleUrl) {
+//   return possibleUrl.isEmpty
+//       ? Container(child: Text("Instagram is not connected."))
+//       : StyledButton(
+//           text: possibleUrl,
+//           onPressed: () async => await canLaunch(possibleUrl)
+//               ? await launch(possibleUrl)
+//               : throw 'Could not launch $possibleUrl');
 // }
