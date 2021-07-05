@@ -119,8 +119,8 @@ class _SettingsState extends State<Settings> {
 
                             DatabaseService db = DatabaseService();
                             db.updateFacebookProfile(currUser, key);
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     SnackBar(content: Text('Processing Data')));
+                             ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Social Media Updated')));
                             // }
                           },
                         ),
