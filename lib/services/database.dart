@@ -52,10 +52,6 @@ class DatabaseService with ChangeNotifier {
       DateTime dateRegistered,
       String username,
       {String userRole = 'Customer'}) async {
-    Map<String, String> connectedSocials = new Map<String, String>();
-    connectedSocials[USER_INSTAGRAM_FIELD] = "";
-    connectedSocials[USER_INSTAGRAM_FIELD] = "";
-
     if (currUser != null) {
       _firestoreInstance
           .collection(USERS_COLLECTION)
@@ -67,7 +63,10 @@ class DatabaseService with ChangeNotifier {
             USER_ID_FIELD: currUser.uid,
             USER_ROLE_FIELD: userRole,
             USER_DATE_REGISTERED_FIELD: dateRegistered,
-            USER_SOCIAL_FIELD: connectedSocials,
+            USER_SOCIAL_FIELD: {
+              USER_FACEBOOK_FIELD: "",
+              USER_INSTAGRAM_FIELD: ""
+            },
             USER_USERNAME_FIELD: username,
           })
           .then((value) =>
@@ -75,6 +74,24 @@ class DatabaseService with ChangeNotifier {
           .catchError((error) => print('Failed to create user: $error'));
     } else {
       print('User was null, so could not complete createUserInDatabase()');
+    }
+  }
+
+  Future createUserInDatabaseWithGoogle(User currUser) async {
+    List userName = currUser.displayName?.split(' ') ?? List.empty();
+    if (userName.length > 0) {
+      await FirebaseFirestore.instance
+          .collection(USERS_COLLECTION)
+          .doc(currUser.uid)
+          .set({
+        USER_FIRSTNAME_FIELD: userName[0],
+        USER_LASTNAME_FIELD: userName[1],
+        USER_EMAIL_FIELD: currUser.email,
+        USER_DATE_REGISTERED_FIELD: DateTime.now(),
+        USER_ROLE_FIELD: 'Customer',
+        USER_SOCIAL_FIELD: {USER_FACEBOOK_FIELD: "", USER_INSTAGRAM_FIELD: ""},
+        USER_ID_FIELD: currUser.uid,
+      });
     }
   }
 
