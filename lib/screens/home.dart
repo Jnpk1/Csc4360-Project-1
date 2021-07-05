@@ -77,7 +77,7 @@ Widget testFunctionToGetCurrentUser(BuildContext context) {
 
 //HEALTH_ROOM_ROUTE_NAME
 Widget roomButtons(BuildContext context) {
-  final String HEALTH_ROOM_ROUTE_NAME = HealthRoom.routeName;
+  // final String HEALTH_ROOM_ROUTE_NAME = HealthRoom.routeName;
   AuthService _auth = Provider.of<AuthService>(context, listen: false);
   print(Navigator.of(context).toString());
 
@@ -129,7 +129,7 @@ Widget home_content(BuildContext context) {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+          Navigator.pushNamed(context, BusinessRoom.routeName);
         },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
@@ -148,7 +148,7 @@ Widget home_content(BuildContext context) {
             style: TextStyle(color: Colors.white),
           ),
           onTap: () {
-            Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+            Navigator.pushNamed(context, GamesRoom.routeName);
           },
           subtitle: Text(''),
           trailing: Icon(Icons.more_vert),
@@ -168,7 +168,7 @@ Widget home_content(BuildContext context) {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+          Navigator.pushNamed(context, HealthRoom.routeName);
         },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
@@ -187,7 +187,7 @@ Widget home_content(BuildContext context) {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          Navigator.pushNamed(context, HEALTH_ROOM_ROUTE_NAME);
+          Navigator.pushNamed(context, StudyRoom.routeName);
         },
         subtitle: Text(''),
         trailing: Icon(Icons.more_vert),
