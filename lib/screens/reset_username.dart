@@ -48,8 +48,16 @@ class _ResetUsernameScreenState extends State<ResetUsernameScreen> {
                           ?.copyWith(color: kTextColor),
                       decoration:
                           textInputDecoration.copyWith(hintText: 'Username'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter a username' : null,
+                      validator: (val) {
+                        if (val != null) {
+                          if (val.isEmpty) {
+                            return "Enter a username";
+                          } else if (val.length > 18) {
+                            return "Max username length is 18 characters.";
+                          }
+                        }
+                        return null;
+                      },
                       onChanged: (val) {
                         setState(() => _username = val);
                       }),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/screens/home.dart';
+import 'package:memoclub/screens/reset_username.dart';
 import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
@@ -26,10 +27,15 @@ class _ProfileState extends State<Profile> {
       backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Profile"),
       body: SafeArea(
-        minimum: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+        left: true,
+        right: true,
+        bottom: true,
+        top: true,
+        minimum: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: Column(children: <Widget>[
           Card(
               margin: EdgeInsets.all(10.0),
+              borderOnForeground: false,
               elevation: 0,
               child: ListTile(
                 leading: Icon(
@@ -46,21 +52,25 @@ class _ProfileState extends State<Profile> {
                       ?.copyWith(color: kPrimaryColor),
                 ),
               )),
-          SizedBox(
-            height: 40,
+          Flexible(
+            child: SizedBox(
+              height: 40,
+            ),
           ),
-          Text(
-            "Connected Socials",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                ?.copyWith(color: kPrimaryColor),
+          Flexible(
+            child: Text(
+              "Connected Socials",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(color: kPrimaryColor),
+            ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+          // SizedBox(
+          //   height: 20,
+          // ),
           Card(
-              margin: EdgeInsets.all(10.0),
+              margin: EdgeInsets.all(5.0),
               child: ListTile(
                 leading: Icon(
                   Icons.facebook,
@@ -99,7 +109,7 @@ class _ProfileState extends State<Profile> {
                       )),
               )),
           Card(
-              margin: EdgeInsets.all(10.0),
+              margin: EdgeInsets.all(5.0),
               child: ListTile(
                 leading: Icon(
                   Icons.camera_alt_outlined,
@@ -137,7 +147,16 @@ class _ProfileState extends State<Profile> {
                             ?.copyWith(color: Colors.white),
                       )),
               )),
-          Expanded(child: Container()),
+          Flexible(
+            child: SizedBox(
+              height: 80,
+            ),
+          ),
+          StyledButton(
+              text: "Update username",
+              onPressed: () =>
+                  Navigator.pushNamed(context, ResetUsernameScreen.routeName)),
+          // Expanded(child: Container(),),
           roomButtons(context),
           SizedBox(
             height: 20,
