@@ -218,6 +218,15 @@ class DatabaseService with ChangeNotifier {
     }
   }
 
+  Future updateUsername(String uid, String newUsername) async {
+    _firestoreInstance
+        .collection(USERS_COLLECTION)
+        .doc(uid)
+        .update({USER_USERNAME_FIELD: newUsername})
+        .then((value) => print('Updated username to $newUsername.'))
+        .catchError((error) => print('Failed to create user: $error'));
+  }
+
   Stream<List<MessageCard>> get businessMessages => _firestoreInstance
       .collection(ROOM_COLLECTION)
       .doc(BUSINESS_ROOM)
