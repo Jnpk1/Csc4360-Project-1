@@ -1,5 +1,9 @@
 # MemoClub 
 
+`https://github.com/Jnpk1/Csc4360-Project-1.git`
+
+link to website: `https://github.com/Jnpk1/Csc4360-Project-1`
+
 ## Goal of this project
 
 Developed as a school project. The goal was to create an app that has multiple message rooms. We developed our app for Android/Webapp (Chrome). 
