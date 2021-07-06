@@ -77,7 +77,7 @@ class AuthService with ChangeNotifier {
         print(res);
         if (res != null) {
           currentMember = Member.fromMap(res);
-          print("Created new member during sign in. $currentMember");
+          // print("Created new member during sign in. $currentMember");
         }
       } else {
         print('No user signed in');

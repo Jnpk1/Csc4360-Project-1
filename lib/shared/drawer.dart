@@ -73,11 +73,6 @@ Widget memoDrawer(BuildContext context) {
               color: kPrimaryColor,
             ),
             onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              // Navigator.pop(context);
-              // Navigator.pushNamed(context, Home.routeName);
               Navigator.of(context).pushNamedAndRemoveUntil(
                   Welcome.routeName, (Route<dynamic> route) => false);
             })

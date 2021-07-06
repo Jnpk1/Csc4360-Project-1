@@ -118,6 +118,7 @@ Widget home_content(BuildContext context) {
     child: ListView(children: <Widget>[
       Card(
           child: ListTile(
+        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         leading: Icon(
           Icons.business_center,
           size: 56.0,
@@ -131,12 +132,10 @@ Widget home_content(BuildContext context) {
         onTap: () {
           Navigator.pushNamed(context, BusinessRoom.routeName);
         },
-        subtitle: Text(''),
-        trailing: Icon(Icons.more_vert),
-        //isThreeLine: true,
       )),
       Card(
         child: ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           leading: Icon(
             Icons.sports_esports_outlined,
             size: 56.0,
@@ -150,13 +149,11 @@ Widget home_content(BuildContext context) {
           onTap: () {
             Navigator.pushNamed(context, GamesRoom.routeName);
           },
-          subtitle: Text(''),
-          trailing: Icon(Icons.more_vert),
-          // isThreeLine: true,
         ),
       ),
       Card(
           child: ListTile(
+        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         leading: Icon(
           Icons.health_and_safety_outlined,
           size: 56.0,
@@ -170,12 +167,10 @@ Widget home_content(BuildContext context) {
         onTap: () {
           Navigator.pushNamed(context, HealthRoom.routeName);
         },
-        subtitle: Text(''),
-        trailing: Icon(Icons.more_vert),
-        //  isThreeLine: true,
       )),
       Card(
           child: ListTile(
+        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         leading: Icon(
           Icons.book,
           size: 56.0,
@@ -189,10 +184,10 @@ Widget home_content(BuildContext context) {
         onTap: () {
           Navigator.pushNamed(context, StudyRoom.routeName);
         },
-        subtitle: Text(''),
-        trailing: Icon(Icons.more_vert),
-        // isThreeLine: true,
       )),
+      SizedBox(
+        height: 80,
+      ),
 
       roomButtons(context),
 
