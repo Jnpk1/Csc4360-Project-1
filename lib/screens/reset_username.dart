@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:memoclub/models/Member.dart';
+import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
@@ -66,9 +67,7 @@ class _ResetUsernameScreenState extends State<ResetUsernameScreen> {
                       color: kButtonColor,
                       onPressed: () async {
                         await _db.updateUsername(currMember.id, _username);
-                        
-
-                        Navigator.pushNamed(context, SignIn.routeName);
+                        Navigator.pushNamed(context, Profile.routeName);
                       }),
                 ]))));
   }
