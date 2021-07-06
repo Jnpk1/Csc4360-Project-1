@@ -46,7 +46,7 @@ Developed as a school project. The goal was to create an app that has multiple m
 
 ## Areas of Improvement
 
-The organization and design principles needed some improvement. We could have reduced duplicated code by reusing a widget class for the buttons. Another area of improvement would be to limit where we access the Member model, so that the app rebuilds a smaller portion of the widget tree. 
+The organization and design principles could use some improvement. We could have reduced duplicated code by reusing a widget class for the buttons throughout the app. Another area of improvement would be to limit where we access the Member model. We use `Provider.of<Member>(context)` to access it, so limiting the areas we call for this value would lead to the app rebuilding a smaller portion of the widget tree, thus improving performance. 
 
 ## Troubleshooting issues
 
