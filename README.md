@@ -4,6 +4,7 @@
 
 * -------
 
+
 ## Contributors:
 
 * Nathan Larkin
@@ -58,3 +59,10 @@ The organization and design principles in this project need improvement. I wasn'
 
 [Imgur](https://i.imgur.com/gYHvjL4.png)
 
+## Authors
+
+Nathan Larkin
+
+James Park
+
+Drew Hartman
