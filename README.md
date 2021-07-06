@@ -40,6 +40,8 @@
 
 * [Splash Screen, Login, Registration](https://youtu.be/trdU3mPxiNU)
 * [Socials, Profile, and Drawer](https://youtu.be/voPbMGEkBeU)
+* [YouTube Video App Demonstration](https://www.youtube.com/watch?v=BA7VXg5wNgA)
+* [Live demo of chatroom functionality](https://www.youtube.com/watch?v=_0hg9_O74EE)
 
 ## Areas of Improvement
 
