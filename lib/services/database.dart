@@ -173,7 +173,7 @@ class DatabaseService with ChangeNotifier {
       .doc(HEALTH_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 
@@ -182,7 +182,7 @@ class DatabaseService with ChangeNotifier {
       .doc(GAMES_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 
@@ -232,7 +232,7 @@ class DatabaseService with ChangeNotifier {
       .doc(BUSINESS_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 
@@ -241,7 +241,7 @@ class DatabaseService with ChangeNotifier {
       .doc(STUDY_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 
