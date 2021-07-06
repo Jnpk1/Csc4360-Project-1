@@ -16,3 +16,8 @@ https://www.youtube.com/watch?v=BA7VXg5wNgA
 
 ![img](https://cdn.discordapp.com/attachments/851552841395077214/858392404439597106/04-BLoC-diagram-1-650x284.png)
 
+## Authors
+
+Nathan Larkin
+James Park
+Drew Hartman
