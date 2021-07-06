@@ -2,10 +2,10 @@
 
 ## Goal of this project
 
-* -------
+Developed as a school project. The goal was to create an app that has multiple message rooms. We developed our app for Android/Webapp (Chrome). 
 
 
-## Contributors:
+## Contributors / Authors:
 
 * Nathan Larkin
 * Drew Hartman
@@ -46,7 +46,7 @@
 
 ## Areas of Improvement
 
-The organization and design principles in this project need improvement. I wasn't able to address these design issues because of the insane time crunch. To improve the program I would probably implement a `Multiprovider` and/or `FutureBuilder`, and the value that would change from my custom user model to the `Firebase.instance.currentUser`. I would possibly implement a more solid MVC design model and create toJson and fromJson methods to serialize communication between Firebase and the custom Class objects that represent the users/messages. I would also change the floating action button test to be based off a `Query` of the current user and see if they have the `userRole: admin`. This would allow for multiple admins to exist, and allow users to change roles easily.
+The organization and design principles needed some improvement. We could have reduced duplicated code by reusing a widget class for the buttons. Another area of improvement would be to limit where we access the Member model, so that the app rebuilds a smaller portion of the widget tree. 
 
 ## Troubleshooting issues
 
@@ -58,11 +58,3 @@ The organization and design principles in this project need improvement. I wasn'
 ## Image of the way the Messages are stored in Firestore
 
 [Imgur](https://i.imgur.com/gYHvjL4.png)
-
-## Authors
-
-Nathan Larkin
-
-James Park
-
-Drew Hartman
