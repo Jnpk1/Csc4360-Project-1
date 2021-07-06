@@ -231,9 +231,9 @@ Widget buildInput(BuildContext context, TextEditingController myController) {
                   String msgContent = myController.text;
                   myController.clear(); // currently doesn't clear
 
-                  User? currUser =
-                      await Provider.of<AuthService>(context, listen: false)
-                          .getUser();
+                  // User? currUser =
+                  //     await Provider.of<AuthService>(context, listen: false)
+                  //         .getUser();
                   MessageCard mc = MessageCard(
                       author: newestMember.username,
                       content: msgContent,
