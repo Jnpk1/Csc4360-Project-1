@@ -13,6 +13,7 @@ import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/services/database.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/drawer.dart';
+import 'package:memoclub/shared/inputDecor.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -40,36 +41,16 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 15.0),
-                MaterialButton(
-                    elevation: buttonThemeElevation,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(buttonBorderRadius),
-                    ),
-                    child: Text('Change Password',
-                        style: Theme.of(context)
-                            .textTheme
-                            .button
-                            ?.copyWith(color: kOnButtonColor)),
-                    color: kButtonColor,
-                    onPressed: () async {
-                      Navigator.pushNamed(context, ResetScreen.routeName);
-                    }),
-                SizedBox(height: 15.0),
-                MaterialButton(
-                    elevation: buttonThemeElevation,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(buttonBorderRadius),
-                    ),
-                    child: Text('Change Username',
-                        style: Theme.of(context)
-                            .textTheme
-                            .button
-                            ?.copyWith(color: kOnButtonColor)),
-                    color: kButtonColor,
-                    onPressed: () async {
-                      Navigator.pushNamed(context, SignIn.routeName);
-                    }),
-                SizedBox(height: 15.0),
+                Flexible(
+                  child: Text(
+                    "Connect a Facebook or Instagram Webpage",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(color: kPrimaryColor),
+                  ),
+                ),
+                // SizedBox(height: 15.0),
                 //**\\\
                 //**This Form is for the User to insert their Social Media URL
                 Form(
@@ -77,15 +58,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        width: 200,
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 50.0),
                         child: TextFormField(
                           onChanged: (input) => _urlToLink = input,
-                          style: TextStyle(color: Colors.black),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              ?.copyWith(color: Colors.black),
 
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Social Media URL',
-                            enabledBorder: OutlineInputBorder(),
-                          ),
+                          decoration: textInputDecoration.copyWith(
+                              hintText: 'Enter Social Media URL'),
+                          // hintText: 'Enter Social Media URL',
+                          // enabledBorder: OutlineInputBorder(),
+                          // ),
                           //This is check if input is valid
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
@@ -104,13 +90,18 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              primary: Colors.deepPurple[600]),
-                          child: const Text('Submit'),
+                        child: MaterialButton(
+                          elevation: buttonThemeElevation,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(buttonBorderRadius),
+                          ),
+                          child: Text('Submit',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .button
+                                  ?.copyWith(color: kOnButtonColor)),
+                          color: kButtonColor,
                           onPressed: () async {
                             if (_formKey.currentState?.validate() ?? false) {
                               // Process Data
@@ -151,19 +142,72 @@ class _SettingsPageState extends State<SettingsPage> {
                                 // Should NEVER happen
                                 print(
                                     "ERROR, url passed validation but did not contain facebook or instagram.");
+                                setState(() {
+                                  error =
+                                      "URL must contain facebook or instagram";
+                                });
                               }
-
-                              // db.updateFacebookProfile(currUser, key);
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(content: Text('Processing Data')));
-                            } else {
-                              setState(() {
-                                error =
-                                    "URL must contain facebook or instagram";
-                              });
                             }
                           },
                         ),
+
+                        // child: MaterialButton(
+                        //   style: Theme.of
+
+                        //   child: const Text('Submit'),
+                        //   onPressed: () async {
+                        //     if (_formKey.currentState?.validate() ?? false) {
+                        //       // Process Data
+                        //       String _originalUrl = _urlToLink;
+                        //       _urlToLink = _urlToLink.toLowerCase();
+
+                        //       User? currUser = await Provider.of<AuthService>(
+                        //               context,
+                        //               listen: false)
+                        //           .getUser();
+                        //       String key = _urlToLink;
+                        //       print(
+                        //           "currUser is = $currUser, sending to database...");
+                        //       // print(
+                        //       //     "userinput is = $key, sending to database...");
+
+                        //       DatabaseService db = DatabaseService();
+                        //       int idx = _urlToLink
+                        //           .indexOf(RegExp(r"(fb\.|facebook\.)"));
+
+                        //       if (idx >= 0) {
+                        //         // contains facebook
+                        //         String _formattedLink = "https://" +
+                        //             _originalUrl.substring(
+                        //                 idx, _urlToLink.length);
+                        //         await db.updateFacebookProfile(
+                        //             currUser, _formattedLink);
+                        //       } else if (_urlToLink.contains("instagram\.")) {
+                        //         // contains instagram
+                        //         String _formattedLink = "https://" +
+                        //             _originalUrl.substring(
+                        //                 _urlToLink
+                        //                     .indexOf(RegExp(r"instagram")),
+                        //                 _urlToLink.length);
+                        //         await db.updateInstagramProfile(
+                        //             currUser, _formattedLink);
+                        //       } else {
+                        //         // Should NEVER happen
+                        //         print(
+                        //             "ERROR, url passed validation but did not contain facebook or instagram.");
+                        //       }
+
+                        //       // db.updateFacebookProfile(currUser, key);
+                        //       // ScaffoldMessenger.of(context).showSnackBar(
+                        //       //     SnackBar(content: Text('Processing Data')));
+                        //     } else {
+                        //       setState(() {
+                        //         error =
+                        //             "URL must contain facebook or instagram";
+                        //       });
+                        //     }
+                        // },
+                        // ),
                       ),
                       // Text(
                       //   error,
@@ -172,6 +216,35 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                 ),
+                MaterialButton(
+                    elevation: buttonThemeElevation,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(buttonBorderRadius),
+                    ),
+                    child: Text('Change Password',
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            ?.copyWith(color: kOnButtonColor)),
+                    color: kButtonColor,
+                    onPressed: () async {
+                      Navigator.pushNamed(context, ResetScreen.routeName);
+                    }),
+                SizedBox(height: 15.0),
+                MaterialButton(
+                    elevation: buttonThemeElevation,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(buttonBorderRadius),
+                    ),
+                    child: Text('Change Username',
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            ?.copyWith(color: kOnButtonColor)),
+                    color: kButtonColor,
+                    onPressed: () async {
+                      Navigator.pushNamed(context, SignIn.routeName);
+                    }),
                 MaterialButton(
                     onPressed: () async {
                       bool didSignOut = await _auth.signOut();
