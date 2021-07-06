@@ -62,6 +62,13 @@ class _ResetUsernameScreenState extends State<ResetUsernameScreen> {
                         setState(() => _username = val);
                       }),
                   SizedBox(height: 15.0),
+                  Text(
+                    "$error",
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        ?.copyWith(color: kErrorColor),
+                  ),
                   MaterialButton(
                       elevation: buttonThemeElevation,
                       shape: RoundedRectangleBorder(
@@ -74,8 +81,27 @@ class _ResetUsernameScreenState extends State<ResetUsernameScreen> {
                               ?.copyWith(color: kOnButtonColor)),
                       color: kButtonColor,
                       onPressed: () async {
-                        await _db.updateUsername(currMember.id, _username);
-                        Navigator.pushNamed(context, Profile.routeName);
+                        setState(() => _isLoading = true);
+                        if (_username.isEmpty) {
+                          setState(() {
+                            _isLoading = false;
+                            error = "username is empty";
+                          });
+                        } else if (_username.length > 18) {
+                          setState(() {
+                            _isLoading = false;
+                            error = "longer than 18 characters";
+                          });
+                        } else {
+                          await _db.updateUsername(currMember.id, _username);
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          Navigator.pushNamed(context, Profile.routeName);
+                        }
+
+                        // await _db.updateUsername(currMember.id, _username);
+                        // Navigator.pushNamed(context, Profile.routeName);
                       }),
                 ]))));
   }
