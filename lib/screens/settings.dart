@@ -28,6 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
   // final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   String _urlToLink = '';
   String error = '';
+  String successMessage = '';
   @override
   Widget build(BuildContext context) {
     AuthService _auth = Provider.of<AuthService>(context);
@@ -35,21 +36,22 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: memoAppBar(context, "Settings"),
+      drawer: memoDrawer(context),
       body: Center(
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 15.0),
-                Flexible(
-                  child: Text(
-                    "Connect a Facebook or Instagram Webpage",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: kPrimaryColor),
-                  ),
+                Flexible(child: SizedBox(height: 15.0)),
+
+                Text(
+                  "Connect a Facebook or Instagram Webpage",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: kPrimaryColor),
                 ),
+
                 // SizedBox(height: 15.0),
                 //**\\\
                 //**This Form is for the User to insert their Social Media URL
@@ -81,6 +83,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 r".*(facebook|fb|instagram)\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$");
 
                             if (!validURL.hasMatch(value.toLowerCase())) {
+                              setState(() => successMessage = '');
                               return "URL must be facebook or instagram";
                             } else {
                               return null;
@@ -129,6 +132,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                         idx, _urlToLink.length);
                                 await db.updateFacebookProfile(
                                     currUser, _formattedLink);
+                                setState(() {
+                                  successMessage =
+                                      "Successfully connected Facebook";
+                                });
                               } else if (_urlToLink.contains("instagram\.")) {
                                 // contains instagram
                                 String _formattedLink = "https://" +
@@ -138,6 +145,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                         _urlToLink.length);
                                 await db.updateInstagramProfile(
                                     currUser, _formattedLink);
+                                setState(() {
+                                  successMessage =
+                                      "Successfully connected Instagram";
+                                });
                               } else {
                                 // Should NEVER happen
                                 print(
@@ -150,69 +161,11 @@ class _SettingsPageState extends State<SettingsPage> {
                             }
                           },
                         ),
-
-                        // child: MaterialButton(
-                        //   style: Theme.of
-
-                        //   child: const Text('Submit'),
-                        //   onPressed: () async {
-                        //     if (_formKey.currentState?.validate() ?? false) {
-                        //       // Process Data
-                        //       String _originalUrl = _urlToLink;
-                        //       _urlToLink = _urlToLink.toLowerCase();
-
-                        //       User? currUser = await Provider.of<AuthService>(
-                        //               context,
-                        //               listen: false)
-                        //           .getUser();
-                        //       String key = _urlToLink;
-                        //       print(
-                        //           "currUser is = $currUser, sending to database...");
-                        //       // print(
-                        //       //     "userinput is = $key, sending to database...");
-
-                        //       DatabaseService db = DatabaseService();
-                        //       int idx = _urlToLink
-                        //           .indexOf(RegExp(r"(fb\.|facebook\.)"));
-
-                        //       if (idx >= 0) {
-                        //         // contains facebook
-                        //         String _formattedLink = "https://" +
-                        //             _originalUrl.substring(
-                        //                 idx, _urlToLink.length);
-                        //         await db.updateFacebookProfile(
-                        //             currUser, _formattedLink);
-                        //       } else if (_urlToLink.contains("instagram\.")) {
-                        //         // contains instagram
-                        //         String _formattedLink = "https://" +
-                        //             _originalUrl.substring(
-                        //                 _urlToLink
-                        //                     .indexOf(RegExp(r"instagram")),
-                        //                 _urlToLink.length);
-                        //         await db.updateInstagramProfile(
-                        //             currUser, _formattedLink);
-                        //       } else {
-                        //         // Should NEVER happen
-                        //         print(
-                        //             "ERROR, url passed validation but did not contain facebook or instagram.");
-                        //       }
-
-                        //       // db.updateFacebookProfile(currUser, key);
-                        //       // ScaffoldMessenger.of(context).showSnackBar(
-                        //       //     SnackBar(content: Text('Processing Data')));
-                        //     } else {
-                        //       setState(() {
-                        //         error =
-                        //             "URL must contain facebook or instagram";
-                        //       });
-                        //     }
-                        // },
-                        // ),
                       ),
-                      // Text(
-                      //   error,
-                      //   style: TextStyle(color: Colors.red, fontSize: 14.0),
-                      // ),
+                      Text(
+                        successMessage,
+                        style: TextStyle(color: Colors.green, fontSize: 14.0),
+                      ),
                     ],
                   ),
                 ),
@@ -230,7 +183,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     onPressed: () async {
                       Navigator.pushNamed(context, ResetScreen.routeName);
                     }),
-                SizedBox(height: 15.0),
+                Flexible(child: SizedBox(height: 15.0)),
                 MaterialButton(
                     elevation: buttonThemeElevation,
                     shape: RoundedRectangleBorder(
