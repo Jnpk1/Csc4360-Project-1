@@ -10,6 +10,7 @@ import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/reset.dart';
+import 'package:memoclub/screens/reset_username.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/theme.dart';
@@ -164,6 +165,7 @@ class _MyMaterialAppState extends State<MyMaterialApp> {
             GamesRoom.routeName: (context) => GamesRoom(),
             BusinessRoom.routeName: (context) => BusinessRoom(),
             StudyRoom.routeName: (context) => StudyRoom(),
+            ResetUsernameScreen.routeName: (context) => ResetUsernameScreen(),
           }),
     );
   }
