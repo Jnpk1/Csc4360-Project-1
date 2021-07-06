@@ -5,7 +5,6 @@ import 'package:memoclub/screens/styles/colors.dart';
 PreferredSizeWidget memoAppBar(BuildContext context, String appBarTitle) {
   return AppBar(
     backgroundColor: kPrimaryColor,
-    // leading: logo(context),
     title: Text(
       appBarTitle,
       style: Theme.of(context)

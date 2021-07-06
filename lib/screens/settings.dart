@@ -1,9 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:memoclub/models/Member.dart';
-import 'package:memoclub/models/socialMedia.dart';
-import 'package:memoclub/screens/home.dart';
-import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/reset.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
@@ -25,7 +21,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   String _urlToLink = '';
   String error = '';
   String successMessage = '';
@@ -52,8 +47,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       ?.copyWith(color: kPrimaryColor),
                 ),
 
-                // SizedBox(height: 15.0),
-                //**\\\
                 //**This Form is for the User to insert their Social Media URL
                 Form(
                   key: _formKey,
@@ -68,13 +61,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               .textTheme
                               .bodyText2
                               ?.copyWith(color: Colors.black),
-
                           decoration: textInputDecoration.copyWith(
                               hintText: 'Enter Social Media URL'),
-                          // hintText: 'Enter Social Media URL',
-                          // enabledBorder: OutlineInputBorder(),
-                          // ),
-                          //This is check if input is valid
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
                               return 'URL is empty.';
@@ -118,8 +106,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               String key = _urlToLink;
                               print(
                                   "currUser is = $currUser, sending to database...");
-                              // print(
-                              //     "userinput is = $key, sending to database...");
 
                               DatabaseService db = DatabaseService();
                               int idx = _urlToLink
@@ -221,42 +207,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     color: kButtonColor),
               ],
             )),
-      ),
-    );
-  }
-
-//this method isn't used
-  form() {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          //Input for Social Media URL
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Enter in your Social Media URL',
-            ),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return 'Enter in a URL';
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  // Process Data
-
-                }
-              },
-              child: const Text('Submit'),
-            ),
-          ),
-        ],
       ),
     );
   }

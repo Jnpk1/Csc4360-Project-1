@@ -3,11 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
-import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/appbar.dart';
 import 'package:memoclub/shared/inputDecor.dart';
 import 'package:memoclub/shared/loading.dart';
-import 'package:provider/provider.dart';
 
 class ResetScreen extends StatefulWidget {
   const ResetScreen({Key? key}) : super(key: key);
@@ -24,8 +22,6 @@ class _ResetScreenState extends State<ResetScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AuthService _auth = Provider.of<AuthService>(context);
-
     return _isLoading
         ? LoadingCircle()
         : Scaffold(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Generic Loading Symbol. Subject to change.
 class LoadingCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

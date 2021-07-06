@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/screens/profile.dart';
-import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/services/auth.dart';
@@ -100,8 +99,8 @@ class _ResetUsernameScreenState extends State<ResetUsernameScreen> {
                           Navigator.pushNamed(context, Profile.routeName);
                         }
 
-                        // await _db.updateUsername(currMember.id, _username);
-                        // Navigator.pushNamed(context, Profile.routeName);
+                        
+                        
                       }),
                 ]))));
   }

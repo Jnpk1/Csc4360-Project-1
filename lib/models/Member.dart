@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Member {
   String firstName;
@@ -30,10 +29,6 @@ class Member {
     }
     try {
       Map<String, String> _connectedSocials = Map<String, String>();
-      // var facebookInfo = userInfo["connectedSocials"]["facebook"];
-      // var googleInfo = userInfo["connectedSocials"]["google"];
-      // assert(facebookInfo is String);
-      // assert(googleInfo is String);
 
       _connectedSocials["facebook"] = userInfo["connectedSocials"]["facebook"];
       _connectedSocials["instagram"] =
