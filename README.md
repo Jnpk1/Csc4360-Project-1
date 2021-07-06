@@ -1,7 +1,7 @@
 # MemoClub
 
-##Youtube Video App Demonstration
-https://www.youtube.com/watch?v=BA7VXg5wNgA
+##Youtube Video App Demonstration: https://www.youtube.com/watch?v=BA7VXg5wNgA
+
 Live Demo of Chatroom functionality: https://www.youtube.com/watch?v=_0hg9_O74EE
 
 ## Useful Links
