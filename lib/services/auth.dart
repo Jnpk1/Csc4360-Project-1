@@ -16,26 +16,6 @@ class AuthService with ChangeNotifier {
   User? user;
   AuthService();
 
-  // Future<Member> getUser() async {
-  //   try {
-  //     final user = _auth.currentUser;
-
-  //     if (user != null) {
-  //       print('User signed in: ${user.email}');
-  //       print('Creating Member Object');
-  //       // get user info from DatabaseService
-  //       Member curr
-  //     } else {
-  //       print('No user signed in');
-  //     }
-  //     notifyListeners();
-  //     return user;
-  //   } catch (e) {
-  //     print(e);
-  //     return null;
-  //   }
-  // }
-
   // Allows the app to grab up to date current user from anywhere in the app.
   // Access by useing "Provider.of<AuthService>(context, listen: false).getUser()"
   Future<User?> getUser() async {
@@ -44,13 +24,6 @@ class AuthService with ChangeNotifier {
 
       if (currUser != null) {
         print('User signed in: ${currUser.email}');
-        // print('Creating Member Object');
-        // get user info from DatabaseService
-        // Map<String, dynamic>? res = await _db.getUserInfoFromFirestore(currUser);
-        // if (res != null) {
-        //   currentMember = Member.fromMap(res);
-        // print("Created new member during sign in. $currentMember");
-        // }
       } else {
         print('No user signed in');
       }
@@ -77,7 +50,7 @@ class AuthService with ChangeNotifier {
         print(res);
         if (res != null) {
           currentMember = Member.fromMap(res);
-          print("Created new member during sign in. $currentMember");
+          // print("Created new member during sign in. $currentMember");
         }
       } else {
         print('No user signed in');
@@ -88,19 +61,6 @@ class AuthService with ChangeNotifier {
       return null;
     }
   }
-
-  // Future createUserInDatabaseWithGoogle(User user) async {
-  //   List userName = user.displayName?.split(' ') ?? List.empty();
-  //   if (userName.length > 0) {
-  //     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-  //       'firstName': userName[0],
-  //       'lastName': userName[1],
-  //       'email': user.email,
-  //       'registrationDate': DateTime.now(),
-  //       'userRole': 'Customer',
-  //     });
-  //   }
-  // }
 
   Future<bool> createUsernameDuringRegistration(
       User? user, String firstName, String lastName) async {
@@ -123,21 +83,6 @@ class AuthService with ChangeNotifier {
       return false;
     }
   }
-
-  // Future<UserCredential?> signInWithGoogle() async {
-  //   // Trigger the authentication flow
-  //   final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-  //   // Obtain the auth details from the request
-  //   final GoogleSignInAuthentication? googleAuth =
-  //       await googleUser?.authentication;
-
-  //   // Create a new credential
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth?.accessToken,
-  //     idToken: googleAuth?.idToken,
-  //   );
-  //   }
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
@@ -173,44 +118,6 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  // Future<User?> createUser() async {}
-  // // Haven't tested yet
-  // Future registerWithEmailAndPassword(
-  //     {required String email,
-  //     required String password,
-  //     required String firstName,
-  //     required String lastName}) async {
-  //   try {
-  //     UserCredential result = await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: password);
-  //     User? newUser = result.user;
-
-  //     /// Add the first and last name to the FirebaseUser
-  //     String newDisplayName = '$firstName $lastName';
-
-  //     await newUser
-  //         ?.updateDisplayName(newDisplayName)
-  //         .catchError((error) => print(error));
-
-  //     // Refresh data
-  //     await newUser?.reload();
-
-  //     // Need to make this call to get the updated display name; or else display name will be null
-  //     User? updatedUser = _auth.currentUser;
-
-  //     print('new display name: ${updatedUser?.displayName}');
-
-  //     notifyListeners();
-
-  //     // Return FirebaseUser with updated information (setting the display name using their first and last name)
-  //     return updatedUser;
-  //   } catch (e) {
-  //     print(e.toString());
-
-  //     return null;
-  //   }
-  // }
-
   // sign in with email and pass
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -231,9 +138,6 @@ class AuthService with ChangeNotifier {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? currUser = result.user;
-      // create a new document based on new user
-      // await DatabaseService(uid: currUser?.uid as String)
-      //     .updateUserData(firstName, lastName, 'Customer', dateRegistered);
       return currUser!;
     } catch (e) {
       print(e.toString());
@@ -271,25 +175,4 @@ class AuthService with ChangeNotifier {
       return false;
     }
   }
-  // Stream<User?> get authStateChanges => _auth.authStateChanges();
-
-  // Stream<Stream<Member?>> getMemberStream() {
-  //   Stream<User?> _authStream = _auth.authStateChanges().;
-
-  // }
-
-  // Stream<Member?> getMember(User? currUser) {
-  //   FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
-  //   final subscription = authStateChanges.listen(
-  //     (event) {
-
-  //   },
-  //   onError: (err) {
-  //     print("ERROR: $err");
-  //   },
-  //   onDone: () {
-  //     print("getMember stream all done!");
-  //   })
-
-  // }
 }

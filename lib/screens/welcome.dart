@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/buttons.dart';
 import 'package:memoclub/screens/styles/colors.dart';
 import 'package:memoclub/services/auth.dart';
 import 'package:memoclub/shared/appbar.dart';
-import 'package:memoclub/shared/inputDecor.dart';
 
 class Welcome extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -25,8 +23,6 @@ class Welcome extends StatelessWidget {
                 Image.asset(
                   'assets/mc.png',
                 ),
-
-                // // ),
                 SizedBox(height: 15.0),
                 MaterialButton(
                     elevation: buttonThemeElevation,

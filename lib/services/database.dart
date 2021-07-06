@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memoclub/models/Member.dart';
 import 'package:memoclub/models/MessageCard.dart';
@@ -21,7 +20,6 @@ class DatabaseService with ChangeNotifier {
 
   static const String USER_SOCIAL_FIELD = "connectedSocials";
   static const String USER_FACEBOOK_FIELD = "facebook";
-  // static const String USER_GOOGLE_FIELD = "google";
   static const String USER_INSTAGRAM_FIELD = "instagram";
 
   static const String ROOM_COLLECTION = 'allRooms';
@@ -40,8 +38,6 @@ class DatabaseService with ChangeNotifier {
     HEALTH_ROOM,
     STUDY_ROOM
   ];
-
-  // TODO: Add methods to create, store, and modify users and messages
 
   Future createUserInDatabaseFromEmail(
       User? currUser,
@@ -95,15 +91,9 @@ class DatabaseService with ChangeNotifier {
     }
   }
 
-  Future createSocialMediaAcct(String socialMedia) async {
-    // _firestoreInstance.collection(USER_SOCIAL_FIELD).doc().set();
-  }
+  Future createSocialMediaAcct(String socialMedia) async {}
   Future<Map<String, dynamic>?> getUserInfoFromFirestore(User? currUser) async {
     try {
-      // await _firestoreInstance
-      //     .collection(USERS_COLLECTION)
-      //     .where(USER_ID_FIELD, isEqualTo: currUser?.uid ?? '').get().then((value) => value.docs.);
-
       DocumentSnapshot<Map<String, dynamic>> result = await _firestoreInstance
           .collection(USERS_COLLECTION)
           .doc(currUser?.uid)
@@ -173,7 +163,7 @@ class DatabaseService with ChangeNotifier {
       .doc(HEALTH_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 
@@ -182,7 +172,7 @@ class DatabaseService with ChangeNotifier {
       .doc(GAMES_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 
@@ -218,12 +208,21 @@ class DatabaseService with ChangeNotifier {
     }
   }
 
+  Future updateUsername(String uid, String newUsername) async {
+    _firestoreInstance
+        .collection(USERS_COLLECTION)
+        .doc(uid)
+        .update({USER_USERNAME_FIELD: newUsername})
+        .then((value) => print('Updated username to $newUsername.'))
+        .catchError((error) => print('Failed to create user: $error'));
+  }
+
   Stream<List<MessageCard>> get businessMessages => _firestoreInstance
       .collection(ROOM_COLLECTION)
       .doc(BUSINESS_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 
@@ -232,7 +231,7 @@ class DatabaseService with ChangeNotifier {
       .doc(STUDY_ROOM)
       .collection(MSG_COLLECTION)
       .orderBy("date", descending: true)
-      .limit(20)
+      // .limit(20)
       .snapshots()
       .map(convertToMessageList);
 

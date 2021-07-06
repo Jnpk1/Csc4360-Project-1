@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +9,11 @@ import 'package:memoclub/screens/home.dart';
 import 'package:memoclub/screens/profile.dart';
 import 'package:memoclub/screens/register.dart';
 import 'package:memoclub/screens/reset.dart';
+import 'package:memoclub/screens/reset_username.dart';
 import 'package:memoclub/screens/settings.dart';
 import 'package:memoclub/screens/sign_in.dart';
 import 'package:memoclub/screens/styles/theme.dart';
 import 'package:memoclub/services/auth.dart';
-import 'package:memoclub/services/database.dart';
 import 'package:memoclub/services/member_bloc.dart';
 import 'package:memoclub/shared/loading.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +72,7 @@ class _AppToInitializeFirebaseState extends State<AppToInitializeFirebase> {
 Widget changeNotifier() {
   return ChangeNotifierProvider<AuthService>(
     create: (_) => new AuthService(),
-    child: MyApp(), //MyApp(),  //
+    child: MyApp(),
   );
 }
 
@@ -89,7 +88,6 @@ class MyApp extends StatelessWidget {
               return Text(snapshot.error.toString());
             }
             print("main.dart: snaphshot.data=${snapshot.data}");
-            // return snapshot.hasData ? materialApp() : Register();
             return MyMaterialApp(snapshot.data, snapshot.hasData);
           } else {
             return LoadingCircle();
@@ -98,15 +96,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Widget materialApp() {
-
-//   // DatabaseService db = DatabaseService();
-//   return
-// }
-
 class MyMaterialApp extends StatefulWidget {
-  // const MyMaterialApp({ Key? key }) : super(key: key);
-  // MyMaterialApp({ Key? key , BuildContext context, }) : super(key: key);
   final User? currUser;
   final bool hasData;
   MyMaterialApp(this.currUser, this.hasData);
@@ -118,7 +108,6 @@ class MyMaterialApp extends StatefulWidget {
 class _MyMaterialAppState extends State<MyMaterialApp> {
   final User? currUser;
   final bool hasData;
-  // late MemberBloc bloc;
   MemberBloc bloc = MemberBloc();
   _MyMaterialAppState(this.currUser, this.hasData);
 
@@ -131,7 +120,6 @@ class _MyMaterialAppState extends State<MyMaterialApp> {
   @override
   void initState() {
     super.initState();
-    // this.bloc = MemberBloc();
   }
 
   @override
@@ -164,6 +152,7 @@ class _MyMaterialAppState extends State<MyMaterialApp> {
             GamesRoom.routeName: (context) => GamesRoom(),
             BusinessRoom.routeName: (context) => BusinessRoom(),
             StudyRoom.routeName: (context) => StudyRoom(),
+            ResetUsernameScreen.routeName: (context) => ResetUsernameScreen(),
           }),
     );
   }
