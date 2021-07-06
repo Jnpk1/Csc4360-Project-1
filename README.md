@@ -19,5 +19,7 @@ https://www.youtube.com/watch?v=BA7VXg5wNgA
 ## Authors
 
 Nathan Larkin
+
 James Park
+
 Drew Hartman
