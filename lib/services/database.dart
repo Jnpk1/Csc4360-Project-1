@@ -75,6 +75,7 @@ class DatabaseService with ChangeNotifier {
 
   Future createUserInDatabaseWithGoogle(User currUser) async {
     List userName = currUser.displayName?.split(' ') ?? List.empty();
+    print(userName);
     if (userName.length > 0) {
       await FirebaseFirestore.instance
           .collection(USERS_COLLECTION)
@@ -87,6 +88,7 @@ class DatabaseService with ChangeNotifier {
         USER_ROLE_FIELD: 'Customer',
         USER_SOCIAL_FIELD: {USER_FACEBOOK_FIELD: "", USER_INSTAGRAM_FIELD: ""},
         USER_ID_FIELD: currUser.uid,
+        USER_USERNAME_FIELD: currUser.displayName,
       });
     }
   }
